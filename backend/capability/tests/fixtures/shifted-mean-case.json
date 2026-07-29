@@ -1,0 +1,17 @@
+{
+  "fixture_id": "cap-shifted-001",
+  "input": {
+    "measurement_data": [10.2, 10.25, 10.3, 10.35, 10.4],
+    "specification": {"lsl": 9.5, "usl": 10.5, "target": 10.0},
+    "unit": "mm"
+  },
+  "expected": {
+    "status": "COMPLETED",
+    "decision": "FAIL",
+    "mean": 10.3,
+    "standard_deviation": 0.07905694150420976,
+    "cp": 2.108185106778912,
+    "cpk": 0.8432740427115619,
+    "ppm_total": 5706.018193001095
+  }
+}

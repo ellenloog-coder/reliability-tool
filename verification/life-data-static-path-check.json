@@ -1,0 +1,16 @@
+{
+  "date": "2026-07-19",
+  "scope": [
+    "index.html",
+    "styles.css",
+    "src"
+  ],
+  "command": "rg \"(src=\\\"/|href=\\\"/|http://|https://|file://)\" -n index.html src styles.css",
+  "result": "PASS",
+  "notes": [
+    "No root-relative script or stylesheet references were found in the static page shell.",
+    "No external CDN or file:// resource dependencies were found for runtime loading.",
+    "Matches in src/reliability/app.js are XLSX package XML namespace strings, not page asset URLs.",
+    "index.html uses the relative module path src/reliability/app.js, which is compatible with static GitHub Pages hosting from the repository root."
+  ]
+}

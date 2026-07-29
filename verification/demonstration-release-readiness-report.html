@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Reliability Demonstration Release Readiness Report</title>
+  <style>
+    body{margin:0;background:#f5f7fb;color:#172033;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;line-height:1.5}
+    main{max-width:1100px;margin:28px auto;padding:28px;background:#fff;border:1px solid #d9e0e8;border-radius:8px}
+    h1{margin:0 0 8px;font-size:30px}h2{margin:26px 0 10px;font-size:19px}p{margin:8px 0}
+    .badge{display:inline-block;border-radius:6px;padding:4px 8px;font-weight:700}
+    .pass{background:#e7f7ef;color:#067647}.warn{background:#fff6db;color:#92400e}.fail{background:#fee4e2;color:#b42318}
+    table{width:100%;border-collapse:collapse;margin:10px 0 14px}th,td{border:1px solid #d9e0e8;padding:8px 10px;text-align:left;vertical-align:top}th{background:#f8fafc;width:280px}
+    code{background:#eef2f7;border-radius:4px;padding:1px 4px}
+  </style>
+</head>
+<body>
+<main>
+  <h1>Reliability Demonstration Release Readiness Report</h1>
+  <p><b>Date:</b> 2026-07-19</p>
+  <p><span class="badge warn">Overall Status: Blocked For Public Testing</span></p>
+  <p>The Demonstration numerical core is verified, but real browser regression was blocked by the Codex in-app browser security policy in this run. Per the requested release gate, the module remains <b>In Development</b>.</p>
+
+  <h2>Scope</h2>
+  <table>
+    <tr><th>Included</th><td>Sample-Based Exact Binomial Plan/Evaluate and Time-Based Exponential Plan/Evaluate.</td></tr>
+    <tr><th>Excluded</th><td>Life Data Weibull MLE core changes, MTBF core business-logic changes, ALT development, Weibull Demonstration, Reliability Growth, Crow-AMSAA, Sequential Testing, Bayesian Demonstration, dual-risk OC design, and competing-risk methods.</td></tr>
+  </table>
+
+  <h2>Independent Numerical Verification</h2>
+  <table>
+    <tr><th>Reference generator</th><td><code>verification/demonstration_reference.py</code></td></tr>
+    <tr><th>Comparison runner</th><td><code>verification/compare-demonstration-numerics.js</code></td></tr>
+    <tr><th>Fixtures</th><td>63 total: 33 sample-based, 30 time-based; 18 sample-plan, 15 sample-evaluate, 15 time-plan, 15 time-evaluate; 12 invalid/guard cases.</td></tr>
+    <tr><th>Result</th><td><span class="badge pass">PASS</span> 63/63 fixtures matched production outputs within the defined numerical tolerances.</td></tr>
+    <tr><th>Generated evidence</th><td><code>verification/fixtures/demonstration-fixtures.json</code>, <code>verification/fixtures/demonstration-expected-results.json</code>, <code>verification/demonstration-numerical-comparison.csv</code>, <code>verification/demonstration-reference-output.csv</code></td></tr>
+  </table>
+
+  <h2>Automated Tests</h2>
+  <table>
+    <tr><th>Command</th><td><code>npm test</code></td></tr>
+    <tr><th>Result</th><td><span class="badge pass">PASS</span> 148/148 tests passed.</td></tr>
+    <tr><th>Added release gates</th><td>Independent fixture comparison, equality-boundary demonstrated decisions, fractional unit rejection, chi-square equivalent exposure field, Evidence Gap chart marker, 100+ curve path points, and Chinese report localization.</td></tr>
+  </table>
+
+  <h2>Static Path Check</h2>
+  <table>
+    <tr><th>Evidence file</th><td><code>verification/demonstration-static-path-check.json</code></td></tr>
+    <tr><th>Result</th><td><span class="badge pass">PASS</span> No runtime-blocking absolute local, CDN, or <code>file://</code> asset paths found.</td></tr>
+    <tr><th>Accepted findings</th><td>XLSX internal XML namespace strings in <code>src/reliability/app.js</code> and historical localhost URLs in verification artifacts only.</td></tr>
+  </table>
+
+  <h2>Browser Regression</h2>
+  <table>
+    <tr><th>Evidence file</th><td><code>verification/demonstration-browser-regression-results.json</code></td></tr>
+    <tr><th>Result</th><td><span class="badge fail">BLOCKED</span> The in-app browser rejected access to both <code>http://127.0.0.1:8005/</code> and a fresh <code>http://127.0.0.1:8006/</code> session.</td></tr>
+    <tr><th>Impact</th><td>Required UI workflows were not executed in a real browser during this run, so the release gate is not complete.</td></tr>
+  </table>
+
+  <h2>Implementation Adjustments</h2>
+  <table>
+    <tr><th>Numerical fields</th><td>Time-based plan/evaluate outputs now expose <code>chiSquareEquivalentQuantile</code>; time evaluate also exposes <code>requiredExposureFactor</code>.</td></tr>
+    <tr><th>Validation</th><td>Time-based optional Number of Units is validated as a positive integer.</td></tr>
+    <tr><th>Boundary decisions</th><td>Sample/time demonstrated checks now treat numerical equality within defined tolerance as demonstrated.</td></tr>
+    <tr><th>UI/report readiness</th><td>Evidence Gap chart markers, localized Evidence Gap report assumptions, and static fallback Demonstration status were updated.</td></tr>
+  </table>
+
+  <h2>Release Decision</h2>
+  <p><span class="badge warn">Not Ready For Public Testing In This Run</span></p>
+  <p>Decision reason: numerical verification, automated tests, and static path checks passed, but browser regression is blocked. Demonstration remains <b>In Development</b> until a real browser regression pass is recorded.</p>
+
+  <h2>Known Limitations</h2>
+  <ul>
+    <li>Only exact binomial sample-based and exponential time-based demonstration methods are implemented.</li>
+    <li>No Life Data Weibull MLE core or MTBF core business logic was changed.</li>
+    <li>No ALT or additional demonstration methods were added.</li>
+    <li>Browser regression requires local-page access approval or an unblocked in-app browser session.</li>
+  </ul>
+</main>
+</body>
+</html>

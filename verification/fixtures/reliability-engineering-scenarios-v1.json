@@ -1,0 +1,305 @@
+{
+  "fixtureVersion": "1.0.0",
+  "lifeData": [
+    {
+      "id": "life_early_failure",
+      "covers": ["beta_lt_1", "early_failure"],
+      "sourceFixture": "beta_lt_1_early_life",
+      "targetReliability": "",
+      "expected": {
+        "validationStatus": "WARNING",
+        "beta": 0.5385089178656887,
+        "trend": "DECREASING",
+        "decisionStatus": "NOT_EVALUATED",
+        "reasonCodes": ["TARGET_RELIABILITY_NOT_PROVIDED"],
+        "minimumInsightLimitations": 1
+      }
+    },
+    {
+      "id": "life_random_failure",
+      "covers": ["beta_approx_1", "random_failure"],
+      "sourceFixture": "beta_approx_1_random",
+      "targetReliability": "",
+      "expected": {
+        "validationStatus": "WARNING",
+        "beta": 0.9114636649173841,
+        "trend": "APPROXIMATELY_CONSTANT",
+        "decisionStatus": "NOT_EVALUATED",
+        "reasonCodes": ["TARGET_RELIABILITY_NOT_PROVIDED"],
+        "minimumInsightLimitations": 1
+      }
+    },
+    {
+      "id": "life_wearout_failure",
+      "covers": ["beta_gt_1", "wear_out"],
+      "sourceFixture": "beta_gt_1_wearout",
+      "targetReliability": "",
+      "expected": {
+        "validationStatus": "WARNING",
+        "beta": 5.415759718692387,
+        "trend": "INCREASING",
+        "decisionStatus": "NOT_EVALUATED",
+        "reasonCodes": ["TARGET_RELIABILITY_NOT_PROVIDED"],
+        "minimumInsightLimitations": 1
+      }
+    },
+    {
+      "id": "life_right_censored",
+      "covers": ["censored_data"],
+      "sourceFixture": "right_censored_weibull",
+      "targetReliability": "",
+      "expected": {
+        "validationStatus": "VALID",
+        "beta": 1.0448396851413617,
+        "trend": "APPROXIMATELY_CONSTANT",
+        "censoredCount": 3,
+        "decisionStatus": "NOT_EVALUATED",
+        "reasonCodes": ["TARGET_RELIABILITY_NOT_PROVIDED"],
+        "minimumInsightLimitations": 1
+      }
+    },
+    {
+      "id": "life_limited_failure_data",
+      "covers": ["limited_failure_data"],
+      "sourceFixture": "one_failure_mixed",
+      "targetReliability": "",
+      "expected": {
+        "validationStatus": "WARNING",
+        "warningIncludes": "Limited failure information",
+        "beta": 0.7267361975409585,
+        "trend": "DECREASING",
+        "decisionStatus": "NOT_EVALUATED",
+        "reasonCodes": ["TARGET_RELIABILITY_NOT_PROVIDED"],
+        "minimumInsightLimitations": 1
+      }
+    },
+    {
+      "id": "life_target_meets",
+      "covers": ["target_meets"],
+      "sourceFixture": "right_censored_weibull",
+      "targetReliability": 0.6,
+      "expected": {
+        "validationStatus": "VALID",
+        "beta": 1.0448396851413617,
+        "missionReliability": 0.6646305618797783,
+        "trend": "APPROXIMATELY_CONSTANT",
+        "decisionStatus": "MEETS_REQUIREMENT",
+        "reasonCodes": ["MISSION_RELIABILITY_MEETS_TARGET"],
+        "minimumInsightLimitations": 2
+      }
+    },
+    {
+      "id": "life_target_does_not_meet",
+      "covers": ["target_does_not_meet"],
+      "sourceFixture": "right_censored_weibull",
+      "targetReliability": 0.8,
+      "expected": {
+        "validationStatus": "VALID",
+        "beta": 1.0448396851413617,
+        "missionReliability": 0.6646305618797783,
+        "trend": "APPROXIMATELY_CONSTANT",
+        "decisionStatus": "DOES_NOT_MEET_REQUIREMENT",
+        "reasonCodes": ["MISSION_RELIABILITY_BELOW_TARGET"],
+        "minimumInsightLimitations": 2
+      }
+    }
+  ],
+  "mtbf": [
+    {
+      "id": "mtbf_zero_failure",
+      "covers": ["zero_failure", "no_infinity"],
+      "sourceFixture": "summary_zero_failure",
+      "expected": {
+        "validationStatus": "WARNING",
+        "mtbf": null,
+        "decisionStatus": "REVIEW_REQUIRED",
+        "reasonCodes": ["MTBF_POINT_ESTIMATE_NOT_ESTIMABLE_ZERO_FAILURE"],
+        "pointEstimateAvailable": false,
+        "limitationIncludes": "confidence-based reliability demonstration"
+      }
+    },
+    {
+      "id": "mtbf_few_failures",
+      "covers": ["few_failure"],
+      "sourceFixture": "summary_one_failure",
+      "expected": {
+        "validationStatus": "VALID",
+        "mtbf": 1200,
+        "decisionStatus": "MEETS_REQUIREMENT",
+        "reasonCodes": ["MTBF_MEETS_TARGET_POINT_ESTIMATE"],
+        "limitedFailureInformation": true,
+        "limitationIncludes": "statistical confidence bounds"
+      }
+    },
+    {
+      "id": "mtbf_target_meets",
+      "covers": ["target_meets"],
+      "sourceFixture": "target_below_observed_mtbf",
+      "expected": {
+        "validationStatus": "VALID",
+        "mtbf": 500,
+        "decisionStatus": "MEETS_REQUIREMENT",
+        "reasonCodes": ["MTBF_MEETS_TARGET_POINT_ESTIMATE"],
+        "limitationIncludes": "statistical confidence bounds"
+      }
+    },
+    {
+      "id": "mtbf_target_does_not_meet",
+      "covers": ["target_does_not_meet"],
+      "sourceFixture": "target_above_observed_mtbf",
+      "expected": {
+        "validationStatus": "VALID",
+        "mtbf": 500,
+        "decisionStatus": "DOES_NOT_MEET_REQUIREMENT",
+        "reasonCodes": ["MTBF_BELOW_TARGET_POINT_ESTIMATE"],
+        "limitationIncludes": "statistical confidence bounds"
+      }
+    },
+    {
+      "id": "mtbf_summary_input",
+      "covers": ["summary_input"],
+      "sourceFixture": "summary_hours_normal",
+      "expected": {
+        "validationStatus": "VALID",
+        "mtbf": 2500,
+        "failureRate": 0.0004,
+        "decisionStatus": "MEETS_REQUIREMENT",
+        "reasonCodes": ["MTBF_MEETS_TARGET_POINT_ESTIMATE"],
+        "limitationIncludes": "does not evaluate changing failure rates"
+      }
+    },
+    {
+      "id": "mtbf_unit_level_input",
+      "covers": ["unit_level_input"],
+      "sourceFixture": "unit_mixed_failure_censored",
+      "expected": {
+        "validationStatus": "VALID",
+        "mtbf": 2317.5,
+        "failureRate": 0.0004314994606256742,
+        "totalUnits": 10,
+        "censoredCount": 6,
+        "decisionStatus": "MEETS_REQUIREMENT",
+        "reasonCodes": ["MTBF_MEETS_TARGET_POINT_ESTIMATE"],
+        "limitationIncludes": "Unit-Level Data"
+      }
+    },
+    {
+      "id": "mtbf_summary_unit_equivalence",
+      "covers": ["summary_unit_equivalence"],
+      "sourceFixtures": ["equivalence_summary", "equivalence_unit"],
+      "expected": {
+        "validationStatus": "VALID",
+        "mtbf": 500,
+        "failureRate": 0.002,
+        "decisionStatus": "MEETS_REQUIREMENT",
+        "reasonCodes": ["MTBF_MEETS_TARGET_POINT_ESTIMATE"],
+        "limitationIncludes": "statistical confidence bounds"
+      }
+    }
+  ],
+  "demonstration": [
+    {
+      "id": "demo_zero_failure_demonstrated",
+      "covers": ["zero_failure", "demonstrated", "sample"],
+      "sourceFixture": "sample_eval_n22_d0",
+      "expected": {
+        "decisionStatus": "DEMONSTRATED",
+        "reasonCodes": [
+          "RELIABILITY_LOWER_BOUND_MEETS_TARGET",
+          "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT",
+          "ZERO_OBSERVED_FAILURES"
+        ],
+        "evidenceGapStatus": "SATISFIED"
+      }
+    },
+    {
+      "id": "demo_failure_observed",
+      "covers": ["failure_observed", "time"],
+      "sourceFixture": "time_eval_one_failure",
+      "expected": {
+        "decisionStatus": "DEMONSTRATED",
+        "reasonCodes": [
+          "MTBF_LOWER_BOUND_MEETS_TARGET",
+          "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT"
+        ],
+        "observedFailures": 1,
+        "evidenceGapStatus": "SATISFIED"
+      }
+    },
+    {
+      "id": "demo_confidence_not_met",
+      "covers": ["confidence_not_met", "sample"],
+      "sourceFixture": "sample_eval_gap_positive",
+      "expected": {
+        "decisionStatus": "NOT_DEMONSTRATED",
+        "reasonCodes": [
+          "RELIABILITY_LOWER_BOUND_BELOW_TARGET",
+          "ACHIEVED_CONFIDENCE_BELOW_REQUIREMENT",
+          "ZERO_OBSERVED_FAILURES",
+          "EVIDENCE_GAP_REMAINS"
+        ],
+        "evidenceGapStatus": "GAP_REMAINS"
+      }
+    },
+    {
+      "id": "demo_evidence_gap",
+      "covers": ["evidence_gap", "time"],
+      "sourceFixture": "time_eval_target_not_demonstrated",
+      "expected": {
+        "decisionStatus": "NOT_DEMONSTRATED",
+        "reasonCodes": [
+          "MTBF_LOWER_BOUND_BELOW_TARGET",
+          "ACHIEVED_CONFIDENCE_BELOW_REQUIREMENT",
+          "ZERO_OBSERVED_FAILURES",
+          "EVIDENCE_GAP_REMAINS"
+        ],
+        "evidenceGapStatus": "GAP_REMAINS"
+      }
+    },
+    {
+      "id": "demo_sample_demonstration",
+      "covers": ["sample_demonstration"],
+      "sourceFixture": "sample_eval_all_failed",
+      "expected": {
+        "decisionStatus": "NOT_DEMONSTRATED",
+        "reasonCodes": [
+          "RELIABILITY_LOWER_BOUND_BELOW_TARGET",
+          "ACHIEVED_CONFIDENCE_BELOW_REQUIREMENT",
+          "EVIDENCE_GAP_REMAINS"
+        ],
+        "evidenceGapStatus": "GAP_REMAINS"
+      }
+    },
+    {
+      "id": "demo_time_demonstration",
+      "covers": ["time_demonstration"],
+      "sourceFixture": "time_eval_target_demonstrated",
+      "expected": {
+        "decisionStatus": "DEMONSTRATED",
+        "reasonCodes": [
+          "MTBF_LOWER_BOUND_MEETS_TARGET",
+          "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT",
+          "ZERO_OBSERVED_FAILURES"
+        ],
+        "evidenceGapStatus": "SATISFIED"
+      }
+    },
+    {
+      "id": "demo_equal_boundary",
+      "covers": ["equal_boundary", "sample", "time"],
+      "sourceFixtures": [
+        "sample_eval_target_equals_lower",
+        "time_eval_target_equals_lower"
+      ],
+      "expected": {
+        "decisionStatus": "DEMONSTRATED",
+        "targetReasonCodes": [
+          "RELIABILITY_LOWER_BOUND_MEETS_TARGET",
+          "MTBF_LOWER_BOUND_MEETS_TARGET"
+        ],
+        "confidenceReasonCode": "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT",
+        "evidenceGapStatus": "SATISFIED"
+      }
+    }
+  ]
+}

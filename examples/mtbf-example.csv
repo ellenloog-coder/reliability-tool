@@ -1,0 +1,11 @@
+Unit ID,Exposure Time,Status,Failure Mode,Test Condition,Notes
+U001,820,Failure,Power module,Field return,Observed shutdown
+U002,1000,Censored,,Field return,Still operating
+U003,960,Operating,,Field return,No Failure
+U004,740,Breakdown,Fan assembly,Chamber run,Corrective action opened
+U005,1200,No Failure,,Chamber run,Normal operation
+U006,690,Failure,Connector,Field return,Intermittent
+U007,1100,Censored,,Chamber run,
+U008,980,正常运行,,Chamber run,
+U009,530,Breakdown,Seal,Field return,
+U010,1250,Operating,,Chamber run,

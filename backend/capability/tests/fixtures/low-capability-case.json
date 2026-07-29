@@ -1,0 +1,17 @@
+{
+  "fixture_id": "cap-low-001",
+  "input": {
+    "measurement_data": [9.0, 10.0, 11.0, 10.0, 10.0],
+    "specification": {"lsl": 9.5, "usl": 10.5, "target": 10.0},
+    "unit": "mm"
+  },
+  "expected": {
+    "status": "COMPLETED",
+    "decision": "FAIL",
+    "mean": 10.0,
+    "standard_deviation": 0.7071067811865476,
+    "cp": 0.2357022603955158,
+    "cpk": 0.2357022603955158,
+    "ppm_total": 479500.1221869535
+  }
+}

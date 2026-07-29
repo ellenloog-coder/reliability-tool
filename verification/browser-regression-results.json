@@ -1,0 +1,19 @@
+{
+  "status": "Pass",
+  "checks": [
+    { "name": "Load Example Data", "status": "Pass" },
+    { "name": "Run Analysis", "status": "Pass" },
+    { "name": "No target risk label without target", "status": "Pass" },
+    { "name": "Mission Time update refreshes R(t) without losing fit", "status": "Pass" },
+    { "name": "Chinese language switch keeps analyzed result and localizes dynamic UI", "status": "Pass" },
+    { "name": "Reset clears data, results, charts, and disables Run Analysis", "status": "Pass" },
+    { "name": "Invalid status blocks Run Analysis", "status": "Pass" },
+    { "name": "Desktop no horizontal overflow", "status": "Pass" },
+    { "name": "Mobile single-column layout and no horizontal overflow", "status": "Pass" }
+  ],
+  "notes": [
+    "Browser regression was executed against http://127.0.0.1:8000/ in the Codex in-app browser.",
+    "Native file picker upload cannot be programmatically exercised by the available browser API; CSV, TSV, and XLSX parser paths are covered by automated tests and the in-browser paste/load-example paths were exercised.",
+    "PDF export is browser Print / Save as PDF by design."
+  ]
+}

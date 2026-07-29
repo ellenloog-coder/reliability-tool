@@ -1,0 +1,20 @@
+{
+  "fixture_id": "cap-normal-001",
+  "input": {
+    "measurement_data": [9.9, 10.0, 10.1, 10.0, 10.0],
+    "specification": {"lsl": 9.5, "usl": 10.5, "target": 10.0},
+    "unit": "mm"
+  },
+  "expected": {
+    "status": "COMPLETED",
+    "validation_status": "VALID_WITH_WARNINGS",
+    "decision": "PASS",
+    "mean": 10.0,
+    "standard_deviation": 0.0707106781186545,
+    "cp": 2.357022603955167,
+    "cpk": 2.357022603955167,
+    "pp": 2.357022603955167,
+    "ppk": 2.357022603955167,
+    "ppm_total": 0.0000015374368445009168
+  }
+}

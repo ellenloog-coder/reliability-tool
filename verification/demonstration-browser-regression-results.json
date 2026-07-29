@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-07-29",
+  "baseURL": "http://127.0.0.1:8005/",
+  "browser": "Chromium 149.0.7827.55 via Playwright",
+  "status": "BLOCKED",
+  "total": 7,
+  "passed": 4,
+  "failed": 0,
+  "blocked": 3,
+  "results": [
+    {"testCase":"Navigation and Demonstration entry","browser":"Chromium 149.0.7827.55","viewport":"1440x900","expected":"Demonstration page opens in real browser","actual":"Opened over HTTP; no console errors observed","status":"PASS","evidence":{"screenshot":"verification/screenshots/demonstration/browser-smoke.png","consoleErrors":[],"networkFailures":[]}},
+    {"testCase":"Sample Plan default","browser":"Chromium 149.0.7827.55","viewport":"1440x900","expected":"Finite result and evidence chart","actual":"Rendered result and SVG evidence chart","status":"PASS","evidence":{"screenshot":"verification/screenshots/demonstration/sample-plan-default.png","consoleErrors":[],"networkFailures":[]}},
+    {"testCase":"Sample Plan allowable failures = 1","browser":"Chromium 149.0.7827.55","viewport":"1440x900","expected":"Changed result and chart","actual":"Rendered after input change","status":"PASS","evidence":{"screenshot":"verification/screenshots/demonstration/sample-plan-c1.png","consoleErrors":[],"networkFailures":[]}},
+    {"testCase":"Sample Evaluate zero failures","browser":"Chromium 149.0.7827.55","viewport":"1440x900","expected":"Evaluate result and evidence state","actual":"Rendered result and SVG evidence chart","status":"PASS","evidence":{"screenshot":"verification/screenshots/demonstration/sample-evaluate-demonstrated.png","consoleErrors":[],"networkFailures":[]}},
+    {"testCase":"Time-based plan/evaluate","browser":"Chromium 149.0.7827.55","viewport":"1440x900","expected":"Time modes and zero-failure result","actual":"Not completed: Chromium process terminated during extended run","status":"BLOCKED","evidence":{"screenshot":null,"consoleErrors":["browser process terminated during extended run"],"networkFailures":[]}},
+    {"testCase":"Chinese and report export","browser":"Chromium 149.0.7827.55","viewport":"1440x900","expected":"Localized UI and downloadable HTML report","actual":"Not completed because extended browser process terminated","status":"BLOCKED","evidence":{"screenshot":null,"consoleErrors":[],"networkFailures":[]}},
+    {"testCase":"Mobile layout","browser":"Chromium 149.0.7827.55","viewport":"390x844","expected":"No horizontal overflow and controls usable","actual":"Not completed because extended browser process terminated","status":"BLOCKED","evidence":{"screenshot":null,"consoleErrors":[],"networkFailures":[]}}
+  ]
+}

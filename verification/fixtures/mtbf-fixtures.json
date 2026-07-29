@@ -1,0 +1,276 @@
+[
+  {
+    "id": "summary_hours_normal",
+    "inputMode": "summary",
+    "timeUnit": "hours",
+    "totalExposure": 10000,
+    "failureCount": 4,
+    "censoredCount": null,
+    "totalUnits": null,
+    "missionTime": 100,
+    "targetMTBF": 2000
+  },
+  {
+    "id": "summary_cycles_normal",
+    "inputMode": "summary",
+    "timeUnit": "cycles",
+    "totalExposure": 500000,
+    "failureCount": 10,
+    "censoredCount": null,
+    "totalUnits": null,
+    "missionTime": 10000,
+    "targetMTBF": 40000
+  },
+  {
+    "id": "summary_days_normal",
+    "inputMode": "summary",
+    "timeUnit": "days",
+    "totalExposure": 365,
+    "failureCount": 2,
+    "censoredCount": null,
+    "totalUnits": null,
+    "missionTime": 30,
+    "targetMTBF": 200
+  },
+  {
+    "id": "summary_one_failure",
+    "inputMode": "summary",
+    "timeUnit": "hours",
+    "totalExposure": 1200,
+    "failureCount": 1,
+    "censoredCount": null,
+    "totalUnits": null,
+    "missionTime": 100,
+    "targetMTBF": 1000
+  },
+  {
+    "id": "summary_three_failures",
+    "inputMode": "summary",
+    "timeUnit": "hours",
+    "totalExposure": 9000,
+    "failureCount": 3,
+    "censoredCount": null,
+    "totalUnits": null,
+    "missionTime": 500,
+    "targetMTBF": 4000
+  },
+  {
+    "id": "summary_six_failures",
+    "inputMode": "summary",
+    "timeUnit": "hours",
+    "totalExposure": 24000,
+    "failureCount": 6,
+    "censoredCount": null,
+    "totalUnits": null,
+    "missionTime": 1000,
+    "targetMTBF": 3000
+  },
+  {
+    "id": "summary_zero_failure",
+    "inputMode": "summary",
+    "timeUnit": "hours",
+    "totalExposure": 5000,
+    "failureCount": 0,
+    "censoredCount": null,
+    "totalUnits": null,
+    "missionTime": 100,
+    "targetMTBF": 1000
+  },
+  {
+    "id": "summary_very_large_total_time",
+    "inputMode": "summary",
+    "timeUnit": "hours",
+    "totalExposure": 1000000000000,
+    "failureCount": 2500,
+    "censoredCount": null,
+    "totalUnits": null,
+    "missionTime": 1000000,
+    "targetMTBF": 300000000
+  },
+  {
+    "id": "summary_very_small_total_time",
+    "inputMode": "summary",
+    "timeUnit": "hours",
+    "totalExposure": 0.0003,
+    "failureCount": 1,
+    "censoredCount": null,
+    "totalUnits": null,
+    "missionTime": 0.0001,
+    "targetMTBF": 0.0002
+  },
+  {
+    "id": "summary_large_failure_count",
+    "inputMode": "summary",
+    "timeUnit": "cycles",
+    "totalExposure": 1000000,
+    "failureCount": 100000,
+    "censoredCount": null,
+    "totalUnits": null,
+    "missionTime": 1,
+    "targetMTBF": 9
+  },
+  {
+    "id": "unit_mixed_failure_censored",
+    "inputMode": "unit",
+    "timeUnit": "hours",
+    "missionTime": 100,
+    "targetMTBF": 2000,
+    "rows": [
+      { "unitId": "U001", "exposureTime": 820, "status": "Failure" },
+      { "unitId": "U002", "exposureTime": 1000, "status": "Censored" },
+      { "unitId": "U003", "exposureTime": 960, "status": "Operating" },
+      { "unitId": "U004", "exposureTime": 740, "status": "Breakdown" },
+      { "unitId": "U005", "exposureTime": 1200, "status": "No Failure" },
+      { "unitId": "U006", "exposureTime": 690, "status": "Failure" },
+      { "unitId": "U007", "exposureTime": 1100, "status": "Censored" },
+      { "unitId": "U008", "exposureTime": 980, "status": "正常运行" },
+      { "unitId": "U009", "exposureTime": 530, "status": "Breakdown" },
+      { "unitId": "U010", "exposureTime": 1250, "status": "Operating" }
+    ]
+  },
+  {
+    "id": "unit_all_failure",
+    "inputMode": "unit",
+    "timeUnit": "hours",
+    "missionTime": 50,
+    "targetMTBF": 200,
+    "rows": [
+      { "unitId": "U001", "exposureTime": 100, "status": "Failure" },
+      { "unitId": "U002", "exposureTime": 200, "status": "Failure" },
+      { "unitId": "U003", "exposureTime": 300, "status": "Failure" }
+    ]
+  },
+  {
+    "id": "unit_all_censored",
+    "inputMode": "unit",
+    "timeUnit": "hours",
+    "missionTime": 50,
+    "targetMTBF": 100,
+    "rows": [
+      { "unitId": "U001", "exposureTime": 100, "status": "Censored" },
+      { "unitId": "U002", "exposureTime": 200, "status": "Operating" },
+      { "unitId": "U003", "exposureTime": 300, "status": "No Failure" }
+    ]
+  },
+  {
+    "id": "unit_one_failure_many_censored",
+    "inputMode": "unit",
+    "timeUnit": "hours",
+    "missionTime": 100,
+    "targetMTBF": 5000,
+    "rows": [
+      { "unitId": "U001", "exposureTime": 100, "status": "Failure" },
+      { "unitId": "U002", "exposureTime": 1000, "status": "Censored" },
+      { "unitId": "U003", "exposureTime": 1000, "status": "Censored" },
+      { "unitId": "U004", "exposureTime": 1000, "status": "Censored" },
+      { "unitId": "U005", "exposureTime": 1000, "status": "Censored" }
+    ]
+  },
+  {
+    "id": "unit_different_exposure_times",
+    "inputMode": "unit",
+    "timeUnit": "hours",
+    "missionTime": 20,
+    "targetMTBF": 400,
+    "rows": [
+      { "unitId": "U001", "exposureTime": 10, "status": "Failure" },
+      { "unitId": "U002", "exposureTime": 1000, "status": "Censored" },
+      { "unitId": "U003", "exposureTime": 50, "status": "Failure" }
+    ]
+  },
+  {
+    "id": "unit_chinese_status",
+    "inputMode": "unit",
+    "timeUnit": "hours",
+    "missionTime": 50,
+    "targetMTBF": 700,
+    "rows": [
+      { "unitId": "U001", "exposureTime": 100, "status": "失效" },
+      { "unitId": "U002", "exposureTime": 200, "status": "未失效" },
+      { "unitId": "U003", "exposureTime": 300, "status": "正常运行" }
+    ]
+  },
+  {
+    "id": "unit_invalid_exposure_time",
+    "inputMode": "unit",
+    "timeUnit": "hours",
+    "missionTime": 50,
+    "targetMTBF": 100,
+    "expectInvalid": true,
+    "rows": [
+      { "unitId": "U001", "exposureTime": "bad", "status": "Failure" },
+      { "unitId": "U002", "exposureTime": 100, "status": "Censored" }
+    ]
+  },
+  {
+    "id": "unit_invalid_status",
+    "inputMode": "unit",
+    "timeUnit": "hours",
+    "missionTime": 50,
+    "targetMTBF": 100,
+    "expectInvalid": true,
+    "rows": [
+      { "unitId": "U001", "exposureTime": 100, "status": "Maybe" },
+      { "unitId": "U002", "exposureTime": 100, "status": "Censored" }
+    ]
+  },
+  {
+    "id": "equivalence_summary",
+    "inputMode": "summary",
+    "equivalenceGroup": "equiv_1000_2",
+    "timeUnit": "hours",
+    "totalExposure": 1000,
+    "failureCount": 2,
+    "censoredCount": null,
+    "totalUnits": null,
+    "missionTime": 50,
+    "targetMTBF": 400
+  },
+  {
+    "id": "equivalence_unit",
+    "inputMode": "unit",
+    "equivalenceGroup": "equiv_1000_2",
+    "timeUnit": "hours",
+    "missionTime": 50,
+    "targetMTBF": 400,
+    "rows": [
+      { "unitId": "U001", "exposureTime": 100, "status": "Failure" },
+      { "unitId": "U002", "exposureTime": 200, "status": "Censored" },
+      { "unitId": "U003", "exposureTime": 300, "status": "Failure" },
+      { "unitId": "U004", "exposureTime": 400, "status": "Censored" }
+    ]
+  },
+  {
+    "id": "target_equal_observed_mtbf",
+    "inputMode": "summary",
+    "timeUnit": "hours",
+    "totalExposure": 1000,
+    "failureCount": 2,
+    "censoredCount": null,
+    "totalUnits": null,
+    "missionTime": 50,
+    "targetMTBF": 500
+  },
+  {
+    "id": "target_above_observed_mtbf",
+    "inputMode": "summary",
+    "timeUnit": "hours",
+    "totalExposure": 1000,
+    "failureCount": 2,
+    "censoredCount": null,
+    "totalUnits": null,
+    "missionTime": 50,
+    "targetMTBF": 600
+  },
+  {
+    "id": "target_below_observed_mtbf",
+    "inputMode": "summary",
+    "timeUnit": "hours",
+    "totalExposure": 1000,
+    "failureCount": 2,
+    "censoredCount": null,
+    "totalUnits": null,
+    "missionTime": 50,
+    "targetMTBF": 400
+  }
+]

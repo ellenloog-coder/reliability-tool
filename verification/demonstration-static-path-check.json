@@ -1,0 +1,36 @@
+{
+  "date": "2026-07-19",
+  "module": "Reliability Demonstration",
+  "status": "PASS",
+  "command": "rg \"(src=\\\"/|href=\\\"/|url\\(/|file://|localhost|127\\.0\\.0\\.1|http://|https://)\" -n index.html styles.css src verification --glob '!verification/demonstration-release-readiness-report.html'",
+  "scannedRuntimeFiles": [
+    "index.html",
+    "styles.css",
+    "src/reliability/app.js",
+    "src/reliability/demonstration/*.js",
+    "src/reliability/i18n.js"
+  ],
+  "runtimeBlockingMatches": [],
+  "acceptedMatches": [
+    {
+      "path": "src/reliability/app.js",
+      "classification": "XLSX internal XML namespace strings",
+      "examples": [
+        "http://schemas.openxmlformats.org/package/2006/content-types",
+        "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument"
+      ],
+      "reason": "These strings are embedded inside generated XLSX package XML and are not external runtime asset requests."
+    },
+    {
+      "path": "verification/*.json and verification/*.html",
+      "classification": "Historical verification report URLs",
+      "examples": [
+        "http://127.0.0.1:8000/",
+        "http://127.0.0.1:8002/",
+        "http://127.0.0.1:8005/"
+      ],
+      "reason": "These are report evidence records, not application runtime dependencies."
+    }
+  ],
+  "conclusion": "The Demonstration runtime does not depend on external CDN, localhost-only, absolute-root, or file:// assets."
+}

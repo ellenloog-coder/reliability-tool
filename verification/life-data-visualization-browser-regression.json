@@ -1,0 +1,37 @@
+{
+  "date": "2026-07-19",
+  "url": "http://127.0.0.1:8002/",
+  "browser": "Codex In-app Browser",
+  "scenario": "Life Data right-censored dataset with mission time, target reliability, custom percentile, custom selected time, and F(t) toggle",
+  "input": {
+    "records": 9,
+    "failures": 6,
+    "rightCensored": 3,
+    "missionTime": 800,
+    "targetReliability": 0.82,
+    "customPercentile": 12.5,
+    "customTime": 333
+  },
+  "checks": {
+    "probabilitySvgVisible": true,
+    "reliabilitySvgVisible": true,
+    "failureMarkersIncludingLegend": 7,
+    "censoredRugMarkersIncludingLegend": 4,
+    "probabilityStatsPresent": true,
+    "probabilityLimitationNotePresent": true,
+    "percentilesHasCustomB12_5": true,
+    "selectedTimesHasCustom333": true,
+    "targetGapHasPercentagePoints": true,
+    "failureRateTrendPresent": true,
+    "curveModeReliabilityActive": false,
+    "curveModeFailureActive": true,
+    "targetLineHiddenInFailureMode": true,
+    "consoleErrors": []
+  },
+  "observedText": {
+    "probabilityStats": "beta 1.6366, eta 902.32 Hours, B10 228.14 Hours, failures 6, Right-censored 3, Weibull 2P MLE",
+    "probabilityNote": "Model-fit statistics are not included in the current version. Visual alignment with the fitted line alone does not confirm that Weibull is the best-fitting distribution.",
+    "targetGap": "Predicted Reliability 43.99%; Target reliability 82.00%; Gap -38.01 percentage points; point-estimate comparison only."
+  },
+  "decision": "PASS"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "reliability-analysis-tool",
+  "version": "15.10.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "verify:demonstration": "python3 verification/demonstration_reference.py --verify && node verification/compare-demonstration-numerics.js --verify",
+    "update-golden:demonstration": "python3 verification/demonstration_reference.py --update-golden && node verification/compare-demonstration-numerics.js --write-report"
+  }
+}

@@ -1,0 +1,150 @@
+Fixture,Input Mode,Metric,Reference Value,JavaScript Value,Absolute Error,Relative Error,Pass / Fail
+summary_hours_normal,summary,totalExposure,10000,10000,0,0,Pass
+summary_hours_normal,summary,failureCount,4,4,0,0,Pass
+summary_hours_normal,summary,failureRate,0.0004,0.0004,0,0,Pass
+summary_hours_normal,summary,MTBF,2500,2500,0,0,Pass
+summary_hours_normal,summary,missionReliability,0.9607894391523232,0.9607894391523232,0,0,Pass
+summary_hours_normal,summary,missionFailureProbability,0.03921056084767682,0.03921056084767682,0,0,Pass
+summary_hours_normal,summary,targetComparison,Meets Target,Meets Target,0,0,Pass
+summary_cycles_normal,summary,totalExposure,500000,500000,0,0,Pass
+summary_cycles_normal,summary,failureCount,10,10,0,0,Pass
+summary_cycles_normal,summary,failureRate,0.00002,0.00002,0,0,Pass
+summary_cycles_normal,summary,MTBF,50000,50000,0,0,Pass
+summary_cycles_normal,summary,missionReliability,0.8187307530779818,0.8187307530779818,0,0,Pass
+summary_cycles_normal,summary,missionFailureProbability,0.18126924692201818,0.18126924692201818,0,0,Pass
+summary_cycles_normal,summary,targetComparison,Meets Target,Meets Target,0,0,Pass
+summary_days_normal,summary,totalExposure,365,365,0,0,Pass
+summary_days_normal,summary,failureCount,2,2,0,0,Pass
+summary_days_normal,summary,failureRate,0.005479452054794521,0.005479452054794521,0,0,Pass
+summary_days_normal,summary,MTBF,182.5,182.5,0,0,Pass
+summary_days_normal,summary,missionReliability,0.8484165394203861,0.8484165394203861,0,0,Pass
+summary_days_normal,summary,missionFailureProbability,0.15158346057961392,0.15158346057961392,0,0,Pass
+summary_days_normal,summary,targetComparison,Below Target,Below Target,0,0,Pass
+summary_one_failure,summary,totalExposure,1200,1200,0,0,Pass
+summary_one_failure,summary,failureCount,1,1,0,0,Pass
+summary_one_failure,summary,failureRate,0.0008333333333333334,0.0008333333333333334,0,0,Pass
+summary_one_failure,summary,MTBF,1200,1200,0,0,Pass
+summary_one_failure,summary,missionReliability,0.9200444146293233,0.9200444146293232,1.1102230246251565e-16,1.2067059013367895e-16,Pass
+summary_one_failure,summary,missionFailureProbability,0.07995558537067671,0.07995558537067682,1.1102230246251565e-16,1.388549679772997e-15,Pass
+summary_one_failure,summary,targetComparison,Meets Target,Meets Target,0,0,Pass
+summary_three_failures,summary,totalExposure,9000,9000,0,0,Pass
+summary_three_failures,summary,failureCount,3,3,0,0,Pass
+summary_three_failures,summary,failureRate,0.0003333333333333333,0.0003333333333333333,0,0,Pass
+summary_three_failures,summary,MTBF,3000,3000,0,0,Pass
+summary_three_failures,summary,missionReliability,0.8464817248906141,0.846481724890614,1.1102230246251565e-16,1.311573530744121e-16,Pass
+summary_three_failures,summary,missionFailureProbability,0.15351827510938587,0.15351827510938598,1.1102230246251565e-16,7.231862290232827e-16,Pass
+summary_three_failures,summary,targetComparison,Below Target,Below Target,0,0,Pass
+summary_six_failures,summary,totalExposure,24000,24000,0,0,Pass
+summary_six_failures,summary,failureCount,6,6,0,0,Pass
+summary_six_failures,summary,failureRate,0.00025,0.00025,0,0,Pass
+summary_six_failures,summary,MTBF,4000,4000,0,0,Pass
+summary_six_failures,summary,missionReliability,0.7788007830714049,0.7788007830714049,0,0,Pass
+summary_six_failures,summary,missionFailureProbability,0.22119921692859512,0.22119921692859512,0,0,Pass
+summary_six_failures,summary,targetComparison,Meets Target,Meets Target,0,0,Pass
+summary_zero_failure,summary,totalExposure,5000,5000,0,0,Pass
+summary_zero_failure,summary,failureCount,0,0,0,0,Pass
+summary_zero_failure,summary,failureRate,,,0,0,Pass
+summary_zero_failure,summary,MTBF,,,0,0,Pass
+summary_zero_failure,summary,missionReliability,,,0,0,Pass
+summary_zero_failure,summary,missionFailureProbability,,,0,0,Pass
+summary_zero_failure,summary,targetComparison,Not Estimable,Not Estimable,0,0,Pass
+summary_very_large_total_time,summary,totalExposure,1000000000000,1000000000000,0,0,Pass
+summary_very_large_total_time,summary,failureCount,2500,2500,0,0,Pass
+summary_very_large_total_time,summary,failureRate,2.5e-9,2.5e-9,0,0,Pass
+summary_very_large_total_time,summary,MTBF,400000000,400000000,0,0,Pass
+summary_very_large_total_time,summary,missionReliability,0.9975031223974601,0.9975031223974601,0,0,Pass
+summary_very_large_total_time,summary,missionFailureProbability,0.0024968776025399153,0.0024968776025399153,0,0,Pass
+summary_very_large_total_time,summary,targetComparison,Meets Target,Meets Target,0,0,Pass
+summary_very_small_total_time,summary,totalExposure,0.0003,0.0003,0,0,Pass
+summary_very_small_total_time,summary,failureCount,1,1,0,0,Pass
+summary_very_small_total_time,summary,failureRate,3333.3333333333335,3333.3333333333335,0,0,Pass
+summary_very_small_total_time,summary,MTBF,0.0003,0.0003,0,0,Pass
+summary_very_small_total_time,summary,missionReliability,0.7165313105737893,0.7165313105737892,1.1102230246251565e-16,1.549441047783528e-16,Pass
+summary_very_small_total_time,summary,missionFailureProbability,0.28346868942621073,0.28346868942621084,1.1102230246251565e-16,3.9165631550787443e-16,Pass
+summary_very_small_total_time,summary,targetComparison,Meets Target,Meets Target,0,0,Pass
+summary_large_failure_count,summary,totalExposure,1000000,1000000,0,0,Pass
+summary_large_failure_count,summary,failureCount,100000,100000,0,0,Pass
+summary_large_failure_count,summary,failureRate,0.1,0.1,0,0,Pass
+summary_large_failure_count,summary,MTBF,10,10,0,0,Pass
+summary_large_failure_count,summary,missionReliability,0.9048374180359595,0.9048374180359595,0,0,Pass
+summary_large_failure_count,summary,missionFailureProbability,0.09516258196404048,0.09516258196404048,0,0,Pass
+summary_large_failure_count,summary,targetComparison,Meets Target,Meets Target,0,0,Pass
+unit_mixed_failure_censored,unit,totalExposure,9270,9270,0,0,Pass
+unit_mixed_failure_censored,unit,failureCount,4,4,0,0,Pass
+unit_mixed_failure_censored,unit,failureRate,0.0004314994606256742,0.0004314994606256742,0,0,Pass
+unit_mixed_failure_censored,unit,MTBF,2317.5,2317.5,0,0,Pass
+unit_mixed_failure_censored,unit,missionReliability,0.9577677657940178,0.9577677657940178,0,0,Pass
+unit_mixed_failure_censored,unit,missionFailureProbability,0.04223223420598221,0.04223223420598221,0,0,Pass
+unit_mixed_failure_censored,unit,targetComparison,Meets Target,Meets Target,0,0,Pass
+unit_all_failure,unit,totalExposure,600,600,0,0,Pass
+unit_all_failure,unit,failureCount,3,3,0,0,Pass
+unit_all_failure,unit,failureRate,0.005,0.005,0,0,Pass
+unit_all_failure,unit,MTBF,200,200,0,0,Pass
+unit_all_failure,unit,missionReliability,0.7788007830714049,0.7788007830714049,0,0,Pass
+unit_all_failure,unit,missionFailureProbability,0.22119921692859512,0.22119921692859512,0,0,Pass
+unit_all_failure,unit,targetComparison,Meets Target,Meets Target,0,0,Pass
+unit_all_censored,unit,totalExposure,600,600,0,0,Pass
+unit_all_censored,unit,failureCount,0,0,0,0,Pass
+unit_all_censored,unit,failureRate,,,0,0,Pass
+unit_all_censored,unit,MTBF,,,0,0,Pass
+unit_all_censored,unit,missionReliability,,,0,0,Pass
+unit_all_censored,unit,missionFailureProbability,,,0,0,Pass
+unit_all_censored,unit,targetComparison,Not Estimable,Not Estimable,0,0,Pass
+unit_one_failure_many_censored,unit,totalExposure,4100,4100,0,0,Pass
+unit_one_failure_many_censored,unit,failureCount,1,1,0,0,Pass
+unit_one_failure_many_censored,unit,failureRate,0.00024390243902439024,0.00024390243902439024,0,0,Pass
+unit_one_failure_many_censored,unit,MTBF,4100,4100,0,0,Pass
+unit_one_failure_many_censored,unit,missionReliability,0.9759047945423922,0.9759047945423922,0,0,Pass
+unit_one_failure_many_censored,unit,missionFailureProbability,0.024095205457607793,0.024095205457607793,0,0,Pass
+unit_one_failure_many_censored,unit,targetComparison,Below Target,Below Target,0,0,Pass
+unit_different_exposure_times,unit,totalExposure,1060,1060,0,0,Pass
+unit_different_exposure_times,unit,failureCount,2,2,0,0,Pass
+unit_different_exposure_times,unit,failureRate,0.0018867924528301887,0.0018867924528301887,0,0,Pass
+unit_different_exposure_times,unit,MTBF,530,530,0,0,Pass
+unit_different_exposure_times,unit,missionReliability,0.9629672760127079,0.9629672760127079,0,0,Pass
+unit_different_exposure_times,unit,missionFailureProbability,0.03703272398729207,0.03703272398729207,0,0,Pass
+unit_different_exposure_times,unit,targetComparison,Meets Target,Meets Target,0,0,Pass
+unit_chinese_status,unit,totalExposure,600,600,0,0,Pass
+unit_chinese_status,unit,failureCount,1,1,0,0,Pass
+unit_chinese_status,unit,failureRate,0.0016666666666666668,0.0016666666666666668,0,0,Pass
+unit_chinese_status,unit,MTBF,600,600,0,0,Pass
+unit_chinese_status,unit,missionReliability,0.9200444146293233,0.9200444146293232,1.1102230246251565e-16,1.2067059013367895e-16,Pass
+unit_chinese_status,unit,missionFailureProbability,0.07995558537067671,0.07995558537067682,1.1102230246251565e-16,1.388549679772997e-15,Pass
+unit_chinese_status,unit,targetComparison,Below Target,Below Target,0,0,Pass
+unit_invalid_exposure_time,unit,valid,false,false,,,Pass
+unit_invalid_status,unit,valid,false,false,,,Pass
+equivalence_summary,summary,totalExposure,1000,1000,0,0,Pass
+equivalence_summary,summary,failureCount,2,2,0,0,Pass
+equivalence_summary,summary,failureRate,0.002,0.002,0,0,Pass
+equivalence_summary,summary,MTBF,500,500,0,0,Pass
+equivalence_summary,summary,missionReliability,0.9048374180359595,0.9048374180359595,0,0,Pass
+equivalence_summary,summary,missionFailureProbability,0.09516258196404048,0.09516258196404048,0,0,Pass
+equivalence_summary,summary,targetComparison,Meets Target,Meets Target,0,0,Pass
+equivalence_unit,unit,totalExposure,1000,1000,0,0,Pass
+equivalence_unit,unit,failureCount,2,2,0,0,Pass
+equivalence_unit,unit,failureRate,0.002,0.002,0,0,Pass
+equivalence_unit,unit,MTBF,500,500,0,0,Pass
+equivalence_unit,unit,missionReliability,0.9048374180359595,0.9048374180359595,0,0,Pass
+equivalence_unit,unit,missionFailureProbability,0.09516258196404048,0.09516258196404048,0,0,Pass
+equivalence_unit,unit,targetComparison,Meets Target,Meets Target,0,0,Pass
+target_equal_observed_mtbf,summary,totalExposure,1000,1000,0,0,Pass
+target_equal_observed_mtbf,summary,failureCount,2,2,0,0,Pass
+target_equal_observed_mtbf,summary,failureRate,0.002,0.002,0,0,Pass
+target_equal_observed_mtbf,summary,MTBF,500,500,0,0,Pass
+target_equal_observed_mtbf,summary,missionReliability,0.9048374180359595,0.9048374180359595,0,0,Pass
+target_equal_observed_mtbf,summary,missionFailureProbability,0.09516258196404048,0.09516258196404048,0,0,Pass
+target_equal_observed_mtbf,summary,targetComparison,Meets Target,Meets Target,0,0,Pass
+target_above_observed_mtbf,summary,totalExposure,1000,1000,0,0,Pass
+target_above_observed_mtbf,summary,failureCount,2,2,0,0,Pass
+target_above_observed_mtbf,summary,failureRate,0.002,0.002,0,0,Pass
+target_above_observed_mtbf,summary,MTBF,500,500,0,0,Pass
+target_above_observed_mtbf,summary,missionReliability,0.9048374180359595,0.9048374180359595,0,0,Pass
+target_above_observed_mtbf,summary,missionFailureProbability,0.09516258196404048,0.09516258196404048,0,0,Pass
+target_above_observed_mtbf,summary,targetComparison,Below Target,Below Target,0,0,Pass
+target_below_observed_mtbf,summary,totalExposure,1000,1000,0,0,Pass
+target_below_observed_mtbf,summary,failureCount,2,2,0,0,Pass
+target_below_observed_mtbf,summary,failureRate,0.002,0.002,0,0,Pass
+target_below_observed_mtbf,summary,MTBF,500,500,0,0,Pass
+target_below_observed_mtbf,summary,missionReliability,0.9048374180359595,0.9048374180359595,0,0,Pass
+target_below_observed_mtbf,summary,missionFailureProbability,0.09516258196404048,0.09516258196404048,0,0,Pass
+target_below_observed_mtbf,summary,targetComparison,Meets Target,Meets Target,0,0,Pass

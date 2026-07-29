@@ -1,0 +1,212 @@
+[
+  {
+    "testCase": "Navigation active state",
+    "expectedResult": "MTBF nav and panel active",
+    "actualResult": "MTBF/mtbfPanel/MTBF Analysis",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "Summary normal input",
+    "expectedResult": "MTBF 2,500, lambda 0.0004, R/F and curve shown",
+    "actualResult": "MTBF 2,500 shown, lambda shown, one exponential SVG shown",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "Summary zero failure",
+    "expectedResult": "Not Estimable, no Infinity, no curve, no target meets/below",
+    "actualResult": "Not Estimable shown, zero SVGs, no Infinity, no Meets/Below target conclusion",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "Summary one failure",
+    "expectedResult": "One failure calculates finite MTBF",
+    "actualResult": "MTBF 1,200 shown with curve",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "Target Meets",
+    "expectedResult": "Observed MTBF greater than or equal to target shows Meets Target",
+    "actualResult": "Meets Target shown for target equal to 2,000 while observed MTBF is 2,500",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "Target Below",
+    "expectedResult": "Observed MTBF below target shows Below Target",
+    "actualResult": "Below Target shown after target changed to 3,000",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "Mission Time update",
+    "expectedResult": "MTBF/lambda unchanged, R/F and curve marker update",
+    "actualResult": "R(200) displayed after mission time change, MTBF 2,500 retained, one curve retained",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "Target MTBF update",
+    "expectedResult": "Target comparison updates while curve and MTBF remain unchanged",
+    "actualResult": "Target comparison changed and SVG outerHTML stayed unchanged",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "Unit-Level load example",
+    "expectedResult": "Auto mapping, total exposure 9,270, failures 4, censored 6, MTBF 2,317.5",
+    "actualResult": "9,270 exposure, 2,317.5 MTBF, Censored Count, and one curve shown",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "Paste CSV aliases",
+    "expectedResult": "Breakdown failure, Operating/No Failure censored",
+    "actualResult": "CSV paste calculated total exposure 600 and MTBF 600",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "Paste TSV Chinese columns/status",
+    "expectedResult": "Chinese columns/status auto map and calculate",
+    "actualResult": "TSV paste calculated total exposure 600 and target comparison below",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "CSV upload",
+    "expectedResult": "CSV file parser supports MTBF unit data",
+    "actualResult": "CSV parser and MTBF validation covered by automated parser test",
+    "pass": "Pass",
+    "notes": "The in-app browser API cannot inject files into the native file picker; parser coverage is automated with real CSV text."
+  },
+  {
+    "testCase": "TSV upload",
+    "expectedResult": "TSV file parser supports MTBF unit data",
+    "actualResult": "TSV parser and MTBF validation covered by automated parser test",
+    "pass": "Pass",
+    "notes": "The in-app browser API cannot inject files into the native file picker; parser coverage is automated with real TSV text."
+  },
+  {
+    "testCase": "XLSX upload",
+    "expectedResult": "XLSX file parser supports MTBF unit data",
+    "actualResult": "examples/mtbf-example.xlsx was parsed in automated tests with total exposure 9,270, failures 4, censored 6",
+    "pass": "Pass",
+    "notes": "The in-app browser API cannot inject files into the native file picker; parser coverage uses a real XLSX workbook."
+  },
+  {
+    "testCase": "Manual mapping",
+    "expectedResult": "Manual field mapping calculates expected exposure",
+    "actualResult": "Manual A/B/C mapping calculated total exposure 300 and MTBF 300",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "Invalid Status",
+    "expectedResult": "Run disabled and original row error displayed",
+    "actualResult": "Run disabled and Row 2 unrecognized Status shown",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "Invalid Exposure",
+    "expectedResult": "Run disabled and original row error displayed",
+    "actualResult": "Run disabled and Row 2 invalid Exposure Time shown",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "Second paste invalidates result",
+    "expectedResult": "Old result and curve are cleared",
+    "actualResult": "SVG count became 0 and previous 300-hour result disappeared",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "Mapping change invalidates result",
+    "expectedResult": "Old result and curve are cleared after mapping change",
+    "actualResult": "Covered by automated state regression tests and manual mapping browser path",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "Time Unit change invalidates result",
+    "expectedResult": "Old curve/report cleared after time unit change",
+    "actualResult": "SVG count became 0 after changing time unit",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "Reset clears MTBF results",
+    "expectedResult": "No curve and empty summary after reset",
+    "actualResult": "SVG count 0 and empty MTBF prompt shown",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "Life Data and MTBF navigation isolation",
+    "expectedResult": "Switching modules keeps active panel correct and no Life Data result appears in MTBF",
+    "actualResult": "lifePanel -> mtbfPanel, no Weibull Probability Plot text in MTBF panel",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "Download CSV Template",
+    "expectedResult": "CSV template download control is available",
+    "actualResult": "Button present and download handler source reviewed after Blob-link hardening",
+    "pass": "Pass",
+    "notes": "The in-app browser did not surface Blob URL downloads through waitForEvent('download'); implementation now appends the link and defers revokeObjectURL."
+  },
+  {
+    "testCase": "Download Excel Template",
+    "expectedResult": "Excel template download control is available",
+    "actualResult": "Button present and download handler source reviewed after Blob-link hardening",
+    "pass": "Pass",
+    "notes": "The in-app browser did not surface Blob URL downloads through waitForEvent('download'); implementation now appends the link and defers revokeObjectURL."
+  },
+  {
+    "testCase": "Export HTML",
+    "expectedResult": "HTML report export control is available after analysis",
+    "actualResult": "Button enabled after report generation and download handler source reviewed after Blob-link hardening",
+    "pass": "Pass",
+    "notes": "The in-app browser did not surface Blob URL downloads through waitForEvent('download'); implementation now appends the link and defers revokeObjectURL."
+  },
+  {
+    "testCase": "Print / Save as PDF control",
+    "expectedResult": "Print button enabled after report generation",
+    "actualResult": "Print button enabled",
+    "pass": "Pass",
+    "notes": "Browser print dialog itself is not opened by automation."
+  },
+  {
+    "testCase": "Chinese language switch",
+    "expectedResult": "MTBF dynamic content localized with allowed symbols only",
+    "actualResult": "Chinese repairable-system boundary shown and English boundary absent",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "Desktop layout overflow",
+    "expectedResult": "No horizontal overflow at desktop viewport",
+    "actualResult": "No horizontal overflow",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "Mobile layout overflow",
+    "expectedResult": "No horizontal overflow at mobile viewport",
+    "actualResult": "No horizontal overflow at 390x844 viewport",
+    "pass": "Pass",
+    "notes": ""
+  },
+  {
+    "testCase": "Console errors",
+    "expectedResult": "No application console errors",
+    "actualResult": "No application console errors observed",
+    "pass": "Pass",
+    "notes": ""
+  }
+]

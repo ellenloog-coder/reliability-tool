@@ -1,0 +1,64 @@
+fixtureId,method,workflow,expectedStatus,actualStatus,maxAbsError,maxRelError,failedField,status,notes
+sample_plan_r90_cl90_c0,sample,plan,ok,ok,0,0,,PASS,
+sample_plan_r90_cl95_c0,sample,plan,ok,ok,0,0,,PASS,
+sample_plan_r95_cl90_c0,sample,plan,ok,ok,0,0,,PASS,
+sample_plan_r95_cl95_c0,sample,plan,ok,ok,0,0,,PASS,
+sample_plan_r99_cl90_c0,sample,plan,ok,ok,0,0,,PASS,
+sample_plan_r99_cl95_c0,sample,plan,ok,ok,0,0,,PASS,
+sample_plan_r90_cl90_c1,sample,plan,ok,ok,0,0,,PASS,
+sample_plan_r90_cl90_c2,sample,plan,ok,ok,0,0,,PASS,
+sample_plan_r95_cl95_c1,sample,plan,ok,ok,0,0,,PASS,
+sample_plan_r90_cl99_c0,sample,plan,ok,ok,0,0,,PASS,
+sample_plan_r90_cl80_c0,sample,plan,ok,ok,0,0,,PASS,
+sample_plan_r999_cl90_c0,sample,plan,ok,ok,0,0,,PASS,
+sample_plan_r70_cl90_c0,sample,plan,ok,ok,0,0,,PASS,
+sample_plan_r90_cl90_c5,sample,plan,ok,ok,0,0,,PASS,
+sample_plan_max_guard,sample,plan,error,error,0,0,,PASS,Unable to find a sample size within the current maximum limit.
+sample_plan_invalid_reliability,sample,plan,error,error,0,0,,PASS,Target Reliability must be greater than 0 and less than 1.
+sample_plan_invalid_confidence,sample,plan,error,error,0,0,,PASS,Confidence Level must be greater than 0 and less than 1.
+sample_plan_invalid_allowable_failures,sample,plan,error,error,0,0,,PASS,Allowable Failures must be a non-negative integer.
+sample_eval_n22_d0,sample,evaluate,ok,ok,2.8990143619012088e-12,3.218880932908465e-12,,PASS,
+sample_eval_n29_d0,sample,evaluate,ok,ok,9.094947017729282e-13,1.0084706813140233e-12,,PASS,
+sample_eval_n100_d0,sample,evaluate,ok,ok,3.694822225952521e-13,3.7808856915404334e-13,,PASS,
+sample_eval_n100_d1,sample,evaluate,ok,ok,6.536993168992922e-13,6.797610125369221e-13,,PASS,
+sample_eval_n100_d5,sample,evaluate,ok,ok,9.094947017729282e-13,1.0002927442090914e-12,,PASS,
+sample_eval_all_failed,sample,evaluate,ok,ok,0,0,,PASS,
+sample_eval_n1_d0,sample,evaluate,ok,ok,5.9117155615240335e-12,5.91171556152941e-11,,PASS,
+sample_eval_target_equals_lower,sample,evaluate,ok,ok,2.8990143619012088e-12,3.218880932908465e-12,,PASS,
+sample_eval_target_below_lower,sample,evaluate,ok,ok,2.8990143619012088e-12,3.218880932908465e-12,,PASS,
+sample_eval_target_above_lower,sample,evaluate,ok,ok,2.8990143619012088e-12,3.218880932908465e-12,,PASS,
+sample_eval_gap_zero,sample,evaluate,ok,ok,1.1368683772161603e-12,1.2275622365537934e-12,,PASS,
+sample_eval_gap_positive,sample,evaluate,ok,ok,1.7053025658242404e-12,2.1468487349139474e-12,,PASS,
+sample_eval_failures_gt_units,sample,evaluate,error,error,0,0,,PASS,Observed Failures cannot be greater than Units Tested.
+sample_eval_units_zero,sample,evaluate,error,error,0,0,,PASS,Units Tested must be a positive integer.
+sample_eval_failures_decimal,sample,evaluate,error,error,0,0,,PASS,Observed Failures must be a non-negative integer.
+time_plan_mtbf_cl90_c0,time,plan,ok,ok,7.959761205711402e-8,3.4568825290008356e-11,,PASS,
+time_plan_mtbf_cl95_c0,time,plan,ok,ok,1.7443699107388966e-7,5.822849812509829e-11,,PASS,
+time_plan_mtbf_cl90_c1,time,plan,ok,ok,5.478477760334499e-8,1.4084503566026374e-11,,PASS,
+time_plan_mtbf_cl90_c2,time,plan,ok,ok,3.616969479480758e-8,6.7959415570593596e-12,,PASS,
+time_plan_reliability_mission,time,plan,ok,ok,7.554763215011917e-8,3.4568825290008356e-11,,PASS,
+time_plan_r90_mission,time,plan,ok,ok,3.7773861549794674e-7,3.4568825290008356e-11,,PASS,
+time_plan_r95_mission,time,plan,ok,ok,7.759081199765205e-7,3.4568871080362837e-11,,PASS,
+time_plan_units_10,time,plan,ok,ok,7.959761205711402e-8,3.4568825290008356e-11,,PASS,
+time_plan_units_1,time,plan,ok,ok,7.959761205711402e-8,3.4568825290008356e-11,,PASS,
+time_plan_units_100,time,plan,ok,ok,7.959761205711402e-8,3.456890243620568e-11,,PASS,
+time_plan_very_large_mtbf,time,plan,ok,ok,0.07959794998168945,3.456895044785151e-11,,PASS,
+time_plan_very_small_mtbf,time,plan,ok,ok,1.5919532359021105e-10,3.4568825290008356e-11,,PASS,
+time_plan_invalid_mtbf,time,plan,error,error,0,0,,PASS,Target MTBF must be a finite positive number.
+time_plan_invalid_mission,time,plan,error,error,0,0,,PASS,Mission Time must be a finite positive number.
+time_plan_invalid_allowable,time,plan,error,error,0,0,,PASS,Allowable Failures must be a non-negative integer.
+time_eval_zero_failure,time,evaluate,ok,ok,7.959761205711402e-8,1,,PASS,
+time_eval_one_failure,time,evaluate,ok,ok,5.478477760334499e-8,1.4084609150628255e-11,,PASS,
+time_eval_three_failures,time,evaluate,ok,ok,5.158926796866581e-8,7.722039084579997e-12,,PASS,
+time_eval_many_failures,time,evaluate,ok,ok,2.0133666112087667e-7,7.444478001513538e-12,,PASS,
+time_eval_target_demonstrated,time,evaluate,ok,ok,7.959761205711402e-8,3.4568825290008356e-11,,PASS,
+time_eval_target_not_demonstrated,time,evaluate,ok,ok,7.959761205711402e-8,6.110741822948863e-11,,PASS,
+time_eval_target_equals_lower,time,evaluate,ok,ok,7.959761205711402e-8,1,,PASS,
+time_eval_reliability_mission,time,evaluate,ok,ok,7.554763215011917e-8,3.456887043285676e-11,,PASS,
+time_eval_zero_point_not_estimable,time,evaluate,ok,ok,7.959761205711402e-8,1,,PASS,
+time_eval_gap_zero,time,evaluate,ok,ok,7.959761205711402e-8,3.4568825290008356e-11,,PASS,
+time_eval_gap_positive,time,evaluate,ok,ok,7.959761205711402e-8,6.110741822948863e-11,,PASS,
+time_eval_very_large_exposure,time,evaluate,ok,ok,0.005779266357421875,7.722004965520026e-12,,PASS,
+time_eval_very_small_exposure,time,evaluate,ok,ok,1.5919532359021105e-10,3.4568825290008356e-11,,PASS,
+time_eval_invalid_total_exposure,time,evaluate,error,error,0,0,,PASS,Total Test Time must be a finite positive number.
+time_eval_invalid_observed_failures,time,evaluate,error,error,0,0,,PASS,Observed Failures must be a non-negative integer.

@@ -1,0 +1,9 @@
+case,production_value,reference_value,absolute_error,status
+binomial_zero_failure_sample_size,22,22,0,PASS
+binomial_allowable_failure_1,38,38,0,PASS
+binomial_lower_bound,0.9006280202083872,0.9006280202083871,1.1102230246251565e-16,PASS
+binomial_achieved_confidence,0.9015229097816388,0.9015229097816388,0,PASS
+exponential_zero_failure_time,2302.5850929149315,2302.585092994046,7.911449811566621e-8,PASS
+exponential_one_failure_time,3889.7201699223897,3889.720169867429,5.496070887893438e-8,PASS
+exponential_mtbf_lower_bound,1000.0000000343591,1000,3.435909512074664e-8,PASS
+exponential_achieved_confidence,0.9,0.9,0,PASS

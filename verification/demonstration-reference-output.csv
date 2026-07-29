@@ -1,0 +1,9 @@
+case,status,primary_value
+sample_plan_r90_cl90_c0,ok,22
+sample_plan_r90_cl95_c0,ok,29
+sample_plan_r95_cl90_c0,ok,45
+sample_plan_r95_cl95_c0,ok,59
+sample_plan_r99_cl90_c0,ok,230
+sample_plan_r99_cl95_c0,ok,299
+sample_plan_r90_cl90_c1,ok,38
+sample_plan_r90_cl90_c2,ok,52

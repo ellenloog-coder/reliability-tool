@@ -1,0 +1,703 @@
+[
+  {
+    "name": "uncensored_weibull",
+    "description": "Uncensored life data with all observations failed.",
+    "records": [
+      {
+        "time": 120,
+        "status": "failure"
+      },
+      {
+        "time": 220,
+        "status": "failure"
+      },
+      {
+        "time": 340,
+        "status": "failure"
+      },
+      {
+        "time": 510,
+        "status": "failure"
+      },
+      {
+        "time": 760,
+        "status": "failure"
+      },
+      {
+        "time": 940,
+        "status": "failure"
+      },
+      {
+        "time": 1180,
+        "status": "failure"
+      },
+      {
+        "time": 1450,
+        "status": "failure"
+      }
+    ],
+    "failureCount": 8,
+    "censoredCount": 0,
+    "missionTime": 500,
+    "expected": {
+      "beta": 1.552532505818011,
+      "eta": 767.637752138295,
+      "converged": true,
+      "iterations": 63,
+      "logLikelihood": -59.323873872003496,
+      "b1": 39.659118646623824,
+      "b5": 113.3169499245785,
+      "b10": 180.15837546915276,
+      "b50": 606.2204579618025,
+      "missionReliability": 0.598114981999254,
+      "missionFailureProbability": 0.40188501800074605
+    }
+  },
+  {
+    "name": "right_censored_weibull",
+    "description": "Mixed failures and right-censored observations.",
+    "records": [
+      {
+        "time": 120,
+        "status": "failure"
+      },
+      {
+        "time": 220,
+        "status": "failure"
+      },
+      {
+        "time": 340,
+        "status": "failure"
+      },
+      {
+        "time": 510,
+        "status": "failure"
+      },
+      {
+        "time": 760,
+        "status": "failure"
+      },
+      {
+        "time": 940,
+        "status": "failure"
+      },
+      {
+        "time": 1180,
+        "status": "censored"
+      },
+      {
+        "time": 1450,
+        "status": "censored"
+      },
+      {
+        "time": 1600,
+        "status": "censored"
+      }
+    ],
+    "failureCount": 6,
+    "censoredCount": 3,
+    "missionTime": 500,
+    "expected": {
+      "beta": 1.0448396851413617,
+      "eta": 1177.7896896520526,
+      "converged": true,
+      "iterations": 63,
+      "logLikelihood": -48.46582453651309,
+      "b1": 14.420671689195458,
+      "b5": 68.6256660517645,
+      "b10": 136.67458975974532,
+      "b50": 829.3240196463173,
+      "missionReliability": 0.6646305618797783,
+      "missionFailureProbability": 0.3353694381202217
+    }
+  },
+  {
+    "name": "beta_lt_1_early_life",
+    "description": "Early-life pattern with decreasing failure-rate estimate.",
+    "records": [
+      {
+        "time": 2,
+        "status": "failure"
+      },
+      {
+        "time": 6,
+        "status": "failure"
+      },
+      {
+        "time": 15,
+        "status": "failure"
+      },
+      {
+        "time": 42,
+        "status": "failure"
+      },
+      {
+        "time": 110,
+        "status": "failure"
+      },
+      {
+        "time": 260,
+        "status": "failure"
+      },
+      {
+        "time": 620,
+        "status": "failure"
+      },
+      {
+        "time": 1300,
+        "status": "failure"
+      }
+    ],
+    "failureCount": 8,
+    "censoredCount": 0,
+    "missionTime": 100,
+    "expected": {
+      "beta": 0.5385089178656887,
+      "eta": 171.7483188700505,
+      "converged": true,
+      "iterations": 63,
+      "logLikelihood": -50.25411841787613,
+      "b1": 0.03349522162163972,
+      "b5": 0.6910373327192876,
+      "b10": 2.6304218602586373,
+      "b50": 86.95782031582239,
+      "missionReliability": 0.47363281420704384,
+      "missionFailureProbability": 0.5263671857929562
+    }
+  },
+  {
+    "name": "beta_approx_1_random",
+    "description": "Approximately constant failure-rate pattern.",
+    "records": [
+      {
+        "time": 24,
+        "status": "failure"
+      },
+      {
+        "time": 85,
+        "status": "failure"
+      },
+      {
+        "time": 160,
+        "status": "failure"
+      },
+      {
+        "time": 312,
+        "status": "failure"
+      },
+      {
+        "time": 550,
+        "status": "failure"
+      },
+      {
+        "time": 800,
+        "status": "failure"
+      },
+      {
+        "time": 1250,
+        "status": "failure"
+      },
+      {
+        "time": 1900,
+        "status": "failure"
+      }
+    ],
+    "failureCount": 8,
+    "censoredCount": 0,
+    "missionTime": 700,
+    "expected": {
+      "beta": 0.9114636649173841,
+      "eta": 608.8627148853135,
+      "converged": true,
+      "iterations": 63,
+      "logLikelihood": -59.57585695231904,
+      "b1": 3.914162836275627,
+      "b5": 23.403448311003295,
+      "b10": 51.55415550023049,
+      "b50": 407.27072425982146,
+      "missionReliability": 0.3212378399082929,
+      "missionFailureProbability": 0.6787621600917071
+    }
+  },
+  {
+    "name": "beta_gt_1_wearout",
+    "description": "Wear-out pattern with increasing failure-rate estimate.",
+    "records": [
+      {
+        "time": 760,
+        "status": "failure"
+      },
+      {
+        "time": 890,
+        "status": "failure"
+      },
+      {
+        "time": 980,
+        "status": "failure"
+      },
+      {
+        "time": 1080,
+        "status": "failure"
+      },
+      {
+        "time": 1180,
+        "status": "failure"
+      },
+      {
+        "time": 1280,
+        "status": "failure"
+      },
+      {
+        "time": 1380,
+        "status": "failure"
+      },
+      {
+        "time": 1510,
+        "status": "failure"
+      }
+    ],
+    "failureCount": 8,
+    "censoredCount": 0,
+    "missionTime": 1200,
+    "expected": {
+      "beta": 5.415759718692387,
+      "eta": 1229.281643259435,
+      "converged": true,
+      "iterations": 63,
+      "logLikelihood": -55.10417177804791,
+      "b1": 525.7283888683319,
+      "b5": 710.3442285169044,
+      "b10": 811.3205628661383,
+      "b50": 1148.8422702755659,
+      "missionReliability": 0.41577995005091317,
+      "missionFailureProbability": 0.5842200499490868
+    }
+  },
+  {
+    "name": "one_failure_mixed",
+    "description": "Only one failure with several right-censored observations.",
+    "records": [
+      {
+        "time": 180,
+        "status": "failure"
+      },
+      {
+        "time": 400,
+        "status": "censored"
+      },
+      {
+        "time": 600,
+        "status": "censored"
+      },
+      {
+        "time": 900,
+        "status": "censored"
+      },
+      {
+        "time": 1200,
+        "status": "censored"
+      }
+    ],
+    "failureCount": 1,
+    "censoredCount": 4,
+    "missionTime": 500,
+    "expected": {
+      "beta": 0.7267361975409585,
+      "eta": 5736.910619626193,
+      "converged": true,
+      "iterations": 63,
+      "logLikelihood": -9.027905284752949,
+      "b1": 10.224647322552228,
+      "b5": 96.31677864860148,
+      "b10": 259.3391448565116,
+      "b50": 3464.5873113428456,
+      "missionReliability": 0.843855308846349,
+      "missionFailureProbability": 0.15614469115365104
+    }
+  },
+  {
+    "name": "three_failures_mixed",
+    "description": "Three failures and right-censored observations.",
+    "records": [
+      {
+        "time": 250,
+        "status": "failure"
+      },
+      {
+        "time": 520,
+        "status": "failure"
+      },
+      {
+        "time": 860,
+        "status": "failure"
+      },
+      {
+        "time": 1000,
+        "status": "censored"
+      },
+      {
+        "time": 1250,
+        "status": "censored"
+      },
+      {
+        "time": 1500,
+        "status": "censored"
+      }
+    ],
+    "failureCount": 3,
+    "censoredCount": 3,
+    "missionTime": 700,
+    "expected": {
+      "beta": 1.2660251848141353,
+      "eta": 1598.6159753321267,
+      "converged": true,
+      "iterations": 63,
+      "logLikelihood": -25.38031447585414,
+      "b1": 42.2395344309656,
+      "b5": 153.05761213228095,
+      "b10": 270.2608343972982,
+      "b50": 1196.785630956992,
+      "missionReliability": 0.7036206509573203,
+      "missionFailureProbability": 0.2963793490426797
+    }
+  },
+  {
+    "name": "all_failure",
+    "description": "All observations are failures.",
+    "records": [
+      {
+        "time": 310,
+        "status": "failure"
+      },
+      {
+        "time": 450,
+        "status": "failure"
+      },
+      {
+        "time": 600,
+        "status": "failure"
+      },
+      {
+        "time": 810,
+        "status": "failure"
+      },
+      {
+        "time": 1030,
+        "status": "failure"
+      },
+      {
+        "time": 1290,
+        "status": "failure"
+      },
+      {
+        "time": 1600,
+        "status": "failure"
+      }
+    ],
+    "failureCount": 7,
+    "censoredCount": 0,
+    "missionTime": 900,
+    "expected": {
+      "beta": 2.174053225691548,
+      "eta": 986.792545161667,
+      "converged": true,
+      "iterations": 63,
+      "logLikelihood": -51.98997842869643,
+      "b1": 118.92911330867402,
+      "b5": 251.70508722819346,
+      "b10": 350.4989135825185,
+      "b50": 833.7009439099852,
+      "missionReliability": 0.44104675560421897,
+      "missionFailureProbability": 0.558953244395781
+    }
+  },
+  {
+    "name": "all_censored",
+    "description": "Invalid for Weibull MLE because no failures were observed.",
+    "records": [
+      {
+        "time": 200,
+        "status": "censored"
+      },
+      {
+        "time": 400,
+        "status": "censored"
+      },
+      {
+        "time": 800,
+        "status": "censored"
+      }
+    ],
+    "failureCount": 0,
+    "censoredCount": 3,
+    "missionTime": 500,
+    "expectError": "zero_failure"
+  },
+  {
+    "name": "identical_times",
+    "description": "Invalid for Weibull MLE because all valid times are identical.",
+    "records": [
+      {
+        "time": 100,
+        "status": "failure"
+      },
+      {
+        "time": 100,
+        "status": "failure"
+      },
+      {
+        "time": 100,
+        "status": "censored"
+      }
+    ],
+    "failureCount": 2,
+    "censoredCount": 1,
+    "missionTime": 100,
+    "expectError": "identical_times"
+  },
+  {
+    "name": "large_time_scale",
+    "description": "Large time values to verify scaling stability.",
+    "records": [
+      {
+        "time": 1000000,
+        "status": "failure"
+      },
+      {
+        "time": 2400000,
+        "status": "failure"
+      },
+      {
+        "time": 3900000,
+        "status": "failure"
+      },
+      {
+        "time": 5600000,
+        "status": "failure"
+      },
+      {
+        "time": 8100000,
+        "status": "failure"
+      },
+      {
+        "time": 12000000,
+        "status": "censored"
+      },
+      {
+        "time": 15000000,
+        "status": "censored"
+      }
+    ],
+    "failureCount": 5,
+    "censoredCount": 2,
+    "missionTime": 7000000,
+    "expected": {
+      "beta": 1.025548302001591,
+      "eta": 9580606.16060395,
+      "converged": true,
+      "iterations": 63,
+      "logLikelihood": -85.38418811006034,
+      "b1": 107979.90313289134,
+      "b5": 529161.6395275652,
+      "b10": 1067622.6369558128,
+      "b50": 6701681.44338751,
+      "missionReliability": 0.4844175926232059,
+      "missionFailureProbability": 0.5155824073767941
+    }
+  },
+  {
+    "name": "small_time_scale",
+    "description": "Small positive time values to verify scaling stability.",
+    "records": [
+      {
+        "time": 0.0012,
+        "status": "failure"
+      },
+      {
+        "time": 0.0021,
+        "status": "failure"
+      },
+      {
+        "time": 0.0034,
+        "status": "failure"
+      },
+      {
+        "time": 0.0051,
+        "status": "failure"
+      },
+      {
+        "time": 0.0076,
+        "status": "failure"
+      },
+      {
+        "time": 0.0094,
+        "status": "failure"
+      },
+      {
+        "time": 0.0118,
+        "status": "censored"
+      },
+      {
+        "time": 0.0145,
+        "status": "censored"
+      }
+    ],
+    "failureCount": 6,
+    "censoredCount": 2,
+    "missionTime": 0.004,
+    "expected": {
+      "beta": 1.160175653273421,
+      "eta": 0.009134150768008723,
+      "converged": true,
+      "iterations": 63,
+      "logLikelihood": 22.228762737515247,
+      "b1": 0.00017324902713014855,
+      "b5": 0.0007060245580968937,
+      "b10": 0.0013130361183345727,
+      "b50": 0.0066599277993725035,
+      "missionReliability": 0.6813600459036594,
+      "missionFailureProbability": 0.3186399540963406
+    }
+  },
+  {
+    "name": "invalid_time",
+    "description": "Parser/validation fixture with invalid time values.",
+    "expectError": "invalid_time",
+    "rawRows": [
+      {
+        "Sample ID": "S001",
+        "Time": "10",
+        "Status": "Failure"
+      },
+      {
+        "Sample ID": "S002",
+        "Time": "NaN",
+        "Status": "Censored"
+      },
+      {
+        "Sample ID": "S003",
+        "Time": "-5",
+        "Status": "Failure"
+      }
+    ]
+  },
+  {
+    "name": "invalid_status",
+    "description": "Parser/validation fixture with invalid status values.",
+    "expectError": "invalid_status",
+    "rawRows": [
+      {
+        "Sample ID": "S001",
+        "Time": "10",
+        "Status": "Failure"
+      },
+      {
+        "Sample ID": "S002",
+        "Time": "20",
+        "Status": "Maybe"
+      }
+    ]
+  },
+  {
+    "name": "larger_sample_mixed",
+    "description": "Larger mixed sample for regression coverage.",
+    "records": [
+      {
+        "time": 180,
+        "status": "failure"
+      },
+      {
+        "time": 240,
+        "status": "failure"
+      },
+      {
+        "time": 310,
+        "status": "failure"
+      },
+      {
+        "time": 420,
+        "status": "failure"
+      },
+      {
+        "time": 560,
+        "status": "failure"
+      },
+      {
+        "time": 690,
+        "status": "failure"
+      },
+      {
+        "time": 830,
+        "status": "failure"
+      },
+      {
+        "time": 960,
+        "status": "failure"
+      },
+      {
+        "time": 1120,
+        "status": "failure"
+      },
+      {
+        "time": 1300,
+        "status": "failure"
+      },
+      {
+        "time": 1500,
+        "status": "failure"
+      },
+      {
+        "time": 1700,
+        "status": "failure"
+      },
+      {
+        "time": 1900,
+        "status": "censored"
+      },
+      {
+        "time": 2050,
+        "status": "censored"
+      },
+      {
+        "time": 2200,
+        "status": "censored"
+      },
+      {
+        "time": 2400,
+        "status": "censored"
+      },
+      {
+        "time": 2600,
+        "status": "censored"
+      },
+      {
+        "time": 2800,
+        "status": "censored"
+      },
+      {
+        "time": 3000,
+        "status": "censored"
+      },
+      {
+        "time": 3200,
+        "status": "censored"
+      }
+    ],
+    "failureCount": 12,
+    "censoredCount": 8,
+    "missionTime": 1000,
+    "expected": {
+      "beta": 0.9661465614192849,
+      "eta": 2522.6069500484177,
+      "converged": true,
+      "iterations": 63,
+      "logLikelihood": -105.86310940587937,
+      "b1": 21.578798858120727,
+      "b5": 116.60338390884276,
+      "b10": 245.63058888333495,
+      "b50": 1726.2259009187017,
+      "missionReliability": 0.6642947785382733,
+      "missionFailureProbability": 0.33570522146172666
+    }
+  }
+]

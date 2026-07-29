@@ -1,0 +1,10 @@
+[
+  { "id": "binomial_zero_failure_sample_size", "method": "sample", "workflow": "plan", "targetReliability": 0.9, "confidenceLevel": 0.9, "allowableFailures": 0 },
+  { "id": "binomial_allowable_failure_1", "method": "sample", "workflow": "plan", "targetReliability": 0.9, "confidenceLevel": 0.9, "allowableFailures": 1 },
+  { "id": "binomial_lower_bound", "method": "sample", "workflow": "evaluate", "unitsTested": 22, "observedFailures": 0, "targetReliability": 0.9, "confidenceLevel": 0.9 },
+  { "id": "binomial_achieved_confidence", "method": "sample", "workflow": "evaluate", "unitsTested": 22, "observedFailures": 0, "targetReliability": 0.9, "confidenceLevel": 0.9 },
+  { "id": "exponential_zero_failure_time", "method": "time", "workflow": "plan", "targetMTBF": 1000, "confidenceLevel": 0.9, "allowableFailures": 0 },
+  { "id": "exponential_one_failure_time", "method": "time", "workflow": "plan", "targetMTBF": 1000, "confidenceLevel": 0.9, "allowableFailures": 1 },
+  { "id": "exponential_mtbf_lower_bound", "method": "time", "workflow": "evaluate", "totalTestTime": 2302.585092994046, "observedFailures": 0, "targetMTBF": 1000, "confidenceLevel": 0.9 },
+  { "id": "exponential_achieved_confidence", "method": "time", "workflow": "evaluate", "totalTestTime": 2302.585092994046, "observedFailures": 0, "targetMTBF": 1000, "confidenceLevel": 0.9 }
+]

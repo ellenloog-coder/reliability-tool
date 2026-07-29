@@ -1,0 +1,16 @@
+Sample ID,Time,Status,Failure Mode,Test Condition
+S001,320,Failure,Seal crack,85C life test
+S002,540,Failure,Seal crack,85C life test
+S003,760,Censored,,85C life test
+S004,810,Failure,Capacity loss,85C life test
+S005,1000,Censored,,85C life test
+S006,1140,Failure,Connector fatigue,85C life test
+S007,1200,Censored,,85C life test
+S008,1275,Failure,Capacity loss,85C life test
+S009,1400,Censored,,85C life test
+S010,1500,Censored,,85C life test
+S011,1660,Failure,Capacity loss,85C life test
+S012,1800,Censored,,85C life test
+S013,1960,Failure,Seal crack,85C life test
+S014,2100,Censored,,85C life test
+S015,2250,Censored,,85C life test

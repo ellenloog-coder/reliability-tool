@@ -1,0 +1,3 @@
+Sample ID,Time,Status,Failure Mode,Test Condition
+S001,100,Failure,,
+S002,200,Censored,,

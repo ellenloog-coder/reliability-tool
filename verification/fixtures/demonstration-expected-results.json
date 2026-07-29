@@ -1,0 +1,1214 @@
+[
+  {
+    "fixtureId": "sample_plan_r90_cl90_c0",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "requiredSampleSize": 22,
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0,
+      "achievedConfidenceAtRequiredN": 0.9015229097816388,
+      "achievedConfidenceAtPreviousN": 0.8905810108684876,
+      "minimalityVerified": true
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_plan_r90_cl95_c0",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "requiredSampleSize": 29,
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.95,
+      "allowableFailures": 0,
+      "achievedConfidenceAtRequiredN": 0.9528987130275375,
+      "achievedConfidenceAtPreviousN": 0.9476652366972639,
+      "minimalityVerified": true
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_plan_r95_cl90_c0",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "requiredSampleSize": 45,
+      "targetReliability": 0.95,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0,
+      "achievedConfidenceAtRequiredN": 0.9005597430129078,
+      "achievedConfidenceAtPreviousN": 0.895326045276745,
+      "minimalityVerified": true
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_plan_r95_cl95_c0",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "requiredSampleSize": 59,
+      "targetReliability": 0.95,
+      "confidenceLevel": 0.95,
+      "allowableFailures": 0,
+      "achievedConfidenceAtRequiredN": 0.9515054747505769,
+      "achievedConfidenceAtPreviousN": 0.9489531313163967,
+      "minimalityVerified": true
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_plan_r99_cl90_c0",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "requiredSampleSize": 230,
+      "targetReliability": 0.99,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0,
+      "achievedConfidenceAtRequiredN": 0.9008951844811254,
+      "achievedConfidenceAtPreviousN": 0.8998941257385105,
+      "minimalityVerified": true
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_plan_r99_cl95_c0",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "requiredSampleSize": 299,
+      "targetReliability": 0.99,
+      "confidenceLevel": 0.95,
+      "allowableFailures": 0,
+      "achievedConfidenceAtRequiredN": 0.9504637433623376,
+      "achievedConfidenceAtPreviousN": 0.9499633771336744,
+      "minimalityVerified": true
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_plan_r90_cl90_c1",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "requiredSampleSize": 38,
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 1,
+      "achievedConfidenceAtRequiredN": 0.9047048699249073,
+      "achievedConfidenceAtPreviousN": 0.8963693620932798,
+      "minimalityVerified": true
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_plan_r90_cl90_c2",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "requiredSampleSize": 52,
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 2,
+      "achievedConfidenceAtRequiredN": 0.9033667148627479,
+      "achievedConfidenceAtPreviousN": 0.8960655333190443,
+      "minimalityVerified": true
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_plan_r95_cl95_c1",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "requiredSampleSize": 93,
+      "targetReliability": 0.95,
+      "confidenceLevel": 0.95,
+      "allowableFailures": 1,
+      "achievedConfidenceAtRequiredN": 0.9500242047573836,
+      "achievedConfidenceAtPreviousN": 0.9478635970683231,
+      "minimalityVerified": true
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_plan_r90_cl99_c0",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "requiredSampleSize": 44,
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.99,
+      "allowableFailures": 0,
+      "achievedConfidenceAtRequiredN": 0.9903022627021247,
+      "achievedConfidenceAtPreviousN": 0.9892247363356942,
+      "minimalityVerified": true
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_plan_r90_cl80_c0",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "requiredSampleSize": 16,
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.8,
+      "allowableFailures": 0,
+      "achievedConfidenceAtRequiredN": 0.8146979811148158,
+      "achievedConfidenceAtPreviousN": 0.794108867905351,
+      "minimalityVerified": true
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_plan_r999_cl90_c0",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "requiredSampleSize": 2302,
+      "targetReliability": 0.999,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0,
+      "achievedConfidenceAtRequiredN": 0.9000566514385345,
+      "achievedConfidenceAtPreviousN": 0.8999566080465811,
+      "minimalityVerified": true
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_plan_r70_cl90_c0",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "requiredSampleSize": 7,
+      "targetReliability": 0.7,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0,
+      "achievedConfidenceAtRequiredN": 0.9176457,
+      "achievedConfidenceAtPreviousN": 0.8823510000000001,
+      "minimalityVerified": true
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_plan_r90_cl90_c5",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "requiredSampleSize": 91,
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 5,
+      "achievedConfidenceAtRequiredN": 0.902424110951453,
+      "achievedConfidenceAtPreviousN": 0.8967543473910252,
+      "minimalityVerified": true
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_plan_max_guard",
+    "expectedStatus": "error",
+    "referenceMethod": "python-standard-library",
+    "status": "error",
+    "outputs": {},
+    "validationErrors": [
+      "Unable to find a sample size within the current maximum limit."
+    ]
+  },
+  {
+    "fixtureId": "sample_plan_invalid_reliability",
+    "expectedStatus": "error",
+    "referenceMethod": "python-standard-library",
+    "status": "error",
+    "outputs": {},
+    "validationErrors": [
+      "Target Reliability must be greater than 0 and less than 1."
+    ]
+  },
+  {
+    "fixtureId": "sample_plan_invalid_confidence",
+    "expectedStatus": "error",
+    "referenceMethod": "python-standard-library",
+    "status": "error",
+    "outputs": {},
+    "validationErrors": [
+      "Confidence Level must be greater than 0 and less than 1."
+    ]
+  },
+  {
+    "fixtureId": "sample_plan_invalid_allowable_failures",
+    "expectedStatus": "error",
+    "referenceMethod": "python-standard-library",
+    "status": "error",
+    "outputs": {},
+    "validationErrors": [
+      "Allowable Failures must be a non-negative integer."
+    ]
+  },
+  {
+    "fixtureId": "sample_eval_n22_d0",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "unitsTested": 22,
+      "observedFailures": 0,
+      "observedSuccesses": 22,
+      "observedPassRate": 1.0,
+      "reliabilityLowerBound": 0.9006280202112862,
+      "targetReliability": 0.9,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.9015229097816388,
+      "demonstrated": true,
+      "evidenceGap": {
+        "additionalUnitsRequired": 0,
+        "requiredTotalUnits": 22
+      }
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_eval_n29_d0",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "unitsTested": 29,
+      "observedFailures": 0,
+      "observedSuccesses": 29,
+      "observedPassRate": 1.0,
+      "reliabilityLowerBound": 0.9018553723226432,
+      "targetReliability": 0.9,
+      "requiredConfidence": 0.95,
+      "achievedConfidenceAtTarget": 0.9528987130275375,
+      "demonstrated": true,
+      "evidenceGap": {
+        "additionalUnitsRequired": 0,
+        "requiredTotalUnits": 29
+      }
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_eval_n100_d0",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "unitsTested": 100,
+      "observedFailures": 0,
+      "observedSuccesses": 100,
+      "observedPassRate": 1.0,
+      "reliabilityLowerBound": 0.9772372209558,
+      "targetReliability": 0.95,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.994079470779666,
+      "demonstrated": true,
+      "evidenceGap": {
+        "additionalUnitsRequired": 0,
+        "requiredTotalUnits": 100
+      }
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_eval_n100_d1",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "unitsTested": 100,
+      "observedFailures": 1,
+      "observedSuccesses": 99,
+      "observedPassRate": 0.99,
+      "reliabilityLowerBound": 0.9616605025045999,
+      "targetReliability": 0.95,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.9629187906726449,
+      "demonstrated": true,
+      "evidenceGap": {
+        "additionalUnitsRequired": 0,
+        "requiredTotalUnits": 100
+      }
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_eval_n100_d5",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "unitsTested": 100,
+      "observedFailures": 5,
+      "observedSuccesses": 95,
+      "observedPassRate": 0.95,
+      "reliabilityLowerBound": 0.9092285303859171,
+      "targetReliability": 0.9,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.9424231135129661,
+      "demonstrated": true,
+      "evidenceGap": {
+        "additionalUnitsRequired": 0,
+        "requiredTotalUnits": 100
+      }
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_eval_all_failed",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "unitsTested": 10,
+      "observedFailures": 10,
+      "observedSuccesses": 0,
+      "observedPassRate": 0.0,
+      "reliabilityLowerBound": 0.0,
+      "targetReliability": 0.9,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.0,
+      "demonstrated": false,
+      "evidenceGap": {
+        "additionalUnitsRequired": 142,
+        "requiredTotalUnits": 152
+      }
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_eval_n1_d0",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "unitsTested": 1,
+      "observedFailures": 0,
+      "observedSuccesses": 1,
+      "observedPassRate": 1.0,
+      "reliabilityLowerBound": 0.09999999999990905,
+      "targetReliability": 0.1,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.9,
+      "demonstrated": true,
+      "evidenceGap": {
+        "additionalUnitsRequired": 0,
+        "requiredTotalUnits": 1
+      }
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_eval_target_equals_lower",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "unitsTested": 22,
+      "observedFailures": 0,
+      "observedSuccesses": 22,
+      "observedPassRate": 1.0,
+      "reliabilityLowerBound": 0.9006280202112862,
+      "targetReliability": 0.9006280202112785,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.9,
+      "demonstrated": true,
+      "evidenceGap": {
+        "additionalUnitsRequired": 0,
+        "requiredTotalUnits": 22
+      }
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_eval_target_below_lower",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "unitsTested": 22,
+      "observedFailures": 0,
+      "observedSuccesses": 22,
+      "observedPassRate": 1.0,
+      "reliabilityLowerBound": 0.9006280202112862,
+      "targetReliability": 0.899,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.9039022502729219,
+      "demonstrated": true,
+      "evidenceGap": {
+        "additionalUnitsRequired": 0,
+        "requiredTotalUnits": 22
+      }
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_eval_target_above_lower",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "unitsTested": 22,
+      "observedFailures": 0,
+      "observedSuccesses": 22,
+      "observedPassRate": 1.0,
+      "reliabilityLowerBound": 0.9006280202112862,
+      "targetReliability": 0.902,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.8965944554731923,
+      "demonstrated": false,
+      "evidenceGap": {
+        "additionalUnitsRequired": 1,
+        "requiredTotalUnits": 23
+      }
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_eval_gap_zero",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "unitsTested": 30,
+      "observedFailures": 0,
+      "observedSuccesses": 30,
+      "observedPassRate": 1.0,
+      "reliabilityLowerBound": 0.926118728128813,
+      "targetReliability": 0.9,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.9576088417247838,
+      "demonstrated": true,
+      "evidenceGap": {
+        "additionalUnitsRequired": 0,
+        "requiredTotalUnits": 30
+      }
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_eval_gap_positive",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "unitsTested": 10,
+      "observedFailures": 0,
+      "observedSuccesses": 10,
+      "observedPassRate": 1.0,
+      "reliabilityLowerBound": 0.7943282347242757,
+      "targetReliability": 0.9,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.6513215599,
+      "demonstrated": false,
+      "evidenceGap": {
+        "additionalUnitsRequired": 12,
+        "requiredTotalUnits": 22
+      }
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "sample_eval_failures_gt_units",
+    "expectedStatus": "error",
+    "referenceMethod": "python-standard-library",
+    "status": "error",
+    "outputs": {},
+    "validationErrors": [
+      "Observed Failures cannot be greater than Units Tested."
+    ]
+  },
+  {
+    "fixtureId": "sample_eval_units_zero",
+    "expectedStatus": "error",
+    "referenceMethod": "python-standard-library",
+    "status": "error",
+    "outputs": {},
+    "validationErrors": [
+      "Units Tested must be a positive integer."
+    ]
+  },
+  {
+    "fixtureId": "sample_eval_failures_decimal",
+    "expectedStatus": "error",
+    "referenceMethod": "python-standard-library",
+    "status": "error",
+    "outputs": {},
+    "validationErrors": [
+      "Observed Failures must be a non-negative integer."
+    ]
+  },
+  {
+    "fixtureId": "time_plan_mtbf_cl90_c0",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "mtbf",
+      "targetReliability": null,
+      "missionTime": null,
+      "targetMTBF": 1000,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0,
+      "requiredExposureFactor": 2.302585092994529,
+      "requiredTotalTestTime": 2302.585092994529,
+      "estimatedTimePerUnit": null,
+      "achievedConfidence": 0.9000000000000483,
+      "chiSquareEquivalentQuantile": 4.605170185989058
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_plan_mtbf_cl95_c0",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "mtbf",
+      "targetReliability": null,
+      "missionTime": null,
+      "targetMTBF": 1000,
+      "confidenceLevel": 0.95,
+      "allowableFailures": 0,
+      "requiredExposureFactor": 2.9957322735532124,
+      "requiredTotalTestTime": 2995.7322735532125,
+      "estimatedTimePerUnit": null,
+      "achievedConfidence": 0.9499999999999611,
+      "chiSquareEquivalentQuantile": 5.991464547106425
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_plan_mtbf_cl90_c1",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "mtbf",
+      "targetReliability": null,
+      "missionTime": null,
+      "targetMTBF": 1000,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 1,
+      "requiredExposureFactor": 3.889720169867605,
+      "requiredTotalTestTime": 3889.720169867605,
+      "estimatedTimePerUnit": null,
+      "achievedConfidence": 0.900000000000014,
+      "chiSquareEquivalentQuantile": 7.77944033973521
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_plan_mtbf_cl90_c2",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "mtbf",
+      "targetReliability": null,
+      "missionTime": null,
+      "targetMTBF": 1000,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 2,
+      "requiredExposureFactor": 5.3223203378339425,
+      "requiredTotalTestTime": 5322.320337833942,
+      "estimatedTimePerUnit": null,
+      "achievedConfidence": 0.8999999999999815,
+      "chiSquareEquivalentQuantile": 10.644640675667885
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_plan_reliability_mission",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "reliability",
+      "targetReliability": 0.9,
+      "missionTime": 100,
+      "targetMTBF": 949.1221581029905,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0,
+      "requiredExposureFactor": 2.302585092994529,
+      "requiredTotalTestTime": 2185.4345326787425,
+      "estimatedTimePerUnit": null,
+      "achievedConfidence": 0.9000000000000483,
+      "chiSquareEquivalentQuantile": 4.605170185989058
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_plan_r90_mission",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "reliability",
+      "targetReliability": 0.9,
+      "missionTime": 500,
+      "targetMTBF": 4745.610790514952,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0,
+      "requiredExposureFactor": 2.302585092994529,
+      "requiredTotalTestTime": 10927.17266339371,
+      "estimatedTimePerUnit": null,
+      "achievedConfidence": 0.9000000000000483,
+      "chiSquareEquivalentQuantile": 4.605170185989058
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_plan_r95_mission",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "reliability",
+      "targetReliability": 0.95,
+      "missionTime": 500,
+      "targetMTBF": 9747.862873111837,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0,
+      "requiredExposureFactor": 2.302585092994529,
+      "requiredTotalTestTime": 22445.283740182138,
+      "estimatedTimePerUnit": null,
+      "achievedConfidence": 0.9000000000000483,
+      "chiSquareEquivalentQuantile": 4.605170185989058
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_plan_units_10",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "mtbf",
+      "targetReliability": null,
+      "missionTime": null,
+      "targetMTBF": 1000,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0,
+      "requiredExposureFactor": 2.302585092994529,
+      "requiredTotalTestTime": 2302.585092994529,
+      "estimatedTimePerUnit": 230.2585092994529,
+      "achievedConfidence": 0.9000000000000483,
+      "chiSquareEquivalentQuantile": 4.605170185989058
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_plan_units_1",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "mtbf",
+      "targetReliability": null,
+      "missionTime": null,
+      "targetMTBF": 1000,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0,
+      "requiredExposureFactor": 2.302585092994529,
+      "requiredTotalTestTime": 2302.585092994529,
+      "estimatedTimePerUnit": 2302.585092994529,
+      "achievedConfidence": 0.9000000000000483,
+      "chiSquareEquivalentQuantile": 4.605170185989058
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_plan_units_100",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "mtbf",
+      "targetReliability": null,
+      "missionTime": null,
+      "targetMTBF": 1000,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0,
+      "requiredExposureFactor": 2.302585092994529,
+      "requiredTotalTestTime": 2302.585092994529,
+      "estimatedTimePerUnit": 23.025850929945292,
+      "achievedConfidence": 0.9000000000000483,
+      "chiSquareEquivalentQuantile": 4.605170185989058
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_plan_very_large_mtbf",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "mtbf",
+      "targetReliability": null,
+      "missionTime": null,
+      "targetMTBF": 1000000000,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0,
+      "requiredExposureFactor": 2.302585092994529,
+      "requiredTotalTestTime": 2302585092.9945292,
+      "estimatedTimePerUnit": null,
+      "achievedConfidence": 0.9000000000000483,
+      "chiSquareEquivalentQuantile": 4.605170185989058
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_plan_very_small_mtbf",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "mtbf",
+      "targetReliability": null,
+      "missionTime": null,
+      "targetMTBF": 0.001,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0,
+      "requiredExposureFactor": 2.302585092994529,
+      "requiredTotalTestTime": 0.002302585092994529,
+      "estimatedTimePerUnit": null,
+      "achievedConfidence": 0.9000000000000483,
+      "chiSquareEquivalentQuantile": 4.605170185989058
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_plan_invalid_mtbf",
+    "expectedStatus": "error",
+    "referenceMethod": "python-standard-library",
+    "status": "error",
+    "outputs": {},
+    "validationErrors": [
+      "Target MTBF must be a finite positive number."
+    ]
+  },
+  {
+    "fixtureId": "time_plan_invalid_mission",
+    "expectedStatus": "error",
+    "referenceMethod": "python-standard-library",
+    "status": "error",
+    "outputs": {},
+    "validationErrors": [
+      "Mission Time must be a finite positive number."
+    ]
+  },
+  {
+    "fixtureId": "time_plan_invalid_allowable",
+    "expectedStatus": "error",
+    "referenceMethod": "python-standard-library",
+    "status": "error",
+    "outputs": {},
+    "validationErrors": [
+      "Allowable Failures must be a non-negative integer."
+    ]
+  },
+  {
+    "fixtureId": "time_eval_zero_failure",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "mtbf",
+      "targetReliability": null,
+      "missionTime": null,
+      "targetMTBF": 1000,
+      "totalTestTime": 2302.585092994046,
+      "observedFailures": 0,
+      "mtbfPointEstimate": null,
+      "mtbfLowerBound": 999.9999999997902,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.9,
+      "reliabilityLowerBoundAtMissionTime": null,
+      "demonstrated": true,
+      "pointEstimateNotEstimable": true,
+      "evidenceGap": {
+        "additionalTotalTestTimeRequired": 4.829416866414249e-10,
+        "requiredTotalTestTime": 2302.585092994529
+      },
+      "requiredExposureFactor": 2.302585092994529,
+      "chiSquareEquivalentQuantile": 4.605170185989058
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_eval_one_failure",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "mtbf",
+      "targetReliability": null,
+      "missionTime": null,
+      "targetMTBF": 1000,
+      "totalTestTime": 4000,
+      "observedFailures": 1,
+      "mtbfPointEstimate": 4000.0,
+      "mtbfLowerBound": 1028.3516102229403,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.9084218055563291,
+      "reliabilityLowerBoundAtMissionTime": null,
+      "demonstrated": true,
+      "pointEstimateNotEstimable": false,
+      "evidenceGap": {
+        "additionalTotalTestTimeRequired": 0.0,
+        "requiredTotalTestTime": 3889.720169867605
+      },
+      "requiredExposureFactor": 3.889720169867605,
+      "chiSquareEquivalentQuantile": 7.77944033973521
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_eval_three_failures",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "mtbf",
+      "targetReliability": null,
+      "missionTime": null,
+      "targetMTBF": 1000,
+      "totalTestTime": 8000,
+      "observedFailures": 3,
+      "mtbfPointEstimate": 2666.6666666666665,
+      "mtbfLowerBound": 1197.4644167108856,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.957619888008316,
+      "reliabilityLowerBoundAtMissionTime": null,
+      "demonstrated": true,
+      "pointEstimateNotEstimable": false,
+      "evidenceGap": {
+        "additionalTotalTestTimeRequired": 0.0,
+        "requiredTotalTestTime": 6680.783068255055
+      },
+      "requiredExposureFactor": 6.680783068255055,
+      "chiSquareEquivalentQuantile": 13.36156613651011
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_eval_many_failures",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "mtbf",
+      "targetReliability": null,
+      "missionTime": null,
+      "targetMTBF": 1000,
+      "totalTestTime": 50000,
+      "observedFailures": 20,
+      "mtbfPointEstimate": 2500.0,
+      "mtbfLowerBound": 1848.7636479290006,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.9999987648127782,
+      "reliabilityLowerBoundAtMissionTime": null,
+      "demonstrated": true,
+      "pointEstimateNotEstimable": false,
+      "evidenceGap": {
+        "additionalTotalTestTimeRequired": 0.0,
+        "requiredTotalTestTime": 27045.101225356953
+      },
+      "requiredExposureFactor": 27.04510122535695,
+      "chiSquareEquivalentQuantile": 54.0902024507139
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_eval_target_demonstrated",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "mtbf",
+      "targetReliability": null,
+      "missionTime": null,
+      "targetMTBF": 1000,
+      "totalTestTime": 3000,
+      "observedFailures": 0,
+      "mtbfPointEstimate": null,
+      "mtbfLowerBound": 1302.883445709482,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.950212931632136,
+      "reliabilityLowerBoundAtMissionTime": null,
+      "demonstrated": true,
+      "pointEstimateNotEstimable": true,
+      "evidenceGap": {
+        "additionalTotalTestTimeRequired": 0.0,
+        "requiredTotalTestTime": 2302.585092994529
+      },
+      "requiredExposureFactor": 2.302585092994529,
+      "chiSquareEquivalentQuantile": 4.605170185989058
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_eval_target_not_demonstrated",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "mtbf",
+      "targetReliability": null,
+      "missionTime": null,
+      "targetMTBF": 1000,
+      "totalTestTime": 1000,
+      "observedFailures": 0,
+      "mtbfPointEstimate": null,
+      "mtbfLowerBound": 434.29448190316066,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.6321205588285577,
+      "reliabilityLowerBoundAtMissionTime": null,
+      "demonstrated": false,
+      "pointEstimateNotEstimable": true,
+      "evidenceGap": {
+        "additionalTotalTestTimeRequired": 1302.585092994529,
+        "requiredTotalTestTime": 2302.585092994529
+      },
+      "requiredExposureFactor": 2.302585092994529,
+      "chiSquareEquivalentQuantile": 4.605170185989058
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_eval_target_equals_lower",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "mtbf",
+      "targetReliability": null,
+      "missionTime": null,
+      "targetMTBF": 1000,
+      "totalTestTime": 2302.585092994046,
+      "observedFailures": 0,
+      "mtbfPointEstimate": null,
+      "mtbfLowerBound": 999.9999999997902,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.9,
+      "reliabilityLowerBoundAtMissionTime": null,
+      "demonstrated": true,
+      "pointEstimateNotEstimable": true,
+      "evidenceGap": {
+        "additionalTotalTestTimeRequired": 4.829416866414249e-10,
+        "requiredTotalTestTime": 2302.585092994529
+      },
+      "requiredExposureFactor": 2.302585092994529,
+      "chiSquareEquivalentQuantile": 4.605170185989058
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_eval_reliability_mission",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "reliability",
+      "targetReliability": 0.9,
+      "missionTime": 100,
+      "targetMTBF": 949.1221581029905,
+      "totalTestTime": 2302.585092994046,
+      "observedFailures": 0,
+      "mtbfPointEstimate": null,
+      "mtbfLowerBound": 999.9999999997902,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.9116116873074062,
+      "reliabilityLowerBoundAtMissionTime": 0.9048374180359406,
+      "demonstrated": true,
+      "pointEstimateNotEstimable": true,
+      "evidenceGap": {
+        "additionalTotalTestTimeRequired": 0.0,
+        "requiredTotalTestTime": 2185.4345326787425
+      },
+      "requiredExposureFactor": 2.302585092994529,
+      "chiSquareEquivalentQuantile": 4.605170185989058
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_eval_zero_point_not_estimable",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "mtbf",
+      "targetReliability": null,
+      "missionTime": null,
+      "targetMTBF": 1000,
+      "totalTestTime": 2302.585092994046,
+      "observedFailures": 0,
+      "mtbfPointEstimate": null,
+      "mtbfLowerBound": 999.9999999997902,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.9,
+      "reliabilityLowerBoundAtMissionTime": null,
+      "demonstrated": true,
+      "pointEstimateNotEstimable": true,
+      "evidenceGap": {
+        "additionalTotalTestTimeRequired": 4.829416866414249e-10,
+        "requiredTotalTestTime": 2302.585092994529
+      },
+      "requiredExposureFactor": 2.302585092994529,
+      "chiSquareEquivalentQuantile": 4.605170185989058
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_eval_gap_zero",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "mtbf",
+      "targetReliability": null,
+      "missionTime": null,
+      "targetMTBF": 1000,
+      "totalTestTime": 3000,
+      "observedFailures": 0,
+      "mtbfPointEstimate": null,
+      "mtbfLowerBound": 1302.883445709482,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.950212931632136,
+      "reliabilityLowerBoundAtMissionTime": null,
+      "demonstrated": true,
+      "pointEstimateNotEstimable": true,
+      "evidenceGap": {
+        "additionalTotalTestTimeRequired": 0.0,
+        "requiredTotalTestTime": 2302.585092994529
+      },
+      "requiredExposureFactor": 2.302585092994529,
+      "chiSquareEquivalentQuantile": 4.605170185989058
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_eval_gap_positive",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "mtbf",
+      "targetReliability": null,
+      "missionTime": null,
+      "targetMTBF": 1000,
+      "totalTestTime": 1000,
+      "observedFailures": 0,
+      "mtbfPointEstimate": null,
+      "mtbfLowerBound": 434.29448190316066,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.6321205588285577,
+      "reliabilityLowerBoundAtMissionTime": null,
+      "demonstrated": false,
+      "pointEstimateNotEstimable": true,
+      "evidenceGap": {
+        "additionalTotalTestTimeRequired": 1302.585092994529,
+        "requiredTotalTestTime": 2302.585092994529
+      },
+      "requiredExposureFactor": 2.302585092994529,
+      "chiSquareEquivalentQuantile": 4.605170185989058
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_eval_very_large_exposure",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "mtbf",
+      "targetReliability": null,
+      "missionTime": null,
+      "targetMTBF": 1000000,
+      "totalTestTime": 5000000000,
+      "observedFailures": 3,
+      "mtbfPointEstimate": 1666666666.6666667,
+      "mtbfLowerBound": 748415260.4443035,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 1.0,
+      "reliabilityLowerBoundAtMissionTime": null,
+      "demonstrated": true,
+      "pointEstimateNotEstimable": false,
+      "evidenceGap": {
+        "additionalTotalTestTimeRequired": 0.0,
+        "requiredTotalTestTime": 6680783.068255055
+      },
+      "requiredExposureFactor": 6.680783068255055,
+      "chiSquareEquivalentQuantile": 13.36156613651011
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_eval_very_small_exposure",
+    "expectedStatus": "ok",
+    "referenceMethod": "python-standard-library",
+    "status": "ok",
+    "outputs": {
+      "targetDefinition": "mtbf",
+      "targetReliability": null,
+      "missionTime": null,
+      "targetMTBF": 0.001,
+      "totalTestTime": 0.01,
+      "observedFailures": 0,
+      "mtbfPointEstimate": null,
+      "mtbfLowerBound": 0.004342944819031607,
+      "requiredConfidence": 0.9,
+      "achievedConfidenceAtTarget": 0.9999546000702375,
+      "reliabilityLowerBoundAtMissionTime": null,
+      "demonstrated": true,
+      "pointEstimateNotEstimable": true,
+      "evidenceGap": {
+        "additionalTotalTestTimeRequired": 0.0,
+        "requiredTotalTestTime": 0.002302585092994529
+      },
+      "requiredExposureFactor": 2.302585092994529,
+      "chiSquareEquivalentQuantile": 4.605170185989058
+    },
+    "validationErrors": []
+  },
+  {
+    "fixtureId": "time_eval_invalid_total_exposure",
+    "expectedStatus": "error",
+    "referenceMethod": "python-standard-library",
+    "status": "error",
+    "outputs": {},
+    "validationErrors": [
+      "Total Test Time must be a finite positive number."
+    ]
+  },
+  {
+    "fixtureId": "time_eval_invalid_observed_failures",
+    "expectedStatus": "error",
+    "referenceMethod": "python-standard-library",
+    "status": "error",
+    "outputs": {},
+    "validationErrors": [
+      "Observed Failures must be a non-negative integer."
+    ]
+  }
+]

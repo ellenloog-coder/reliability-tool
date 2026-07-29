@@ -1,0 +1,891 @@
+[
+  {
+    "fixtureId": "sample_plan_r90_cl90_c0",
+    "method": "sample",
+    "workflow": "plan",
+    "inputs": {
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0,
+      "missionTime": 100
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_plan_r90_cl95_c0",
+    "method": "sample",
+    "workflow": "plan",
+    "inputs": {
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.95,
+      "allowableFailures": 0
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_plan_r95_cl90_c0",
+    "method": "sample",
+    "workflow": "plan",
+    "inputs": {
+      "targetReliability": 0.95,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_plan_r95_cl95_c0",
+    "method": "sample",
+    "workflow": "plan",
+    "inputs": {
+      "targetReliability": 0.95,
+      "confidenceLevel": 0.95,
+      "allowableFailures": 0
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_plan_r99_cl90_c0",
+    "method": "sample",
+    "workflow": "plan",
+    "inputs": {
+      "targetReliability": 0.99,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_plan_r99_cl95_c0",
+    "method": "sample",
+    "workflow": "plan",
+    "inputs": {
+      "targetReliability": 0.99,
+      "confidenceLevel": 0.95,
+      "allowableFailures": 0
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_plan_r90_cl90_c1",
+    "method": "sample",
+    "workflow": "plan",
+    "inputs": {
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 1
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_plan_r90_cl90_c2",
+    "method": "sample",
+    "workflow": "plan",
+    "inputs": {
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 2
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_plan_r95_cl95_c1",
+    "method": "sample",
+    "workflow": "plan",
+    "inputs": {
+      "targetReliability": 0.95,
+      "confidenceLevel": 0.95,
+      "allowableFailures": 1
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_plan_r90_cl99_c0",
+    "method": "sample",
+    "workflow": "plan",
+    "inputs": {
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.99,
+      "allowableFailures": 0
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_plan_r90_cl80_c0",
+    "method": "sample",
+    "workflow": "plan",
+    "inputs": {
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.8,
+      "allowableFailures": 0
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_plan_r999_cl90_c0",
+    "method": "sample",
+    "workflow": "plan",
+    "inputs": {
+      "targetReliability": 0.999,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_plan_r70_cl90_c0",
+    "method": "sample",
+    "workflow": "plan",
+    "inputs": {
+      "targetReliability": 0.7,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_plan_r90_cl90_c5",
+    "method": "sample",
+    "workflow": "plan",
+    "inputs": {
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 5
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_plan_max_guard",
+    "method": "sample",
+    "workflow": "plan",
+    "inputs": {
+      "targetReliability": 0.99999,
+      "confidenceLevel": 0.999,
+      "allowableFailures": 0,
+      "maxSampleSize": 100
+    },
+    "expectedStatus": "error",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_plan_invalid_reliability",
+    "method": "sample",
+    "workflow": "plan",
+    "inputs": {
+      "targetReliability": 1.0,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0
+    },
+    "expectedStatus": "error",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_plan_invalid_confidence",
+    "method": "sample",
+    "workflow": "plan",
+    "inputs": {
+      "targetReliability": 0.9,
+      "confidenceLevel": 1.0,
+      "allowableFailures": 0
+    },
+    "expectedStatus": "error",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_plan_invalid_allowable_failures",
+    "method": "sample",
+    "workflow": "plan",
+    "inputs": {
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 1.5
+    },
+    "expectedStatus": "error",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_eval_n22_d0",
+    "method": "sample",
+    "workflow": "evaluate",
+    "inputs": {
+      "unitsTested": 22,
+      "observedFailures": 0,
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_eval_n29_d0",
+    "method": "sample",
+    "workflow": "evaluate",
+    "inputs": {
+      "unitsTested": 29,
+      "observedFailures": 0,
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.95
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_eval_n100_d0",
+    "method": "sample",
+    "workflow": "evaluate",
+    "inputs": {
+      "unitsTested": 100,
+      "observedFailures": 0,
+      "targetReliability": 0.95,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_eval_n100_d1",
+    "method": "sample",
+    "workflow": "evaluate",
+    "inputs": {
+      "unitsTested": 100,
+      "observedFailures": 1,
+      "targetReliability": 0.95,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_eval_n100_d5",
+    "method": "sample",
+    "workflow": "evaluate",
+    "inputs": {
+      "unitsTested": 100,
+      "observedFailures": 5,
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_eval_all_failed",
+    "method": "sample",
+    "workflow": "evaluate",
+    "inputs": {
+      "unitsTested": 10,
+      "observedFailures": 10,
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_eval_n1_d0",
+    "method": "sample",
+    "workflow": "evaluate",
+    "inputs": {
+      "unitsTested": 1,
+      "observedFailures": 0,
+      "targetReliability": 0.1,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_eval_target_equals_lower",
+    "method": "sample",
+    "workflow": "evaluate",
+    "inputs": {
+      "unitsTested": 22,
+      "observedFailures": 0,
+      "targetReliability": 0.9006280202112785,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_eval_target_below_lower",
+    "method": "sample",
+    "workflow": "evaluate",
+    "inputs": {
+      "unitsTested": 22,
+      "observedFailures": 0,
+      "targetReliability": 0.899,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_eval_target_above_lower",
+    "method": "sample",
+    "workflow": "evaluate",
+    "inputs": {
+      "unitsTested": 22,
+      "observedFailures": 0,
+      "targetReliability": 0.902,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_eval_gap_zero",
+    "method": "sample",
+    "workflow": "evaluate",
+    "inputs": {
+      "unitsTested": 30,
+      "observedFailures": 0,
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_eval_gap_positive",
+    "method": "sample",
+    "workflow": "evaluate",
+    "inputs": {
+      "unitsTested": 10,
+      "observedFailures": 0,
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_eval_failures_gt_units",
+    "method": "sample",
+    "workflow": "evaluate",
+    "inputs": {
+      "unitsTested": 5,
+      "observedFailures": 6,
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "error",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_eval_units_zero",
+    "method": "sample",
+    "workflow": "evaluate",
+    "inputs": {
+      "unitsTested": 0,
+      "observedFailures": 0,
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "error",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "sample_eval_failures_decimal",
+    "method": "sample",
+    "workflow": "evaluate",
+    "inputs": {
+      "unitsTested": 5,
+      "observedFailures": 1.2,
+      "targetReliability": 0.9,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "error",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_plan_mtbf_cl90_c0",
+    "method": "time",
+    "workflow": "plan",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_plan_mtbf_cl95_c0",
+    "method": "time",
+    "workflow": "plan",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000,
+      "confidenceLevel": 0.95,
+      "allowableFailures": 0
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_plan_mtbf_cl90_c1",
+    "method": "time",
+    "workflow": "plan",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 1
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_plan_mtbf_cl90_c2",
+    "method": "time",
+    "workflow": "plan",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 2
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_plan_reliability_mission",
+    "method": "time",
+    "workflow": "plan",
+    "inputs": {
+      "targetDefinition": "reliability",
+      "targetReliability": 0.9,
+      "missionTime": 100,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_plan_r90_mission",
+    "method": "time",
+    "workflow": "plan",
+    "inputs": {
+      "targetDefinition": "reliability",
+      "targetReliability": 0.9,
+      "missionTime": 500,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_plan_r95_mission",
+    "method": "time",
+    "workflow": "plan",
+    "inputs": {
+      "targetDefinition": "reliability",
+      "targetReliability": 0.95,
+      "missionTime": 500,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_plan_units_10",
+    "method": "time",
+    "workflow": "plan",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0,
+      "numberOfUnits": 10
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_plan_units_1",
+    "method": "time",
+    "workflow": "plan",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0,
+      "numberOfUnits": 1
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_plan_units_100",
+    "method": "time",
+    "workflow": "plan",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0,
+      "numberOfUnits": 100
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_plan_very_large_mtbf",
+    "method": "time",
+    "workflow": "plan",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000000000,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_plan_very_small_mtbf",
+    "method": "time",
+    "workflow": "plan",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 0.001,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_plan_invalid_mtbf",
+    "method": "time",
+    "workflow": "plan",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 0,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0
+    },
+    "expectedStatus": "error",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_plan_invalid_mission",
+    "method": "time",
+    "workflow": "plan",
+    "inputs": {
+      "targetDefinition": "reliability",
+      "targetReliability": 0.9,
+      "missionTime": 0,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 0
+    },
+    "expectedStatus": "error",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_plan_invalid_allowable",
+    "method": "time",
+    "workflow": "plan",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000,
+      "confidenceLevel": 0.9,
+      "allowableFailures": 1.2
+    },
+    "expectedStatus": "error",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_eval_zero_failure",
+    "method": "time",
+    "workflow": "evaluate",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000,
+      "totalTestTime": 2302.585092994046,
+      "observedFailures": 0,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_eval_one_failure",
+    "method": "time",
+    "workflow": "evaluate",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000,
+      "totalTestTime": 4000,
+      "observedFailures": 1,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_eval_three_failures",
+    "method": "time",
+    "workflow": "evaluate",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000,
+      "totalTestTime": 8000,
+      "observedFailures": 3,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_eval_many_failures",
+    "method": "time",
+    "workflow": "evaluate",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000,
+      "totalTestTime": 50000,
+      "observedFailures": 20,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_eval_target_demonstrated",
+    "method": "time",
+    "workflow": "evaluate",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000,
+      "totalTestTime": 3000,
+      "observedFailures": 0,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_eval_target_not_demonstrated",
+    "method": "time",
+    "workflow": "evaluate",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000,
+      "totalTestTime": 1000,
+      "observedFailures": 0,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_eval_target_equals_lower",
+    "method": "time",
+    "workflow": "evaluate",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000,
+      "totalTestTime": 2302.585092994046,
+      "observedFailures": 0,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_eval_reliability_mission",
+    "method": "time",
+    "workflow": "evaluate",
+    "inputs": {
+      "targetDefinition": "reliability",
+      "targetReliability": 0.9,
+      "missionTime": 100,
+      "totalTestTime": 2302.585092994046,
+      "observedFailures": 0,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_eval_zero_point_not_estimable",
+    "method": "time",
+    "workflow": "evaluate",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000,
+      "totalTestTime": 2302.585092994046,
+      "observedFailures": 0,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_eval_gap_zero",
+    "method": "time",
+    "workflow": "evaluate",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000,
+      "totalTestTime": 3000,
+      "observedFailures": 0,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_eval_gap_positive",
+    "method": "time",
+    "workflow": "evaluate",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000,
+      "totalTestTime": 1000,
+      "observedFailures": 0,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_eval_very_large_exposure",
+    "method": "time",
+    "workflow": "evaluate",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000000,
+      "totalTestTime": 5000000000,
+      "observedFailures": 3,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_eval_very_small_exposure",
+    "method": "time",
+    "workflow": "evaluate",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 0.001,
+      "totalTestTime": 0.01,
+      "observedFailures": 0,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "ok",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_eval_invalid_total_exposure",
+    "method": "time",
+    "workflow": "evaluate",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000,
+      "totalTestTime": 0,
+      "observedFailures": 0,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "error",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  },
+  {
+    "fixtureId": "time_eval_invalid_observed_failures",
+    "method": "time",
+    "workflow": "evaluate",
+    "inputs": {
+      "targetDefinition": "mtbf",
+      "targetMTBF": 1000,
+      "totalTestTime": 1000,
+      "observedFailures": -1,
+      "confidenceLevel": 0.9
+    },
+    "expectedStatus": "error",
+    "expectedWarnings": [],
+    "referenceMethod": "python-standard-library"
+  }
+]

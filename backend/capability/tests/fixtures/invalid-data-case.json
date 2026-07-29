@@ -1,0 +1,14 @@
+{
+  "fixture_id": "cap-invalid-001",
+  "input": {
+    "measurement_data": [],
+    "specification": {"lsl": 9.5, "usl": 10.5, "target": 10.0},
+    "unit": "mm"
+  },
+  "expected": {
+    "status": "INVALID_INPUT",
+    "validation_status": "INVALID",
+    "decision": "REVIEW",
+    "error_codes": ["EMPTY_MEASUREMENT_DATA"]
+  }
+}
