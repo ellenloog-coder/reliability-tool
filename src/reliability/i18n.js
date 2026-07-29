@@ -1,7 +1,7 @@
 export const dictionary = {
   en: {
     brand: "Reliability", navLife: "Life Data", navMtbf: "MTBF", navDemo: "Demonstration", navAlt: "ALT", navAltFull: "Accelerated Life Testing", navFaq: "FAQ",
-    available: "Available", inDevelopment: "In Development", comingSoon: "Coming Soon",
+    available: "Available", inDevelopment: "Beta", comingSoon: "Coming Soon",
     title: "Reliability Analysis Tool",
     subtitle: "A lightweight, browser-based life data analysis engine that performs Weibull/MTBF calculations locally and generates clear, engineering-focused reliability insights without storing any user data.",
     stepUpload: "Upload Data", stepUploadHint: "Excel or CSV", stepConfirm: "Confirm Data", stepConfirmHint: "Mapping and validation", stepRun: "Run Analysis", stepRunHint: "Get reliability insight",
@@ -68,7 +68,7 @@ export const dictionary = {
   },
   zh: {
     brand: "可靠性", navLife: "寿命数据", navMtbf: "MTBF", navDemo: "可靠性验证", navAlt: "加速寿命试验", navAltFull: "加速寿命试验", navFaq: "常见问题",
-    available: "可用", inDevelopment: "开发中", comingSoon: "即将推出",
+    available: "可用", inDevelopment: "测试版", comingSoon: "即将推出",
     title: "可靠性分析工具",
     subtitle: "一款轻量化、基于浏览器的寿命数据分析工具，可在本地完成 Weibull 和 MTBF 计算，并生成清晰、面向工程应用的可靠性分析结果，不存储任何用户数据。",
     stepUpload: "上传数据", stepUploadHint: "Excel 或 CSV", stepConfirm: "确认数据", stepConfirmHint: "列映射和校验", stepRun: "运行分析", stepRunHint: "生成可靠性解释",
