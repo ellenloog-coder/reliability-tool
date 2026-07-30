@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Reliability Analysis Tool</title>
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="https://ellenloog-coder.github.io/guided-8d-investigation-tool/ai-assistant.css?v=20260730-5" />
+  <link rel="stylesheet" href="https://ellenloog-coder.github.io/guided-8d-investigation-tool/ai-assistant.css?v=20260730-6" />
 </head>
 <body>
   <div class="top-nav-wrap">
@@ -162,7 +162,9 @@
       currentTool: "reliability_analysis",
       analysisButtonTarget: ".hero",
       insertButtonAfter: true,
-      language: () => document.documentElement.lang.toLowerCase().startsWith("zh") ? "zh" : "en",
+      showInlineLauncher: false,
+      autoHoverOpen: true,
+      language: () => localStorage.getItem("reliability.ui.lang") === "zh" ? "zh" : "en",
       quickQuestions: {
         zh: [
           "解释我当前的可靠性结果",
@@ -195,6 +197,6 @@
           }
     };
   </script>
-  <script src="https://ellenloog-coder.github.io/guided-8d-investigation-tool/ai-assistant.js?v=20260730-5"></script>
+  <script src="https://ellenloog-coder.github.io/guided-8d-investigation-tool/ai-assistant.js?v=20260730-6"></script>
 </body>
 </html>
