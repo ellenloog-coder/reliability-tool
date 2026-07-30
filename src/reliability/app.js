@@ -99,6 +99,73 @@ const demoState = createDemoState();
 const $ = id => document.getElementById(id);
 const ui = key => t(state.lang, key);
 
+window.getReliabilityCopilotSummary = function getReliabilityCopilotSummary() {
+  const zh = state.lang === "zh";
+  const metrics = {};
+  const add = (zhKey, enKey, value) => {
+    if (value !== null && value !== undefined && String(value).trim() && String(value).trim() !== "-") {
+      metrics[zh ? zhKey : enKey] = String(value).trim().slice(0, 160);
+    }
+  };
+  let hasResults = false;
+  let interpretation = "";
+
+  add("当前模块", "current module", state.mode);
+  if (state.mode === "life") {
+    hasResults = Boolean(state.metrics);
+    add("有效记录数", "valid record count", state.validation?.totalCount);
+    add("失效数", "failure count", state.validation?.failureCount);
+    add("删失数", "censored count", state.validation?.censoredCount);
+    add("Weibull β", "Weibull beta", state.metrics?.beta);
+    add("Weibull η", "Weibull eta", state.metrics?.eta);
+    add("B10 寿命", "B10 life", state.metrics?.b10);
+    add("任务时间", "mission time", state.metrics?.missionTime);
+    add("任务可靠度", "mission reliability", state.metrics?.missionReliability);
+    add("目标比较", "target comparison", state.metrics?.targetComparison?.status);
+    interpretation = state.metrics
+      ? `${zh ? "页面已完成 Weibull 2P 分析，参数和目标比较必须以页面计算为准。" : "The page has completed Weibull 2P analysis; its parameters and target comparison remain authoritative."} ${state.metrics.targetComparison?.message || ""}`
+      : (zh ? "页面尚未完成寿命数据分析。" : "Life-data analysis has not been completed on the page.");
+  } else if (state.mode === "mtbf") {
+    hasResults = Boolean(mtbfState.result);
+    add("输入方式", "input mode", mtbfState.inputMode);
+    add("总暴露时间", "total exposure", mtbfState.result?.totalExposure);
+    add("失效数", "failure count", mtbfState.result?.failureCount);
+    add("MTBF", "MTBF", mtbfState.result?.mtbf);
+    add("失效率", "failure rate", mtbfState.result?.failureRate);
+    add("任务时间", "mission time", mtbfState.result?.missionTime);
+    add("任务可靠度", "mission reliability", mtbfState.result?.missionReliability);
+    add("目标比较", "target comparison", mtbfState.targetComparison?.status);
+    interpretation = mtbfState.result
+      ? `${zh ? "页面已按恒定失效率假设完成 MTBF 分析；MTBF 不等同于单件寿命。" : "The page has completed MTBF analysis under a constant-failure-rate assumption; MTBF is not individual product life."} ${mtbfState.targetComparison?.message || ""}`
+      : (zh ? "页面尚未完成 MTBF 分析。" : "MTBF analysis has not been completed on the page.");
+  } else if (state.mode === "demo") {
+    hasResults = Boolean(demoState.result);
+    add("验证方法", "demonstration method", demoState.method);
+    add("工作流", "workflow", demoState.workflow);
+    add("目标可靠度", "target reliability", demoState.result?.targetReliability);
+    add("置信水平", "confidence level", demoState.result?.confidenceLevel || demoState.result?.requiredConfidence);
+    add("允许失效数", "allowable failures", demoState.result?.allowableFailures);
+    add("所需样本量", "required sample size", demoState.result?.requiredSampleSize);
+    add("所需总试验时间", "required total test time", demoState.result?.requiredTotalTestTime);
+    add("验证结论", "demonstration result", demoState.result?.demonstrated);
+    add("证据缺口", "evidence gap", demoState.result?.evidenceGap?.additionalUnitsRequired ?? demoState.result?.evidenceGap?.additionalTotalTestTimeRequired);
+    interpretation = demoState.result
+      ? (zh ? "页面已完成可靠性验证计划或证据评估；正式资格判定仍需依据适用要求和试验证据。" : "The page has completed a reliability-demonstration plan or evidence evaluation; formal qualification still depends on applicable requirements and test evidence.")
+      : (zh ? "页面尚未完成可靠性验证计算。" : "Reliability-demonstration calculation has not been completed on the page.");
+  } else {
+    interpretation = zh ? "当前模块没有可供解释的计算结果。" : "The current module has no calculated result to interpret.";
+  }
+
+  return {
+    current_tool: "reliability_analysis",
+    analysis_type: state.mode,
+    available_context: ["analysis module", "validation counts", "calculated reliability metrics", "target comparison", "model boundary"],
+    summary_metrics: metrics,
+    deterministic_interpretation: interpretation.slice(0, 1800),
+    has_results: hasResults
+  };
+};
+
 function init() {
   applyLanguage();
   bindEvents();
@@ -1241,6 +1308,7 @@ function setLanguage(lang) {
   state.lang = lang;
   localStorage.setItem("reliability.ui.lang", lang);
   applyLanguage();
+  window.dispatchEvent(new Event("languagechange"));
 }
 
 function applyLanguage() {

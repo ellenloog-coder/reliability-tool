@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Reliability Analysis Tool</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://ellenloog-coder.github.io/guided-8d-investigation-tool/ai-assistant.css?v=20260730-5" />
 </head>
 <body>
   <div class="top-nav-wrap">
@@ -112,5 +113,44 @@
     <div class="mode-panel" id="faqPanel"><div class="panel faq"><h2 data-i18n="navFaq">FAQ</h2><p data-i18n="faqText">Use Time and Status as minimum fields. Failure data can be mixed with right-censored observations.</p><p data-i18n="faqPrivacy">No external data API, LLM API, or server upload is used.</p></div></div>
   </div>
   <script type="module" src="src/reliability/app.js"></script>
+  <script>
+    window.QualityCopilotConfig = {
+      currentTool: "reliability_analysis",
+      analysisButtonTarget: ".hero",
+      insertButtonAfter: true,
+      language: () => document.documentElement.lang.toLowerCase().startsWith("zh") ? "zh" : "en",
+      quickQuestions: {
+        zh: [
+          "解释我当前的可靠性结果",
+          "下一步应该验证什么？",
+          "β、η 和 B10 分别代表什么？",
+          "什么时候应使用 Weibull、MTBF 或可靠性验证？",
+          "如何规划可靠性验证试验？"
+        ],
+        en: [
+          "Explain my current reliability result",
+          "What should I verify next?",
+          "What do β, η, and B10 mean?",
+          "When should I use Weibull, MTBF, or reliability demonstration?",
+          "How should I plan a reliability demonstration test?"
+        ]
+      },
+      requiresPageContext: question => {
+        const text = String(question || "").toLowerCase();
+        return /当前|这个|这份|页面|报告|结果|我的|下一步|这些指标|current|this result|these results|my result|page|report|next step|these metrics/.test(text);
+      },
+      collectSummary: () => typeof window.getReliabilityCopilotSummary === "function"
+        ? window.getReliabilityCopilotSummary()
+        : {
+            current_tool: "reliability_analysis",
+            analysis_type: "Reliability",
+            available_context: [],
+            summary_metrics: {},
+            deterministic_interpretation: "",
+            has_results: false
+          }
+    };
+  </script>
+  <script src="https://ellenloog-coder.github.io/guided-8d-investigation-tool/ai-assistant.js?v=20260730-5"></script>
 </body>
 </html>
