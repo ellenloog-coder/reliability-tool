@@ -4,19 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Reliability Analysis Tool</title>
-  <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="https://ellenloog-coder.github.io/guided-8d-investigation-tool/ai-assistant.css?v=20260730-6" />
   <link rel="stylesheet" href="https://ellenloog-coder.github.io/guided-8d-investigation-tool/feedback-widget.css?v=20260730-1" />
+  <link rel="stylesheet" href="styles.css?v=20260730-2" />
 </head>
 <body>
   <div class="top-nav-wrap">
     <div class="top-nav">
       <div class="brand"><div class="logo">R</div><div class="brand-name" data-i18n="brand">Reliability</div></div>
-      <span class="nav-section-label" data-i18n="navAnalysisTools">Analysis Tools</span>
-      <button class="nav-link active" data-mode="life" data-i18n="navLife">Life Data</button>
-      <button class="nav-link" data-mode="mtbf" data-i18n="navMtbf">MTBF</button>
-      <button class="nav-link" data-mode="demo" data-i18n="navDemo">Demonstration</button>
-      <button class="nav-link" data-mode="alt" data-i18n="navAlt">ALT</button>
+      <div class="nav-tools" id="analysisTools">
+        <button class="nav-link nav-tools-trigger" id="analysisToolsButton" type="button" aria-expanded="false" aria-controls="analysisToolsMenu" aria-haspopup="menu">
+          <span data-i18n="navAnalysisTools">Analysis Tools</span>
+          <span class="nav-tools-chevron" aria-hidden="true">⌄</span>
+        </button>
+        <div class="nav-tools-menu" id="analysisToolsMenu" role="menu" hidden>
+          <button class="nav-tool-option active" type="button" role="menuitem" data-mode="life" data-i18n="navLife">Life Data</button>
+          <button class="nav-tool-option" type="button" role="menuitem" data-mode="mtbf" data-i18n="navMtbf">MTBF</button>
+          <button class="nav-tool-option" type="button" role="menuitem" data-mode="demo" data-i18n="navDemo">Demonstration</button>
+          <button class="nav-tool-option" type="button" role="menuitem" data-mode="alt" data-i18n="navAlt">ALT</button>
+        </div>
+      </div>
       <button class="nav-link help-nav-link" id="userManualButton" type="button" data-i18n="navManual" aria-haspopup="dialog">User Manual</button>
       <button class="nav-link help-nav-link" id="faqButton" type="button" data-i18n="navFaq" aria-haspopup="dialog">FAQ</button>
       <div class="nav-right">
@@ -146,6 +153,9 @@
     </div>
     <div class="mode-panel" id="altPanel"></div>
   </div>
+  <footer class="app-footer" aria-label="Application version">
+    <span>v15.10.0</span>
+  </footer>
   <div class="help-overlay" id="helpOverlay" hidden></div>
   <aside class="help-drawer" id="helpDrawer" role="dialog" aria-modal="true" aria-labelledby="helpDrawerTitle" hidden>
     <header class="help-drawer-header">
@@ -161,7 +171,7 @@
   <script>
     window.QualityCopilotConfig = {
       currentTool: "reliability_analysis",
-      analysisButtonTarget: ".hero",
+      analysisButtonTarget: ".hero > div:first-child",
       insertButtonAfter: true,
       showInlineLauncher: false,
       autoHoverOpen: true,

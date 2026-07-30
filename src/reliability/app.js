@@ -241,11 +241,27 @@ function bindEvents() {
   $("languageSelect").addEventListener("change", event => setLanguage(event.target.value));
   $("userManualButton").addEventListener("click", () => helpDrawer?.open("manual", $("userManualButton")));
   $("faqButton").addEventListener("click", () => helpDrawer?.open("faq", $("faqButton")));
+  $("analysisToolsButton").addEventListener("click", () => {
+    setAnalysisToolsOpen($("analysisToolsButton").getAttribute("aria-expanded") !== "true");
+  });
+  document.addEventListener("click", event => {
+    if (!$("analysisTools").contains(event.target)) setAnalysisToolsOpen(false);
+  });
+  document.addEventListener("keydown", event => {
+    if (event.key !== "Escape" || $("analysisToolsButton").getAttribute("aria-expanded") !== "true") return;
+    setAnalysisToolsOpen(false);
+    $("analysisToolsButton").focus();
+  });
   document.querySelectorAll("[data-mode]").forEach(button => button.addEventListener("click", () => setMode(button.dataset.mode)));
   document.querySelectorAll("[data-result-tab-target]").forEach(button => {
     button.addEventListener("click", () => setResultTab(button.dataset.resultTabTarget));
     button.addEventListener("keydown", handleResultTabKeydown);
   });
+}
+
+function setAnalysisToolsOpen(open) {
+  $("analysisToolsButton").setAttribute("aria-expanded", String(open));
+  $("analysisToolsMenu").hidden = !open;
 }
 
 async function handleFile(event) {
@@ -1864,6 +1880,7 @@ function setMode(mode) {
   state.mode = mode;
   document.querySelectorAll("[data-mode]").forEach(button => button.classList.toggle("active", button.dataset.mode === mode));
   ["life", "mtbf", "demo", "alt"].forEach(name => $(`${name}Panel`).classList.toggle("active", name === mode));
+  setAnalysisToolsOpen(false);
   renderHero();
 }
 

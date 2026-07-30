@@ -5,6 +5,17 @@ It does not replace the current browser authority path.
 
 ## Run
 
+Start the complete local tool (frontend and backend):
+
+```bash
+npm run dev
+```
+
+Then open `http://127.0.0.1:8020/`. This is the recommended local
+development command because Life Data uses the backend as its authority.
+
+Start only the backend:
+
 ```bash
 npm run server
 ```

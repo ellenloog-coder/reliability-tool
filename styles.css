@@ -185,3 +185,60 @@ body.help-open{overflow:hidden}
   .help-overlay,.help-drawer{transition:none}
   .manual-article{scroll-behavior:auto}
 }
+
+/* Compact primary navigation */
+.top-nav-wrap{position:relative;z-index:60}
+.nav-tools{position:relative;flex:0 0 auto}
+.nav-tools-trigger{display:inline-flex;align-items:center;gap:5px;font-size:var(--type-body)}
+.nav-tools-chevron{font-size:11px;line-height:1;transition:transform .16s ease}
+.nav-tools-trigger[aria-expanded="true"] .nav-tools-chevron{transform:rotate(180deg)}
+.nav-tools-menu{
+  position:absolute;z-index:70;top:calc(100% + 8px);left:-10px;
+  display:grid;min-width:176px;padding:6px;
+  border:1px solid var(--line);border-radius:10px;background:#fff;
+  box-shadow:0 12px 30px rgba(15,23,42,.14)
+}
+.nav-tools-menu[hidden]{display:none}
+.nav-tool-option{
+  width:100%;padding:9px 10px;border:0;border-radius:7px;
+  background:transparent;color:#344054;
+  font-size:var(--type-body);font-weight:650;text-align:left;white-space:nowrap
+}
+.nav-tool-option:hover,.nav-tool-option:focus-visible{background:#f1f5f9;color:var(--text);outline:0}
+.nav-tool-option.active{background:#eaf2ff;color:var(--primary-dark)}
+
+/* Keep the shared AI entry beside the page heading instead of as a full-width band. */
+.hero{display:flex;align-items:center;justify-content:space-between;gap:18px}
+.hero>div:first-child{min-width:0;flex:1 1 auto}
+.hero>.qai-inline-launch{
+  flex:0 1 310px;max-width:310px;min-width:250px;
+  margin:0;padding:8px 10px;gap:8px;border-radius:10px;
+  box-shadow:none
+}
+.hero>.qai-inline-launch>div{min-width:0}
+.hero>.qai-inline-launch strong{font-size:var(--type-small);line-height:1.3}
+.hero>.qai-inline-launch span{font-size:var(--type-caption);line-height:1.35}
+.hero>.qai-inline-launch button{
+  flex:0 0 auto;min-height:30px;padding:6px 9px;
+  border-radius:8px;font-size:var(--type-small);white-space:nowrap
+}
+
+@media(max-width:950px){
+  .top-nav{overflow:visible}
+  .hero{align-items:flex-start}
+  .hero>.qai-inline-launch{flex-basis:285px;min-width:220px}
+}
+@media(max-width:700px){
+  .hero{flex-wrap:wrap;gap:12px}
+  .hero>.qai-inline-launch{flex:0 1 100%;width:min(100%,310px)}
+}
+@media(prefers-reduced-motion:reduce){
+  .nav-tools-chevron{transition:none}
+}
+
+.app-footer{
+  max-width:var(--result-shell-max-width);margin:0 auto;
+  padding:0 16px 18px;color:#98a2b3;
+  font-size:var(--type-caption);font-weight:500;
+  letter-spacing:.02em;text-align:center
+}

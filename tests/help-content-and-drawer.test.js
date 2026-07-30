@@ -40,12 +40,16 @@ test("FAQ search matches question or answer and restores all content when cleare
 });
 
 test("top navigation opens one shared in-app drawer and uses a language select", () => {
+  assert.match(indexHtml, /id="analysisToolsButton"[^>]*aria-expanded="false"/);
+  assert.match(indexHtml, /id="analysisToolsMenu"[^>]*role="menu"[^>]*hidden/);
+  assert.equal((indexHtml.match(/role="menuitem" data-mode=/g) || []).length, 4);
   assert.match(indexHtml, /id="userManualButton"/);
   assert.match(indexHtml, /id="faqButton"/);
   assert.match(indexHtml, /id="languageSelect"/);
   assert.match(indexHtml, /id="helpDrawer"[^>]*role="dialog"/);
   assert.doesNotMatch(indexHtml, /data-mode="faq"/);
   assert.match(appSource, /createHelpDrawer/);
+  assert.match(appSource, /function setAnalysisToolsOpen/);
 });
 
 test("drawer supports Escape, overlay close, focus containment, and accessible FAQ expansion", () => {
@@ -56,4 +60,3 @@ test("drawer supports Escape, overlay close, focus containment, and accessible F
   assert.match(drawerSource, /aria-controls=/);
   assert.match(drawerSource, /type="search"/);
 });
-
