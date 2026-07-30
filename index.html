@@ -11,14 +11,21 @@
   <div class="top-nav-wrap">
     <div class="top-nav">
       <div class="brand"><div class="logo">R</div><div class="brand-name" data-i18n="brand">Reliability</div></div>
+      <span class="nav-section-label" data-i18n="navAnalysisTools">Analysis Tools</span>
       <button class="nav-link active" data-mode="life" data-i18n="navLife">Life Data</button>
       <button class="nav-link" data-mode="mtbf" data-i18n="navMtbf">MTBF</button>
       <button class="nav-link" data-mode="demo" data-i18n="navDemo">Demonstration</button>
       <button class="nav-link" data-mode="alt" data-i18n="navAlt">ALT</button>
-      <button class="nav-link" data-mode="faq" data-i18n="navFaq">FAQ</button>
+      <button class="nav-link help-nav-link" id="userManualButton" type="button" data-i18n="navManual" aria-haspopup="dialog">User Manual</button>
+      <button class="nav-link help-nav-link" id="faqButton" type="button" data-i18n="navFaq" aria-haspopup="dialog">FAQ</button>
       <div class="nav-right">
-        <button class="nav-pill" id="englishButton">English</button>
-        <button class="nav-pill" id="chineseButton">中文</button>
+        <label class="language-picker">
+          <span data-i18n="language">Language</span>
+          <select class="nav-pill" id="languageSelect" aria-label="Language">
+            <option value="en">English</option>
+            <option value="zh">中文</option>
+          </select>
+        </label>
       </div>
     </div>
   </div>
@@ -27,24 +34,30 @@
     <section class="hero">
       <div>
         <h1 data-i18n="title">Reliability Analysis Tool</h1>
-        <p data-i18n="subtitle">A lightweight, browser-based life data analysis engine that performs Weibull/MTBF calculations locally and generates clear, engineering-focused reliability insights without storing any user data.</p>
+        <p data-i18n="subtitle">A lightweight reliability analysis tool. Life Data requests are analyzed by the configured Reliability Backend; MTBF and Demonstration retain their current browser workflows.</p>
       </div>
     </section>
   </div>
 
   <div class="app">
     <div class="mode-panel active" id="lifePanel">
-      <div class="layout">
-        <aside class="panel sidebar">
-          <h2 class="section-title" data-i18n="setup">Analysis Setup</h2>
+      <div class="layout" id="lifeLayout">
+        <aside class="panel sidebar" id="analysisSidebar">
+          <div class="sidebar-header">
+            <h2 class="section-title" data-i18n="setup">Analysis Setup</h2>
+            <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-expanded="true" aria-controls="sidebarDetails" aria-label="Collapse analysis settings" title="Collapse analysis settings">
+              <span aria-hidden="true">‹</span>
+            </button>
+          </div>
           <div class="step-list" id="steps">
             <div class="step active" data-step="1"><div class="step-num">1</div><div><strong data-i18n="stepUpload">Upload Data</strong><span data-i18n="stepUploadHint">Excel or CSV</span></div></div>
             <div class="step" data-step="2"><div class="step-num">2</div><div><strong data-i18n="stepConfirm">Confirm Data</strong><span data-i18n="stepConfirmHint">Mapping and validation</span></div></div>
             <div class="step" data-step="3"><div class="step-num">3</div><div><strong data-i18n="stepRun">Run Analysis</strong><span data-i18n="stepRunHint">Get reliability insight</span></div></div>
           </div>
+          <div class="sidebar-details" id="sidebarDetails">
           <div class="upload">
             <strong data-i18n="upload">Upload reliability data</strong>
-            <small data-i18n="processed">Excel / CSV / TSV / paste · processed locally</small>
+            <small data-i18n="processed">Excel / CSV / TSV / paste · parsed in the browser</small>
             <div style="margin-top:10px">
               <label class="btn primary" for="fileInput" data-i18n="choose">Choose File</label>
               <input class="file-input" id="fileInput" type="file" accept=".csv,.tsv,.xlsx,.xls,text/csv" />
@@ -71,24 +84,53 @@
           </div>
           <h3 class="section-title" style="margin-top:14px" data-i18n="dataCheck">Data Check</h3>
           <div class="info-list" id="dataCheck"></div>
-          <p class="privacy" data-i18n="localOnly">All calculations run locally in this browser. Uploaded engineering data is not stored.</p>
+          <p class="privacy" data-i18n="lifeDataBackendPrivacy">Life Data inputs are sent to the configured Reliability Backend for calculation. No account or application database is used, input data is not retained, and no third-party AI or external analysis service is called.</p>
+          </div>
           <div class="sidebar-footer"><button class="btn" id="resetButton" data-i18n="reset">Reset</button><button class="btn primary" id="runButton" data-i18n="run">Run Analysis</button></div>
         </aside>
         <main class="main">
-          <section class="panel summary">
+          <nav class="panel result-tabs" aria-label="Analysis result navigation">
+            <div class="result-tabs-scroll" role="tablist">
+              <button class="result-tab active" type="button" role="tab" aria-selected="true" data-result-tab-target="overview" data-i18n="resultOverview">Overview</button>
+              <button class="result-tab" type="button" role="tab" aria-selected="false" data-result-tab-target="weibull" data-i18n="resultWeibullModel">Weibull Model</button>
+              <button class="result-tab" type="button" role="tab" aria-selected="false" data-result-tab-target="weibull-plot" data-i18n="probPlot">Weibull Probability Plot</button>
+              <button class="result-tab" type="button" role="tab" aria-selected="false" data-result-tab-target="curve" data-i18n="resultReliabilityCurve">Reliability Curve R(t)</button>
+              <button class="result-tab" type="button" role="tab" aria-selected="false" data-result-tab-target="b-life" data-i18n="resultBLife">Key Life Points (B-values)</button>
+              <button class="result-tab" type="button" role="tab" aria-selected="false" data-result-tab-target="reliability-table" data-i18n="resultReliabilityTable">R(t) / F(t) Table</button>
+              <button class="result-tab" type="button" role="tab" aria-selected="false" data-result-tab-target="statistics" data-i18n="resultStatisticalInfo">Statistical Information</button>
+              <button class="result-tab" type="button" role="tab" aria-selected="false" data-result-tab-target="data" data-i18n="resultDataSummary">Data Summary</button>
+            </div>
+          </nav>
+          <section class="panel summary" data-result-tab-panel="overview">
             <span class="status-badge" data-i18n="available">Available</span>
             <h2 data-i18n="summary">Reliability Summary</h2><p id="summaryNote"></p>
             <div class="kpis" id="kpis"></div>
             <p class="eta-note" data-i18n="etaNote">η: Time at which the fitted cumulative failure probability reaches 63.2%.</p>
           </section>
-          <section class="panel block"><h3 data-i18n="probPlot">Weibull Probability Plot</h3><div class="viz-strip" id="probabilityStats"></div><div class="chart" id="probabilityPlot"></div><p class="plot-note" id="probabilityPlotNote"></p></section>
-          <section class="panel block"><h3 data-i18n="lifePercentiles">Life Percentiles</h3><p class="eta-note" data-i18n="lifePercentilesHint">Estimated time to cumulative failure</p><div class="table-wrap" id="lifePercentilesTable"></div><div class="mini-grid table-control"><div class="field"><label for="customPercentile" data-i18n="customPercentile">Custom Percentile</label><input id="customPercentile" type="number" min="0" max="100" step="any" /></div><div class="info-item" id="customPercentileMessage"></div></div></section>
-          <section class="panel block"><div class="section-row"><h3 data-i18n="relCurve">Reliability Curve</h3><div class="segmented compact" role="group"><button class="segment active" id="curveModeReliability" type="button" data-i18n="reliabilityRt">Reliability R(t)</button><button class="segment" id="curveModeFailure" type="button" data-i18n="cumulativeFailureFt">Cumulative Failure F(t)</button></div></div><div class="chart" id="reliabilityCurve"></div><div class="info-list target-gap" id="targetGapPanel"></div></section>
-          <section class="panel block"><h3 data-i18n="reliabilityAtSelectedTimes">Reliability at Selected Times</h3><div class="table-wrap" id="reliabilityTimesTable"></div><div class="mini-grid table-control"><div class="field"><label for="customTime" data-i18n="customTime">Custom Time</label><input id="customTime" type="number" min="0" step="any" /></div><div class="info-item" id="customTimeMessage"></div></div></section>
-          <section class="panel insight"><h3 style="margin:0 0 12px;font-size:15px" data-i18n="insight">Engineering Insight</h3><div class="insight-grid" id="insightGrid"></div></section>
-          <section class="panel block"><h3 data-i18n="targetComparison">Target Comparison</h3><div class="info-list" id="targetComparisonPanel"></div></section>
-          <section class="panel block"><h3 data-i18n="preview">Data Preview</h3><div class="table-wrap" id="previewTable"></div></section>
-          <section class="panel block"><h3 data-i18n="report">Report Export</h3><div class="report-actions"><button class="btn" id="exportHtmlButton" data-i18n="exportHtml">Export HTML</button><button class="btn" id="exportPdfButton" data-i18n="exportPdf">Export PDF</button><button class="btn" id="printButton" data-i18n="print">Print</button></div></section>
+          <section class="panel block" data-result-tab-panel="weibull" hidden><h3 data-i18n="resultWeibullModel">Weibull Model</h3><div class="info-list" id="weibullModelPanel"></div></section>
+          <section class="panel block result-chart-panel" data-result-tab-panel="weibull-plot" hidden><h3 data-i18n="probPlot">Weibull Probability Plot</h3><div class="viz-strip" id="probabilityStats"></div><div class="chart result-chart result-chart-full" id="probabilityPlot"></div><p class="plot-note" id="probabilityPlotNote"></p></section>
+          <section class="panel block curve-panel" data-result-tab-panel="curve" hidden>
+            <h3 data-i18n="relCurve">Reliability Curve</h3>
+            <div class="result-chart-grid result-chart-grid-split">
+              <article class="result-chart-card">
+                <h4 data-i18n="reliabilityRt">Reliability R(t)</h4>
+                <div class="chart result-chart result-chart-split" id="reliabilityCurve"></div>
+                <div class="info-list curve-summary" id="reliabilityTargetGapPanel"></div>
+              </article>
+              <article class="result-chart-card">
+                <h4 data-i18n="cumulativeFailureFt">Cumulative Failure F(t)</h4>
+                <div class="chart result-chart result-chart-split" id="failureCurve"></div>
+                <div class="info-list curve-summary" id="failureTargetGapPanel"></div>
+              </article>
+            </div>
+          </section>
+          <section class="panel block" data-result-tab-panel="b-life" hidden><h3 data-i18n="lifePercentiles">Life Percentiles</h3><p class="eta-note" data-i18n="lifePercentilesHint">Estimated time to cumulative failure</p><div class="table-wrap" id="lifePercentilesTable"></div><div class="mini-grid table-control"><div class="field"><label for="customPercentile" data-i18n="customPercentile">Custom Percentile</label><input id="customPercentile" type="number" min="0" max="100" step="any" /></div><div class="info-item" id="customPercentileMessage"></div></div></section>
+          <section class="panel block" data-result-tab-panel="reliability-table" hidden><h3 data-i18n="reliabilityAtSelectedTimes">Reliability at Selected Times</h3><div class="table-wrap" id="reliabilityTimesTable"></div><div class="mini-grid table-control"><div class="field"><label for="customTime" data-i18n="customTime">Custom Time</label><input id="customTime" type="number" min="0" step="any" /></div><div class="info-item" id="customTimeMessage"></div></div></section>
+          <section class="panel insight" data-result-tab-panel="overview"><h3 style="margin:0 0 12px;font-size:15px" data-i18n="insight">Engineering Insight</h3><div class="insight-grid" id="insightGrid"></div></section>
+          <section class="panel block" data-result-tab-panel="overview"><h3 data-i18n="targetComparison">Target Comparison</h3><div class="info-list" id="targetComparisonPanel"></div></section>
+          <section class="panel block" data-result-tab-panel="statistics" hidden><h3 data-i18n="resultStatisticalInfo">Statistical Information</h3><div class="info-list result-statistics" id="statisticalInfoPanel"></div></section>
+          <section class="panel block" data-result-tab-panel="data" hidden><h3 data-i18n="preview">Data Preview</h3><div class="table-wrap" id="previewTable"></div></section>
+          <section class="panel block" data-result-tab-panel="data" hidden><h3 data-i18n="report">Report Export</h3><div class="report-actions"><button class="btn" id="exportHtmlButton" data-i18n="exportHtml">Export HTML</button><button class="btn" id="exportPdfButton" data-i18n="exportPdf">Export PDF</button><button class="btn" id="printButton" data-i18n="print">Print</button></div></section>
         </main>
       </div>
     </div>
@@ -101,17 +143,19 @@
         <p class="module-note" data-i18n="demoBoundary">This module will not show fixed test times, fake confidence intervals, or placeholder calculations.</p>
       </section>
     </div>
-    <div class="mode-panel" id="altPanel">
-      <section class="panel module-boundary">
-        <span class="status-badge muted" data-i18n="comingSoon">Coming Soon</span>
-        <h2 data-i18n="navAltFull">Accelerated Life Testing</h2>
-        <p data-i18n="altDescription">Accelerated Life Testing uses life data collected under elevated stress conditions to estimate reliability performance under normal use conditions.</p>
-        <div class="future-list"><span>Arrhenius</span><span>Peck</span><span>Coffin-Manson</span></div>
-        <p class="module-note" data-i18n="altBoundary">Future models are listed only as scope markers. No unimplemented calculation controls are provided.</p>
-      </section>
-    </div>
-    <div class="mode-panel" id="faqPanel"><div class="panel faq"><h2 data-i18n="navFaq">FAQ</h2><p data-i18n="faqText">Use Time and Status as minimum fields. Failure data can be mixed with right-censored observations.</p><p data-i18n="faqPrivacy">No external data API, LLM API, or server upload is used.</p></div></div>
+    <div class="mode-panel" id="altPanel"></div>
   </div>
+  <div class="help-overlay" id="helpOverlay" hidden></div>
+  <aside class="help-drawer" id="helpDrawer" role="dialog" aria-modal="true" aria-labelledby="helpDrawerTitle" hidden>
+    <header class="help-drawer-header">
+      <div>
+        <h2 id="helpDrawerTitle"></h2>
+        <p id="helpDrawerSubtitle"></p>
+      </div>
+      <button class="help-close" id="helpDrawerClose" type="button" aria-label="Close">×</button>
+    </header>
+    <div class="help-drawer-content" id="helpDrawerContent"></div>
+  </aside>
   <script type="module" src="src/reliability/app.js"></script>
   <script>
     window.QualityCopilotConfig = {

@@ -178,8 +178,8 @@ test("report includes upgraded Life Data tables, target gap, default curve view,
     lang: "en"
   });
   for (const text of ["Life Percentiles", "Reliability at Selected Times", "Target Gap", "Default report curve view", "Failure-Rate Trend"]) assert(report.includes(text), text);
-  assert(report.includes("does not report fit-quality"));
-  assert(report.includes("No confidence intervals, probability bands, goodness-of-fit statistics"));
+  assert(report.includes("Goodness-of-fit and Anderson-Darling statistics are not calculated"));
+  assert(report.includes("Confidence bounds and formal goodness-of-fit statistics are not available"));
   for (const unsupportedField of ["Model Fit = Good", "Confidence Interval</th>", "Anderson-Darling</th>", "Correlation Coefficient</th>", "Standards compliance</th>"]) assert(!report.includes(unsupportedField));
 });
 

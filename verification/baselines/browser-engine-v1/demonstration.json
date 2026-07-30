@@ -1,0 +1,3237 @@
+{
+  "baseline_id": "browser-engine-reference-v1-20260730-dirty-53ce11e",
+  "cases": [
+    {
+      "chartData": {
+        "presentationDigest": "2097a5a692c15f8047953029255e60d3a74d4bc6ce3da4ab16fba8593ad753e9",
+        "source": {
+          "evidence": {
+            "evidenceGap": {
+              "additionalUnitsRequired": 0,
+              "assumption": "No additional units are required.",
+              "requiredTotalUnits": 22
+            },
+            "observedFailures": 0,
+            "observedSuccesses": 22,
+            "unitsTested": 22
+          },
+          "evidenceGap": {
+            "additionalUnitsRequired": 0,
+            "assumption": "No additional units are required.",
+            "requiredTotalUnits": 22,
+            "status": "SATISFIED"
+          },
+          "method": "sample",
+          "metrics": {
+            "achievedConfidenceAtTarget": 0.9015229097816388,
+            "observedPassRate": 1,
+            "reliabilityLowerBound": 0.9006280202083872
+          },
+          "requirement": {
+            "requiredConfidence": 0.9,
+            "targetReliability": 0.9
+          },
+          "workflow": "evaluate"
+        }
+      },
+      "covers": [
+        "zero_failure",
+        "demonstrated",
+        "sample"
+      ],
+      "id": "demo_zero_failure_demonstrated",
+      "input": {
+        "inputs": {
+          "confidenceLevel": 0.9,
+          "observedFailures": 0,
+          "targetReliability": 0.9,
+          "timeUnit": "hours",
+          "unitsTested": 22
+        },
+        "method": "sample",
+        "targetDefinition": {
+          "$baselineType": "undefined"
+        },
+        "workflow": "evaluate"
+      },
+      "output": {
+        "calculation": {
+          "assumptions": {
+            "evidenceGapAssumption": "No additional units are required."
+          },
+          "evidence": {
+            "evidenceGap": {
+              "additionalUnitsRequired": 0,
+              "assumption": "No additional units are required.",
+              "requiredTotalUnits": 22
+            },
+            "observedFailures": 0,
+            "observedSuccesses": 22,
+            "unitsTested": 22
+          },
+          "metrics": {
+            "achievedConfidenceAtTarget": 0.9015229097816388,
+            "observedPassRate": 1,
+            "reliabilityLowerBound": 0.9006280202083872
+          },
+          "model": "Exact Binomial",
+          "requirement": {
+            "requiredConfidence": 0.9,
+            "targetReliability": 0.9
+          },
+          "status": "COMPLETED"
+        },
+        "compatibility": {
+          "insight": {
+            "assumptions": [
+              "Independent pass/fail observations",
+              "Same mission definition for all units",
+              "No time-to-failure modeling"
+            ],
+            "evidence": "Reliability lower bound is 90.06%; achieved confidence at target is 90.15%.",
+            "explanationKeys": [
+              "Target demonstrated at the selected confidence level",
+              "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level."
+            ],
+            "flags": {
+              "allowableFailures": false,
+              "missingOptionalMissionTime": false,
+              "smallEvidenceMargin": false
+            },
+            "limitations": [
+              "No time-to-failure modeling",
+              "No reliability growth evaluation",
+              "Statistical demonstration does not confirm a physical failure mechanism"
+            ],
+            "meaning": "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level.",
+            "parameters": {
+              "allowableFailures": null,
+              "assumptions": [
+                "Independent pass/fail observations",
+                "Same mission definition for all units",
+                "No time-to-failure modeling"
+              ],
+              "decisionReasonCodes": [
+                "RELIABILITY_LOWER_BOUND_MEETS_TARGET",
+                "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT",
+                "ZERO_OBSERVED_FAILURES"
+              ],
+              "decisionStatus": "DEMONSTRATED",
+              "evidenceGapStatus": "SATISFIED",
+              "evidenceText": "Reliability lower bound is 90.06%; achieved confidence at target is 90.15%.",
+              "meaningText": "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level.",
+              "method": "sample",
+              "missingOptionalMissionTime": false,
+              "resultText": "Target demonstrated at the selected confidence level",
+              "validationStatus": "VALID",
+              "workflow": "evaluate"
+            },
+            "recommendationKeys": [
+              "Confirm mission definition",
+              "Confirm failure classification",
+              "Use Life Data if failure times and censoring information are available"
+            ],
+            "recommendedActions": [
+              "Confirm mission definition",
+              "Confirm failure classification",
+              "Use Life Data if failure times and censoring information are available"
+            ],
+            "result": "Target demonstrated at the selected confidence level",
+            "structuredLimitations": [
+              "No time-to-failure modeling",
+              "No reliability growth evaluation",
+              "Statistical demonstration does not confirm a physical failure mechanism"
+            ]
+          },
+          "result": {
+            "achievedConfidenceAtTarget": 0.9015229097816388,
+            "demonstrated": true,
+            "evidenceGap": {
+              "additionalUnitsRequired": 0,
+              "assumption": "No additional units are required.",
+              "requiredTotalUnits": 22
+            },
+            "method": "sample",
+            "missionTime": null,
+            "observedFailures": 0,
+            "observedPassRate": 1,
+            "observedSuccesses": 22,
+            "reliabilityLowerBound": 0.9006280202083872,
+            "requiredConfidence": 0.9,
+            "targetReliability": 0.9,
+            "timeUnit": "hours",
+            "unitsTested": 22,
+            "workflow": "evaluate"
+          },
+          "validation": {
+            "errors": [],
+            "warnings": []
+          }
+        },
+        "decision": {
+          "actualEvidence": {
+            "evidenceGap": {
+              "additionalUnitsRequired": 0,
+              "assumption": "No additional units are required.",
+              "requiredTotalUnits": 22
+            },
+            "observedFailures": 0,
+            "unitsTested": 22
+          },
+          "actualValue": 0.9006280202083872,
+          "evidenceGap": {
+            "additionalUnitsRequired": 0,
+            "assumption": "No additional units are required.",
+            "requiredTotalUnits": 22,
+            "status": "SATISFIED"
+          },
+          "existingDecision": {
+            "demonstrated": true
+          },
+          "limitations": [],
+          "reasonCodes": [
+            "RELIABILITY_LOWER_BOUND_MEETS_TARGET",
+            "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT",
+            "ZERO_OBSERVED_FAILURES"
+          ],
+          "requirement": {
+            "requiredConfidence": 0.9,
+            "targetReliability": 0.9
+          },
+          "status": "DEMONSTRATED"
+        },
+        "insight": {
+          "explanationKeys": [
+            "Target demonstrated at the selected confidence level",
+            "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level."
+          ],
+          "limitations": [
+            "No time-to-failure modeling",
+            "No reliability growth evaluation",
+            "Statistical demonstration does not confirm a physical failure mechanism"
+          ],
+          "parameters": {
+            "allowableFailures": null,
+            "assumptions": [
+              "Independent pass/fail observations",
+              "Same mission definition for all units",
+              "No time-to-failure modeling"
+            ],
+            "decisionReasonCodes": [
+              "RELIABILITY_LOWER_BOUND_MEETS_TARGET",
+              "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT",
+              "ZERO_OBSERVED_FAILURES"
+            ],
+            "decisionStatus": "DEMONSTRATED",
+            "evidenceGapStatus": "SATISFIED",
+            "evidenceText": "Reliability lower bound is 90.06%; achieved confidence at target is 90.15%.",
+            "meaningText": "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level.",
+            "method": "sample",
+            "missingOptionalMissionTime": false,
+            "resultText": "Target demonstrated at the selected confidence level",
+            "validationStatus": "VALID",
+            "workflow": "evaluate"
+          },
+          "recommendationKeys": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Use Life Data if failure times and censoring information are available"
+          ]
+        },
+        "metadata": {
+          "contractVersion": "1.0.0",
+          "engineVersion": "1.0.0",
+          "fixtureVersion": "1.0.0",
+          "module": "demonstration"
+        },
+        "validation": {
+          "errors": [],
+          "status": "VALID",
+          "warnings": []
+        }
+      },
+      "reportConsumer": {
+        "chartSource": {
+          "evidence": {
+            "evidenceGap": {
+              "additionalUnitsRequired": 0,
+              "assumption": "No additional units are required.",
+              "requiredTotalUnits": 22
+            },
+            "observedFailures": 0,
+            "observedSuccesses": 22,
+            "unitsTested": 22
+          },
+          "evidenceGap": {
+            "additionalUnitsRequired": 0,
+            "assumption": "No additional units are required.",
+            "requiredTotalUnits": 22,
+            "status": "SATISFIED"
+          },
+          "method": "sample",
+          "metrics": {
+            "achievedConfidenceAtTarget": 0.9015229097816388,
+            "observedPassRate": 1,
+            "reliabilityLowerBound": 0.9006280202083872
+          },
+          "requirement": {
+            "requiredConfidence": 0.9,
+            "targetReliability": 0.9
+          },
+          "workflow": "evaluate"
+        },
+        "chartSvgSha256": "2097a5a692c15f8047953029255e60d3a74d4bc6ce3da4ab16fba8593ad753e9",
+        "inputs": {
+          "confidenceLevel": 0.9,
+          "observedFailures": 0,
+          "targetReliability": 0.9,
+          "timeUnit": "hours",
+          "unitsTested": 22
+        },
+        "insight": {
+          "assumptions": [
+            "Independent pass/fail observations",
+            "Same mission definition for all units",
+            "No time-to-failure modeling"
+          ],
+          "evidence": "Reliability lower bound is 90.06%; achieved confidence at target is 90.15%.",
+          "explanationKeys": [
+            "Target demonstrated at the selected confidence level",
+            "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level."
+          ],
+          "flags": {
+            "allowableFailures": false,
+            "missingOptionalMissionTime": false,
+            "smallEvidenceMargin": false
+          },
+          "limitations": [
+            "No time-to-failure modeling",
+            "No reliability growth evaluation",
+            "Statistical demonstration does not confirm a physical failure mechanism"
+          ],
+          "meaning": "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level.",
+          "parameters": {
+            "allowableFailures": null,
+            "assumptions": [
+              "Independent pass/fail observations",
+              "Same mission definition for all units",
+              "No time-to-failure modeling"
+            ],
+            "decisionReasonCodes": [
+              "RELIABILITY_LOWER_BOUND_MEETS_TARGET",
+              "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT",
+              "ZERO_OBSERVED_FAILURES"
+            ],
+            "decisionStatus": "DEMONSTRATED",
+            "evidenceGapStatus": "SATISFIED",
+            "evidenceText": "Reliability lower bound is 90.06%; achieved confidence at target is 90.15%.",
+            "meaningText": "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level.",
+            "method": "sample",
+            "missingOptionalMissionTime": false,
+            "resultText": "Target demonstrated at the selected confidence level",
+            "validationStatus": "VALID",
+            "workflow": "evaluate"
+          },
+          "recommendationKeys": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Use Life Data if failure times and censoring information are available"
+          ],
+          "recommendedActions": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Use Life Data if failure times and censoring information are available"
+          ],
+          "result": "Target demonstrated at the selected confidence level",
+          "structuredLimitations": [
+            "No time-to-failure modeling",
+            "No reliability growth evaluation",
+            "Statistical demonstration does not confirm a physical failure mechanism"
+          ]
+        },
+        "result": {
+          "achievedConfidenceAtTarget": 0.9015229097816388,
+          "demonstrated": true,
+          "evidenceGap": {
+            "additionalUnitsRequired": 0,
+            "assumption": "No additional units are required.",
+            "requiredTotalUnits": 22
+          },
+          "method": "sample",
+          "missionTime": null,
+          "observedFailures": 0,
+          "observedPassRate": 1,
+          "observedSuccesses": 22,
+          "reliabilityLowerBound": 0.9006280202083872,
+          "requiredConfidence": 0.9,
+          "targetReliability": 0.9,
+          "timeUnit": "hours",
+          "unitsTested": 22,
+          "workflow": "evaluate"
+        }
+      },
+      "valueAudit": {
+        "nonFiniteNumberPaths": [],
+        "undefinedPaths": []
+      }
+    },
+    {
+      "chartData": {
+        "presentationDigest": "6dfacecb3b1d357a7579411a3aed7360bddd4197b8c3f896d9ff61f571ae0076",
+        "source": {
+          "evidence": {
+            "evidenceGap": {
+              "additionalTotalTestTimeRequired": 0,
+              "assumption": "No additional exposure is required.",
+              "requiredTotalTestTime": 3889.7201699223897
+            },
+            "observedFailures": 1,
+            "totalTestTime": 4000
+          },
+          "evidenceGap": {
+            "additionalTotalTestTimeRequired": 0,
+            "assumption": "No additional exposure is required.",
+            "requiredTotalTestTime": 3889.7201699223897,
+            "status": "SATISFIED"
+          },
+          "method": "time",
+          "metrics": {
+            "achievedConfidenceAtTarget": 0.9084218055563291,
+            "chiSquareEquivalentQuantile": 7.779440339844779,
+            "mtbfLowerBound": 1028.3516102084563,
+            "mtbfPointEstimate": 4000,
+            "reliabilityLowerBoundAtMissionTime": null,
+            "requiredExposureFactor": 3.8897201699223896
+          },
+          "requirement": {
+            "missionTime": null,
+            "requiredConfidence": 0.9,
+            "targetDefinition": "mtbf",
+            "targetMTBF": 1000,
+            "targetReliability": null
+          },
+          "workflow": "evaluate"
+        }
+      },
+      "covers": [
+        "failure_observed",
+        "time"
+      ],
+      "id": "demo_failure_observed",
+      "input": {
+        "inputs": {
+          "confidenceLevel": 0.9,
+          "observedFailures": 1,
+          "targetDefinition": "mtbf",
+          "targetMTBF": 1000,
+          "timeUnit": "hours",
+          "totalTestTime": 4000
+        },
+        "method": "time",
+        "targetDefinition": "mtbf",
+        "workflow": "evaluate"
+      },
+      "output": {
+        "calculation": {
+          "assumptions": {
+            "evidenceGapAssumption": "No additional exposure is required.",
+            "pointEstimateNotEstimable": false
+          },
+          "evidence": {
+            "evidenceGap": {
+              "additionalTotalTestTimeRequired": 0,
+              "assumption": "No additional exposure is required.",
+              "requiredTotalTestTime": 3889.7201699223897
+            },
+            "observedFailures": 1,
+            "totalTestTime": 4000
+          },
+          "metrics": {
+            "achievedConfidenceAtTarget": 0.9084218055563291,
+            "chiSquareEquivalentQuantile": 7.779440339844779,
+            "mtbfLowerBound": 1028.3516102084563,
+            "mtbfPointEstimate": 4000,
+            "reliabilityLowerBoundAtMissionTime": null,
+            "requiredExposureFactor": 3.8897201699223896
+          },
+          "model": "Exponential / Poisson",
+          "requirement": {
+            "missionTime": null,
+            "requiredConfidence": 0.9,
+            "targetDefinition": "mtbf",
+            "targetMTBF": 1000,
+            "targetReliability": null
+          },
+          "status": "COMPLETED"
+        },
+        "compatibility": {
+          "insight": {
+            "assumptions": [
+              "Exponential constant failure-rate assumption",
+              "Independent failure events",
+              "Accumulated exposure time is treated as reliable"
+            ],
+            "evidence": "MTBF lower bound is 1,028.35; achieved confidence at target is 90.84%.",
+            "explanationKeys": [
+              "Target demonstrated at the selected confidence level",
+              "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level."
+            ],
+            "flags": {
+              "allowableFailures": false,
+              "missingOptionalMissionTime": false,
+              "smallEvidenceMargin": false
+            },
+            "limitations": [
+              "No failure-rate trend evaluation",
+              "No repairable-system growth modeling",
+              "Statistical demonstration does not confirm a physical failure mechanism"
+            ],
+            "meaning": "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level.",
+            "parameters": {
+              "allowableFailures": null,
+              "assumptions": [
+                "Exponential constant failure-rate assumption",
+                "Independent failure events",
+                "Accumulated exposure time is treated as reliable"
+              ],
+              "decisionReasonCodes": [
+                "MTBF_LOWER_BOUND_MEETS_TARGET",
+                "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT"
+              ],
+              "decisionStatus": "DEMONSTRATED",
+              "evidenceGapStatus": "SATISFIED",
+              "evidenceText": "MTBF lower bound is 1,028.35; achieved confidence at target is 90.84%.",
+              "meaningText": "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level.",
+              "method": "time",
+              "missingOptionalMissionTime": false,
+              "resultText": "Target demonstrated at the selected confidence level",
+              "validationStatus": "VALID",
+              "workflow": "evaluate"
+            },
+            "recommendationKeys": [
+              "Confirm mission definition",
+              "Confirm failure classification",
+              "Review whether the exponential assumption is appropriate",
+              "Use Life Data if failure times and censoring information are available"
+            ],
+            "recommendedActions": [
+              "Confirm mission definition",
+              "Confirm failure classification",
+              "Review whether the exponential assumption is appropriate",
+              "Use Life Data if failure times and censoring information are available"
+            ],
+            "result": "Target demonstrated at the selected confidence level",
+            "structuredLimitations": [
+              "No failure-rate trend evaluation",
+              "No repairable-system growth modeling",
+              "Statistical demonstration does not confirm a physical failure mechanism"
+            ]
+          },
+          "result": {
+            "achievedConfidenceAtTarget": 0.9084218055563291,
+            "chiSquareEquivalentQuantile": 7.779440339844779,
+            "demonstrated": true,
+            "evidenceGap": {
+              "additionalTotalTestTimeRequired": 0,
+              "assumption": "No additional exposure is required.",
+              "requiredTotalTestTime": 3889.7201699223897
+            },
+            "method": "time",
+            "missionTime": null,
+            "mtbfLowerBound": 1028.3516102084563,
+            "mtbfPointEstimate": 4000,
+            "observedFailures": 1,
+            "pointEstimateNotEstimable": false,
+            "reliabilityLowerBoundAtMissionTime": null,
+            "requiredConfidence": 0.9,
+            "requiredExposureFactor": 3.8897201699223896,
+            "targetDefinition": "mtbf",
+            "targetMTBF": 1000,
+            "targetReliability": null,
+            "timeUnit": "hours",
+            "totalTestTime": 4000,
+            "workflow": "evaluate"
+          },
+          "validation": {
+            "errors": [],
+            "warnings": []
+          }
+        },
+        "decision": {
+          "actualEvidence": {
+            "evidenceGap": {
+              "additionalTotalTestTimeRequired": 0,
+              "assumption": "No additional exposure is required.",
+              "requiredTotalTestTime": 3889.7201699223897
+            },
+            "observedFailures": 1,
+            "totalTestTime": 4000
+          },
+          "actualValue": 1028.3516102084563,
+          "evidenceGap": {
+            "additionalTotalTestTimeRequired": 0,
+            "assumption": "No additional exposure is required.",
+            "requiredTotalTestTime": 3889.7201699223897,
+            "status": "SATISFIED"
+          },
+          "existingDecision": {
+            "demonstrated": true
+          },
+          "limitations": [],
+          "reasonCodes": [
+            "MTBF_LOWER_BOUND_MEETS_TARGET",
+            "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT"
+          ],
+          "requirement": {
+            "missionTime": null,
+            "requiredConfidence": 0.9,
+            "targetDefinition": "mtbf",
+            "targetMTBF": 1000,
+            "targetReliability": null
+          },
+          "status": "DEMONSTRATED"
+        },
+        "insight": {
+          "explanationKeys": [
+            "Target demonstrated at the selected confidence level",
+            "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level."
+          ],
+          "limitations": [
+            "No failure-rate trend evaluation",
+            "No repairable-system growth modeling",
+            "Statistical demonstration does not confirm a physical failure mechanism"
+          ],
+          "parameters": {
+            "allowableFailures": null,
+            "assumptions": [
+              "Exponential constant failure-rate assumption",
+              "Independent failure events",
+              "Accumulated exposure time is treated as reliable"
+            ],
+            "decisionReasonCodes": [
+              "MTBF_LOWER_BOUND_MEETS_TARGET",
+              "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT"
+            ],
+            "decisionStatus": "DEMONSTRATED",
+            "evidenceGapStatus": "SATISFIED",
+            "evidenceText": "MTBF lower bound is 1,028.35; achieved confidence at target is 90.84%.",
+            "meaningText": "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level.",
+            "method": "time",
+            "missingOptionalMissionTime": false,
+            "resultText": "Target demonstrated at the selected confidence level",
+            "validationStatus": "VALID",
+            "workflow": "evaluate"
+          },
+          "recommendationKeys": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Review whether the exponential assumption is appropriate",
+            "Use Life Data if failure times and censoring information are available"
+          ]
+        },
+        "metadata": {
+          "contractVersion": "1.0.0",
+          "engineVersion": "1.0.0",
+          "fixtureVersion": "1.0.0",
+          "module": "demonstration"
+        },
+        "validation": {
+          "errors": [],
+          "status": "VALID",
+          "warnings": []
+        }
+      },
+      "reportConsumer": {
+        "chartSource": {
+          "evidence": {
+            "evidenceGap": {
+              "additionalTotalTestTimeRequired": 0,
+              "assumption": "No additional exposure is required.",
+              "requiredTotalTestTime": 3889.7201699223897
+            },
+            "observedFailures": 1,
+            "totalTestTime": 4000
+          },
+          "evidenceGap": {
+            "additionalTotalTestTimeRequired": 0,
+            "assumption": "No additional exposure is required.",
+            "requiredTotalTestTime": 3889.7201699223897,
+            "status": "SATISFIED"
+          },
+          "method": "time",
+          "metrics": {
+            "achievedConfidenceAtTarget": 0.9084218055563291,
+            "chiSquareEquivalentQuantile": 7.779440339844779,
+            "mtbfLowerBound": 1028.3516102084563,
+            "mtbfPointEstimate": 4000,
+            "reliabilityLowerBoundAtMissionTime": null,
+            "requiredExposureFactor": 3.8897201699223896
+          },
+          "requirement": {
+            "missionTime": null,
+            "requiredConfidence": 0.9,
+            "targetDefinition": "mtbf",
+            "targetMTBF": 1000,
+            "targetReliability": null
+          },
+          "workflow": "evaluate"
+        },
+        "chartSvgSha256": "6dfacecb3b1d357a7579411a3aed7360bddd4197b8c3f896d9ff61f571ae0076",
+        "inputs": {
+          "confidenceLevel": 0.9,
+          "observedFailures": 1,
+          "targetDefinition": "mtbf",
+          "targetMTBF": 1000,
+          "timeUnit": "hours",
+          "totalTestTime": 4000
+        },
+        "insight": {
+          "assumptions": [
+            "Exponential constant failure-rate assumption",
+            "Independent failure events",
+            "Accumulated exposure time is treated as reliable"
+          ],
+          "evidence": "MTBF lower bound is 1,028.35; achieved confidence at target is 90.84%.",
+          "explanationKeys": [
+            "Target demonstrated at the selected confidence level",
+            "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level."
+          ],
+          "flags": {
+            "allowableFailures": false,
+            "missingOptionalMissionTime": false,
+            "smallEvidenceMargin": false
+          },
+          "limitations": [
+            "No failure-rate trend evaluation",
+            "No repairable-system growth modeling",
+            "Statistical demonstration does not confirm a physical failure mechanism"
+          ],
+          "meaning": "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level.",
+          "parameters": {
+            "allowableFailures": null,
+            "assumptions": [
+              "Exponential constant failure-rate assumption",
+              "Independent failure events",
+              "Accumulated exposure time is treated as reliable"
+            ],
+            "decisionReasonCodes": [
+              "MTBF_LOWER_BOUND_MEETS_TARGET",
+              "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT"
+            ],
+            "decisionStatus": "DEMONSTRATED",
+            "evidenceGapStatus": "SATISFIED",
+            "evidenceText": "MTBF lower bound is 1,028.35; achieved confidence at target is 90.84%.",
+            "meaningText": "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level.",
+            "method": "time",
+            "missingOptionalMissionTime": false,
+            "resultText": "Target demonstrated at the selected confidence level",
+            "validationStatus": "VALID",
+            "workflow": "evaluate"
+          },
+          "recommendationKeys": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Review whether the exponential assumption is appropriate",
+            "Use Life Data if failure times and censoring information are available"
+          ],
+          "recommendedActions": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Review whether the exponential assumption is appropriate",
+            "Use Life Data if failure times and censoring information are available"
+          ],
+          "result": "Target demonstrated at the selected confidence level",
+          "structuredLimitations": [
+            "No failure-rate trend evaluation",
+            "No repairable-system growth modeling",
+            "Statistical demonstration does not confirm a physical failure mechanism"
+          ]
+        },
+        "result": {
+          "achievedConfidenceAtTarget": 0.9084218055563291,
+          "chiSquareEquivalentQuantile": 7.779440339844779,
+          "demonstrated": true,
+          "evidenceGap": {
+            "additionalTotalTestTimeRequired": 0,
+            "assumption": "No additional exposure is required.",
+            "requiredTotalTestTime": 3889.7201699223897
+          },
+          "method": "time",
+          "missionTime": null,
+          "mtbfLowerBound": 1028.3516102084563,
+          "mtbfPointEstimate": 4000,
+          "observedFailures": 1,
+          "pointEstimateNotEstimable": false,
+          "reliabilityLowerBoundAtMissionTime": null,
+          "requiredConfidence": 0.9,
+          "requiredExposureFactor": 3.8897201699223896,
+          "targetDefinition": "mtbf",
+          "targetMTBF": 1000,
+          "targetReliability": null,
+          "timeUnit": "hours",
+          "totalTestTime": 4000,
+          "workflow": "evaluate"
+        }
+      },
+      "valueAudit": {
+        "nonFiniteNumberPaths": [],
+        "undefinedPaths": []
+      }
+    },
+    {
+      "chartData": {
+        "presentationDigest": "bf73dc8140905f921fee84c0e2ff419f67ccc269b11c3d10ae0bf2748d65dd90",
+        "source": {
+          "evidence": {
+            "evidenceGap": {
+              "additionalUnitsRequired": 12,
+              "assumption": "This estimate assumes no additional failures occur in the added units.",
+              "requiredTotalUnits": 22
+            },
+            "observedFailures": 0,
+            "observedSuccesses": 10,
+            "unitsTested": 10
+          },
+          "evidenceGap": {
+            "additionalUnitsRequired": 12,
+            "assumption": "This estimate assumes no additional failures occur in the added units.",
+            "requiredTotalUnits": 22,
+            "status": "GAP_REMAINS"
+          },
+          "method": "sample",
+          "metrics": {
+            "achievedConfidenceAtTarget": 0.6513215599,
+            "observedPassRate": 1,
+            "reliabilityLowerBound": 0.794328234725981
+          },
+          "requirement": {
+            "requiredConfidence": 0.9,
+            "targetReliability": 0.9
+          },
+          "workflow": "evaluate"
+        }
+      },
+      "covers": [
+        "confidence_not_met",
+        "sample"
+      ],
+      "id": "demo_confidence_not_met",
+      "input": {
+        "inputs": {
+          "confidenceLevel": 0.9,
+          "observedFailures": 0,
+          "targetReliability": 0.9,
+          "timeUnit": "hours",
+          "unitsTested": 10
+        },
+        "method": "sample",
+        "targetDefinition": {
+          "$baselineType": "undefined"
+        },
+        "workflow": "evaluate"
+      },
+      "output": {
+        "calculation": {
+          "assumptions": {
+            "evidenceGapAssumption": "This estimate assumes no additional failures occur in the added units."
+          },
+          "evidence": {
+            "evidenceGap": {
+              "additionalUnitsRequired": 12,
+              "assumption": "This estimate assumes no additional failures occur in the added units.",
+              "requiredTotalUnits": 22
+            },
+            "observedFailures": 0,
+            "observedSuccesses": 10,
+            "unitsTested": 10
+          },
+          "metrics": {
+            "achievedConfidenceAtTarget": 0.6513215599,
+            "observedPassRate": 1,
+            "reliabilityLowerBound": 0.794328234725981
+          },
+          "model": "Exact Binomial",
+          "requirement": {
+            "requiredConfidence": 0.9,
+            "targetReliability": 0.9
+          },
+          "status": "COMPLETED"
+        },
+        "compatibility": {
+          "insight": {
+            "assumptions": [
+              "Independent pass/fail observations",
+              "Same mission definition for all units",
+              "No time-to-failure modeling"
+            ],
+            "evidence": "Reliability lower bound is 79.43%; achieved confidence at target is 65.13%.",
+            "explanationKeys": [
+              "Target not demonstrated at the selected confidence level",
+              "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level."
+            ],
+            "flags": {
+              "allowableFailures": false,
+              "missingOptionalMissionTime": false,
+              "smallEvidenceMargin": false
+            },
+            "limitations": [
+              "No time-to-failure modeling",
+              "No reliability growth evaluation",
+              "Statistical demonstration does not confirm a physical failure mechanism"
+            ],
+            "meaning": "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level.",
+            "parameters": {
+              "allowableFailures": null,
+              "assumptions": [
+                "Independent pass/fail observations",
+                "Same mission definition for all units",
+                "No time-to-failure modeling"
+              ],
+              "decisionReasonCodes": [
+                "RELIABILITY_LOWER_BOUND_BELOW_TARGET",
+                "ACHIEVED_CONFIDENCE_BELOW_REQUIREMENT",
+                "ZERO_OBSERVED_FAILURES",
+                "EVIDENCE_GAP_REMAINS"
+              ],
+              "decisionStatus": "NOT_DEMONSTRATED",
+              "evidenceGapStatus": "GAP_REMAINS",
+              "evidenceText": "Reliability lower bound is 79.43%; achieved confidence at target is 65.13%.",
+              "meaningText": "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level.",
+              "method": "sample",
+              "missingOptionalMissionTime": false,
+              "resultText": "Target not demonstrated at the selected confidence level",
+              "validationStatus": "VALID",
+              "workflow": "evaluate"
+            },
+            "recommendationKeys": [
+              "Confirm mission definition",
+              "Confirm failure classification",
+              "Continue testing to close the evidence gap",
+              "Use Life Data if failure times and censoring information are available"
+            ],
+            "recommendedActions": [
+              "Confirm mission definition",
+              "Confirm failure classification",
+              "Continue testing to close the evidence gap",
+              "Use Life Data if failure times and censoring information are available"
+            ],
+            "result": "Target not demonstrated at the selected confidence level",
+            "structuredLimitations": [
+              "No time-to-failure modeling",
+              "No reliability growth evaluation",
+              "Statistical demonstration does not confirm a physical failure mechanism"
+            ]
+          },
+          "result": {
+            "achievedConfidenceAtTarget": 0.6513215599,
+            "demonstrated": false,
+            "evidenceGap": {
+              "additionalUnitsRequired": 12,
+              "assumption": "This estimate assumes no additional failures occur in the added units.",
+              "requiredTotalUnits": 22
+            },
+            "method": "sample",
+            "missionTime": null,
+            "observedFailures": 0,
+            "observedPassRate": 1,
+            "observedSuccesses": 10,
+            "reliabilityLowerBound": 0.794328234725981,
+            "requiredConfidence": 0.9,
+            "targetReliability": 0.9,
+            "timeUnit": "hours",
+            "unitsTested": 10,
+            "workflow": "evaluate"
+          },
+          "validation": {
+            "errors": [],
+            "warnings": []
+          }
+        },
+        "decision": {
+          "actualEvidence": {
+            "evidenceGap": {
+              "additionalUnitsRequired": 12,
+              "assumption": "This estimate assumes no additional failures occur in the added units.",
+              "requiredTotalUnits": 22
+            },
+            "observedFailures": 0,
+            "unitsTested": 10
+          },
+          "actualValue": 0.794328234725981,
+          "evidenceGap": {
+            "additionalUnitsRequired": 12,
+            "assumption": "This estimate assumes no additional failures occur in the added units.",
+            "requiredTotalUnits": 22,
+            "status": "GAP_REMAINS"
+          },
+          "existingDecision": {
+            "demonstrated": false
+          },
+          "limitations": [],
+          "reasonCodes": [
+            "RELIABILITY_LOWER_BOUND_BELOW_TARGET",
+            "ACHIEVED_CONFIDENCE_BELOW_REQUIREMENT",
+            "ZERO_OBSERVED_FAILURES",
+            "EVIDENCE_GAP_REMAINS"
+          ],
+          "requirement": {
+            "requiredConfidence": 0.9,
+            "targetReliability": 0.9
+          },
+          "status": "NOT_DEMONSTRATED"
+        },
+        "insight": {
+          "explanationKeys": [
+            "Target not demonstrated at the selected confidence level",
+            "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level."
+          ],
+          "limitations": [
+            "No time-to-failure modeling",
+            "No reliability growth evaluation",
+            "Statistical demonstration does not confirm a physical failure mechanism"
+          ],
+          "parameters": {
+            "allowableFailures": null,
+            "assumptions": [
+              "Independent pass/fail observations",
+              "Same mission definition for all units",
+              "No time-to-failure modeling"
+            ],
+            "decisionReasonCodes": [
+              "RELIABILITY_LOWER_BOUND_BELOW_TARGET",
+              "ACHIEVED_CONFIDENCE_BELOW_REQUIREMENT",
+              "ZERO_OBSERVED_FAILURES",
+              "EVIDENCE_GAP_REMAINS"
+            ],
+            "decisionStatus": "NOT_DEMONSTRATED",
+            "evidenceGapStatus": "GAP_REMAINS",
+            "evidenceText": "Reliability lower bound is 79.43%; achieved confidence at target is 65.13%.",
+            "meaningText": "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level.",
+            "method": "sample",
+            "missingOptionalMissionTime": false,
+            "resultText": "Target not demonstrated at the selected confidence level",
+            "validationStatus": "VALID",
+            "workflow": "evaluate"
+          },
+          "recommendationKeys": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Continue testing to close the evidence gap",
+            "Use Life Data if failure times and censoring information are available"
+          ]
+        },
+        "metadata": {
+          "contractVersion": "1.0.0",
+          "engineVersion": "1.0.0",
+          "fixtureVersion": "1.0.0",
+          "module": "demonstration"
+        },
+        "validation": {
+          "errors": [],
+          "status": "VALID",
+          "warnings": []
+        }
+      },
+      "reportConsumer": {
+        "chartSource": {
+          "evidence": {
+            "evidenceGap": {
+              "additionalUnitsRequired": 12,
+              "assumption": "This estimate assumes no additional failures occur in the added units.",
+              "requiredTotalUnits": 22
+            },
+            "observedFailures": 0,
+            "observedSuccesses": 10,
+            "unitsTested": 10
+          },
+          "evidenceGap": {
+            "additionalUnitsRequired": 12,
+            "assumption": "This estimate assumes no additional failures occur in the added units.",
+            "requiredTotalUnits": 22,
+            "status": "GAP_REMAINS"
+          },
+          "method": "sample",
+          "metrics": {
+            "achievedConfidenceAtTarget": 0.6513215599,
+            "observedPassRate": 1,
+            "reliabilityLowerBound": 0.794328234725981
+          },
+          "requirement": {
+            "requiredConfidence": 0.9,
+            "targetReliability": 0.9
+          },
+          "workflow": "evaluate"
+        },
+        "chartSvgSha256": "bf73dc8140905f921fee84c0e2ff419f67ccc269b11c3d10ae0bf2748d65dd90",
+        "inputs": {
+          "confidenceLevel": 0.9,
+          "observedFailures": 0,
+          "targetReliability": 0.9,
+          "timeUnit": "hours",
+          "unitsTested": 10
+        },
+        "insight": {
+          "assumptions": [
+            "Independent pass/fail observations",
+            "Same mission definition for all units",
+            "No time-to-failure modeling"
+          ],
+          "evidence": "Reliability lower bound is 79.43%; achieved confidence at target is 65.13%.",
+          "explanationKeys": [
+            "Target not demonstrated at the selected confidence level",
+            "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level."
+          ],
+          "flags": {
+            "allowableFailures": false,
+            "missingOptionalMissionTime": false,
+            "smallEvidenceMargin": false
+          },
+          "limitations": [
+            "No time-to-failure modeling",
+            "No reliability growth evaluation",
+            "Statistical demonstration does not confirm a physical failure mechanism"
+          ],
+          "meaning": "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level.",
+          "parameters": {
+            "allowableFailures": null,
+            "assumptions": [
+              "Independent pass/fail observations",
+              "Same mission definition for all units",
+              "No time-to-failure modeling"
+            ],
+            "decisionReasonCodes": [
+              "RELIABILITY_LOWER_BOUND_BELOW_TARGET",
+              "ACHIEVED_CONFIDENCE_BELOW_REQUIREMENT",
+              "ZERO_OBSERVED_FAILURES",
+              "EVIDENCE_GAP_REMAINS"
+            ],
+            "decisionStatus": "NOT_DEMONSTRATED",
+            "evidenceGapStatus": "GAP_REMAINS",
+            "evidenceText": "Reliability lower bound is 79.43%; achieved confidence at target is 65.13%.",
+            "meaningText": "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level.",
+            "method": "sample",
+            "missingOptionalMissionTime": false,
+            "resultText": "Target not demonstrated at the selected confidence level",
+            "validationStatus": "VALID",
+            "workflow": "evaluate"
+          },
+          "recommendationKeys": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Continue testing to close the evidence gap",
+            "Use Life Data if failure times and censoring information are available"
+          ],
+          "recommendedActions": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Continue testing to close the evidence gap",
+            "Use Life Data if failure times and censoring information are available"
+          ],
+          "result": "Target not demonstrated at the selected confidence level",
+          "structuredLimitations": [
+            "No time-to-failure modeling",
+            "No reliability growth evaluation",
+            "Statistical demonstration does not confirm a physical failure mechanism"
+          ]
+        },
+        "result": {
+          "achievedConfidenceAtTarget": 0.6513215599,
+          "demonstrated": false,
+          "evidenceGap": {
+            "additionalUnitsRequired": 12,
+            "assumption": "This estimate assumes no additional failures occur in the added units.",
+            "requiredTotalUnits": 22
+          },
+          "method": "sample",
+          "missionTime": null,
+          "observedFailures": 0,
+          "observedPassRate": 1,
+          "observedSuccesses": 10,
+          "reliabilityLowerBound": 0.794328234725981,
+          "requiredConfidence": 0.9,
+          "targetReliability": 0.9,
+          "timeUnit": "hours",
+          "unitsTested": 10,
+          "workflow": "evaluate"
+        }
+      },
+      "valueAudit": {
+        "nonFiniteNumberPaths": [],
+        "undefinedPaths": []
+      }
+    },
+    {
+      "chartData": {
+        "presentationDigest": "2c14a438e659b1cfe21bfee04566a789b9eb8327ce865719f060c6ba8a06e55d",
+        "source": {
+          "evidence": {
+            "evidenceGap": {
+              "additionalTotalTestTimeRequired": 1302.5850929149315,
+              "assumption": "This estimate assumes no additional failures occur during the additional exposure.",
+              "requiredTotalTestTime": 2302.5850929149315
+            },
+            "observedFailures": 0,
+            "totalTestTime": 1000
+          },
+          "evidenceGap": {
+            "additionalTotalTestTimeRequired": 1302.5850929149315,
+            "assumption": "This estimate assumes no additional failures occur during the additional exposure.",
+            "requiredTotalTestTime": 2302.5850929149315,
+            "status": "GAP_REMAINS"
+          },
+          "method": "time",
+          "metrics": {
+            "achievedConfidenceAtTarget": 0.6321205588285577,
+            "chiSquareEquivalentQuantile": 4.605170185829863,
+            "mtbfLowerBound": 434.2944819181737,
+            "mtbfPointEstimate": null,
+            "reliabilityLowerBoundAtMissionTime": null,
+            "requiredExposureFactor": 2.3025850929149314
+          },
+          "requirement": {
+            "missionTime": null,
+            "requiredConfidence": 0.9,
+            "targetDefinition": "mtbf",
+            "targetMTBF": 1000,
+            "targetReliability": null
+          },
+          "workflow": "evaluate"
+        }
+      },
+      "covers": [
+        "evidence_gap",
+        "time"
+      ],
+      "id": "demo_evidence_gap",
+      "input": {
+        "inputs": {
+          "confidenceLevel": 0.9,
+          "observedFailures": 0,
+          "targetDefinition": "mtbf",
+          "targetMTBF": 1000,
+          "timeUnit": "hours",
+          "totalTestTime": 1000
+        },
+        "method": "time",
+        "targetDefinition": "mtbf",
+        "workflow": "evaluate"
+      },
+      "output": {
+        "calculation": {
+          "assumptions": {
+            "evidenceGapAssumption": "This estimate assumes no additional failures occur during the additional exposure.",
+            "pointEstimateNotEstimable": true
+          },
+          "evidence": {
+            "evidenceGap": {
+              "additionalTotalTestTimeRequired": 1302.5850929149315,
+              "assumption": "This estimate assumes no additional failures occur during the additional exposure.",
+              "requiredTotalTestTime": 2302.5850929149315
+            },
+            "observedFailures": 0,
+            "totalTestTime": 1000
+          },
+          "metrics": {
+            "achievedConfidenceAtTarget": 0.6321205588285577,
+            "chiSquareEquivalentQuantile": 4.605170185829863,
+            "mtbfLowerBound": 434.2944819181737,
+            "mtbfPointEstimate": null,
+            "reliabilityLowerBoundAtMissionTime": null,
+            "requiredExposureFactor": 2.3025850929149314
+          },
+          "model": "Exponential / Poisson",
+          "requirement": {
+            "missionTime": null,
+            "requiredConfidence": 0.9,
+            "targetDefinition": "mtbf",
+            "targetMTBF": 1000,
+            "targetReliability": null
+          },
+          "status": "COMPLETED"
+        },
+        "compatibility": {
+          "insight": {
+            "assumptions": [
+              "Exponential constant failure-rate assumption",
+              "Independent failure events",
+              "Accumulated exposure time is treated as reliable"
+            ],
+            "evidence": "MTBF lower bound is 434.294; achieved confidence at target is 63.21%.",
+            "explanationKeys": [
+              "Target not demonstrated at the selected confidence level",
+              "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level."
+            ],
+            "flags": {
+              "allowableFailures": false,
+              "missingOptionalMissionTime": false,
+              "smallEvidenceMargin": false
+            },
+            "limitations": [
+              "No failure-rate trend evaluation",
+              "No repairable-system growth modeling",
+              "Statistical demonstration does not confirm a physical failure mechanism"
+            ],
+            "meaning": "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level.",
+            "parameters": {
+              "allowableFailures": null,
+              "assumptions": [
+                "Exponential constant failure-rate assumption",
+                "Independent failure events",
+                "Accumulated exposure time is treated as reliable"
+              ],
+              "decisionReasonCodes": [
+                "MTBF_LOWER_BOUND_BELOW_TARGET",
+                "ACHIEVED_CONFIDENCE_BELOW_REQUIREMENT",
+                "ZERO_OBSERVED_FAILURES",
+                "EVIDENCE_GAP_REMAINS"
+              ],
+              "decisionStatus": "NOT_DEMONSTRATED",
+              "evidenceGapStatus": "GAP_REMAINS",
+              "evidenceText": "MTBF lower bound is 434.294; achieved confidence at target is 63.21%.",
+              "meaningText": "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level.",
+              "method": "time",
+              "missingOptionalMissionTime": false,
+              "resultText": "Target not demonstrated at the selected confidence level",
+              "validationStatus": "VALID",
+              "workflow": "evaluate"
+            },
+            "recommendationKeys": [
+              "Confirm mission definition",
+              "Confirm failure classification",
+              "Continue testing to close the evidence gap",
+              "Review whether the exponential assumption is appropriate",
+              "Use Life Data if failure times and censoring information are available",
+              "Use the lower confidence bound instead of an infinite point estimate"
+            ],
+            "recommendedActions": [
+              "Confirm mission definition",
+              "Confirm failure classification",
+              "Continue testing to close the evidence gap",
+              "Review whether the exponential assumption is appropriate",
+              "Use Life Data if failure times and censoring information are available",
+              "Use the lower confidence bound instead of an infinite point estimate"
+            ],
+            "result": "Target not demonstrated at the selected confidence level",
+            "structuredLimitations": [
+              "No failure-rate trend evaluation",
+              "No repairable-system growth modeling",
+              "Statistical demonstration does not confirm a physical failure mechanism",
+              "MTBF_POINT_ESTIMATE_NOT_ESTIMABLE_ZERO_FAILURE"
+            ]
+          },
+          "result": {
+            "achievedConfidenceAtTarget": 0.6321205588285577,
+            "chiSquareEquivalentQuantile": 4.605170185829863,
+            "demonstrated": false,
+            "evidenceGap": {
+              "additionalTotalTestTimeRequired": 1302.5850929149315,
+              "assumption": "This estimate assumes no additional failures occur during the additional exposure.",
+              "requiredTotalTestTime": 2302.5850929149315
+            },
+            "method": "time",
+            "missionTime": null,
+            "mtbfLowerBound": 434.2944819181737,
+            "mtbfPointEstimate": null,
+            "observedFailures": 0,
+            "pointEstimateNotEstimable": true,
+            "reliabilityLowerBoundAtMissionTime": null,
+            "requiredConfidence": 0.9,
+            "requiredExposureFactor": 2.3025850929149314,
+            "targetDefinition": "mtbf",
+            "targetMTBF": 1000,
+            "targetReliability": null,
+            "timeUnit": "hours",
+            "totalTestTime": 1000,
+            "workflow": "evaluate"
+          },
+          "validation": {
+            "errors": [],
+            "warnings": []
+          }
+        },
+        "decision": {
+          "actualEvidence": {
+            "evidenceGap": {
+              "additionalTotalTestTimeRequired": 1302.5850929149315,
+              "assumption": "This estimate assumes no additional failures occur during the additional exposure.",
+              "requiredTotalTestTime": 2302.5850929149315
+            },
+            "observedFailures": 0,
+            "totalTestTime": 1000
+          },
+          "actualValue": 434.2944819181737,
+          "evidenceGap": {
+            "additionalTotalTestTimeRequired": 1302.5850929149315,
+            "assumption": "This estimate assumes no additional failures occur during the additional exposure.",
+            "requiredTotalTestTime": 2302.5850929149315,
+            "status": "GAP_REMAINS"
+          },
+          "existingDecision": {
+            "demonstrated": false
+          },
+          "limitations": [
+            "MTBF_POINT_ESTIMATE_NOT_ESTIMABLE_ZERO_FAILURE"
+          ],
+          "reasonCodes": [
+            "MTBF_LOWER_BOUND_BELOW_TARGET",
+            "ACHIEVED_CONFIDENCE_BELOW_REQUIREMENT",
+            "ZERO_OBSERVED_FAILURES",
+            "EVIDENCE_GAP_REMAINS"
+          ],
+          "requirement": {
+            "missionTime": null,
+            "requiredConfidence": 0.9,
+            "targetDefinition": "mtbf",
+            "targetMTBF": 1000,
+            "targetReliability": null
+          },
+          "status": "NOT_DEMONSTRATED"
+        },
+        "insight": {
+          "explanationKeys": [
+            "Target not demonstrated at the selected confidence level",
+            "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level."
+          ],
+          "limitations": [
+            "No failure-rate trend evaluation",
+            "No repairable-system growth modeling",
+            "Statistical demonstration does not confirm a physical failure mechanism",
+            "MTBF_POINT_ESTIMATE_NOT_ESTIMABLE_ZERO_FAILURE"
+          ],
+          "parameters": {
+            "allowableFailures": null,
+            "assumptions": [
+              "Exponential constant failure-rate assumption",
+              "Independent failure events",
+              "Accumulated exposure time is treated as reliable"
+            ],
+            "decisionReasonCodes": [
+              "MTBF_LOWER_BOUND_BELOW_TARGET",
+              "ACHIEVED_CONFIDENCE_BELOW_REQUIREMENT",
+              "ZERO_OBSERVED_FAILURES",
+              "EVIDENCE_GAP_REMAINS"
+            ],
+            "decisionStatus": "NOT_DEMONSTRATED",
+            "evidenceGapStatus": "GAP_REMAINS",
+            "evidenceText": "MTBF lower bound is 434.294; achieved confidence at target is 63.21%.",
+            "meaningText": "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level.",
+            "method": "time",
+            "missingOptionalMissionTime": false,
+            "resultText": "Target not demonstrated at the selected confidence level",
+            "validationStatus": "VALID",
+            "workflow": "evaluate"
+          },
+          "recommendationKeys": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Continue testing to close the evidence gap",
+            "Review whether the exponential assumption is appropriate",
+            "Use Life Data if failure times and censoring information are available",
+            "Use the lower confidence bound instead of an infinite point estimate"
+          ]
+        },
+        "metadata": {
+          "contractVersion": "1.0.0",
+          "engineVersion": "1.0.0",
+          "fixtureVersion": "1.0.0",
+          "module": "demonstration"
+        },
+        "validation": {
+          "errors": [],
+          "status": "VALID",
+          "warnings": []
+        }
+      },
+      "reportConsumer": {
+        "chartSource": {
+          "evidence": {
+            "evidenceGap": {
+              "additionalTotalTestTimeRequired": 1302.5850929149315,
+              "assumption": "This estimate assumes no additional failures occur during the additional exposure.",
+              "requiredTotalTestTime": 2302.5850929149315
+            },
+            "observedFailures": 0,
+            "totalTestTime": 1000
+          },
+          "evidenceGap": {
+            "additionalTotalTestTimeRequired": 1302.5850929149315,
+            "assumption": "This estimate assumes no additional failures occur during the additional exposure.",
+            "requiredTotalTestTime": 2302.5850929149315,
+            "status": "GAP_REMAINS"
+          },
+          "method": "time",
+          "metrics": {
+            "achievedConfidenceAtTarget": 0.6321205588285577,
+            "chiSquareEquivalentQuantile": 4.605170185829863,
+            "mtbfLowerBound": 434.2944819181737,
+            "mtbfPointEstimate": null,
+            "reliabilityLowerBoundAtMissionTime": null,
+            "requiredExposureFactor": 2.3025850929149314
+          },
+          "requirement": {
+            "missionTime": null,
+            "requiredConfidence": 0.9,
+            "targetDefinition": "mtbf",
+            "targetMTBF": 1000,
+            "targetReliability": null
+          },
+          "workflow": "evaluate"
+        },
+        "chartSvgSha256": "2c14a438e659b1cfe21bfee04566a789b9eb8327ce865719f060c6ba8a06e55d",
+        "inputs": {
+          "confidenceLevel": 0.9,
+          "observedFailures": 0,
+          "targetDefinition": "mtbf",
+          "targetMTBF": 1000,
+          "timeUnit": "hours",
+          "totalTestTime": 1000
+        },
+        "insight": {
+          "assumptions": [
+            "Exponential constant failure-rate assumption",
+            "Independent failure events",
+            "Accumulated exposure time is treated as reliable"
+          ],
+          "evidence": "MTBF lower bound is 434.294; achieved confidence at target is 63.21%.",
+          "explanationKeys": [
+            "Target not demonstrated at the selected confidence level",
+            "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level."
+          ],
+          "flags": {
+            "allowableFailures": false,
+            "missingOptionalMissionTime": false,
+            "smallEvidenceMargin": false
+          },
+          "limitations": [
+            "No failure-rate trend evaluation",
+            "No repairable-system growth modeling",
+            "Statistical demonstration does not confirm a physical failure mechanism"
+          ],
+          "meaning": "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level.",
+          "parameters": {
+            "allowableFailures": null,
+            "assumptions": [
+              "Exponential constant failure-rate assumption",
+              "Independent failure events",
+              "Accumulated exposure time is treated as reliable"
+            ],
+            "decisionReasonCodes": [
+              "MTBF_LOWER_BOUND_BELOW_TARGET",
+              "ACHIEVED_CONFIDENCE_BELOW_REQUIREMENT",
+              "ZERO_OBSERVED_FAILURES",
+              "EVIDENCE_GAP_REMAINS"
+            ],
+            "decisionStatus": "NOT_DEMONSTRATED",
+            "evidenceGapStatus": "GAP_REMAINS",
+            "evidenceText": "MTBF lower bound is 434.294; achieved confidence at target is 63.21%.",
+            "meaningText": "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level.",
+            "method": "time",
+            "missingOptionalMissionTime": false,
+            "resultText": "Target not demonstrated at the selected confidence level",
+            "validationStatus": "VALID",
+            "workflow": "evaluate"
+          },
+          "recommendationKeys": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Continue testing to close the evidence gap",
+            "Review whether the exponential assumption is appropriate",
+            "Use Life Data if failure times and censoring information are available",
+            "Use the lower confidence bound instead of an infinite point estimate"
+          ],
+          "recommendedActions": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Continue testing to close the evidence gap",
+            "Review whether the exponential assumption is appropriate",
+            "Use Life Data if failure times and censoring information are available",
+            "Use the lower confidence bound instead of an infinite point estimate"
+          ],
+          "result": "Target not demonstrated at the selected confidence level",
+          "structuredLimitations": [
+            "No failure-rate trend evaluation",
+            "No repairable-system growth modeling",
+            "Statistical demonstration does not confirm a physical failure mechanism",
+            "MTBF_POINT_ESTIMATE_NOT_ESTIMABLE_ZERO_FAILURE"
+          ]
+        },
+        "result": {
+          "achievedConfidenceAtTarget": 0.6321205588285577,
+          "chiSquareEquivalentQuantile": 4.605170185829863,
+          "demonstrated": false,
+          "evidenceGap": {
+            "additionalTotalTestTimeRequired": 1302.5850929149315,
+            "assumption": "This estimate assumes no additional failures occur during the additional exposure.",
+            "requiredTotalTestTime": 2302.5850929149315
+          },
+          "method": "time",
+          "missionTime": null,
+          "mtbfLowerBound": 434.2944819181737,
+          "mtbfPointEstimate": null,
+          "observedFailures": 0,
+          "pointEstimateNotEstimable": true,
+          "reliabilityLowerBoundAtMissionTime": null,
+          "requiredConfidence": 0.9,
+          "requiredExposureFactor": 2.3025850929149314,
+          "targetDefinition": "mtbf",
+          "targetMTBF": 1000,
+          "targetReliability": null,
+          "timeUnit": "hours",
+          "totalTestTime": 1000,
+          "workflow": "evaluate"
+        }
+      },
+      "valueAudit": {
+        "nonFiniteNumberPaths": [],
+        "undefinedPaths": []
+      }
+    },
+    {
+      "chartData": {
+        "presentationDigest": "5af74a9c31ecc3651fb1749cd38369ef37c2cf665d5203ab46eb961ee471273e",
+        "source": {
+          "evidence": {
+            "evidenceGap": {
+              "additionalUnitsRequired": 142,
+              "assumption": "This estimate assumes no additional failures occur in the added units.",
+              "requiredTotalUnits": 152
+            },
+            "observedFailures": 10,
+            "observedSuccesses": 0,
+            "unitsTested": 10
+          },
+          "evidenceGap": {
+            "additionalUnitsRequired": 142,
+            "assumption": "This estimate assumes no additional failures occur in the added units.",
+            "requiredTotalUnits": 152,
+            "status": "GAP_REMAINS"
+          },
+          "method": "sample",
+          "metrics": {
+            "achievedConfidenceAtTarget": 0,
+            "observedPassRate": 0,
+            "reliabilityLowerBound": 0
+          },
+          "requirement": {
+            "requiredConfidence": 0.9,
+            "targetReliability": 0.9
+          },
+          "workflow": "evaluate"
+        }
+      },
+      "covers": [
+        "sample_demonstration"
+      ],
+      "id": "demo_sample_demonstration",
+      "input": {
+        "inputs": {
+          "confidenceLevel": 0.9,
+          "observedFailures": 10,
+          "targetReliability": 0.9,
+          "timeUnit": "hours",
+          "unitsTested": 10
+        },
+        "method": "sample",
+        "targetDefinition": {
+          "$baselineType": "undefined"
+        },
+        "workflow": "evaluate"
+      },
+      "output": {
+        "calculation": {
+          "assumptions": {
+            "evidenceGapAssumption": "This estimate assumes no additional failures occur in the added units."
+          },
+          "evidence": {
+            "evidenceGap": {
+              "additionalUnitsRequired": 142,
+              "assumption": "This estimate assumes no additional failures occur in the added units.",
+              "requiredTotalUnits": 152
+            },
+            "observedFailures": 10,
+            "observedSuccesses": 0,
+            "unitsTested": 10
+          },
+          "metrics": {
+            "achievedConfidenceAtTarget": 0,
+            "observedPassRate": 0,
+            "reliabilityLowerBound": 0
+          },
+          "model": "Exact Binomial",
+          "requirement": {
+            "requiredConfidence": 0.9,
+            "targetReliability": 0.9
+          },
+          "status": "COMPLETED"
+        },
+        "compatibility": {
+          "insight": {
+            "assumptions": [
+              "Independent pass/fail observations",
+              "Same mission definition for all units",
+              "No time-to-failure modeling"
+            ],
+            "evidence": "Reliability lower bound is 0.00%; achieved confidence at target is 0.00%.",
+            "explanationKeys": [
+              "Target not demonstrated at the selected confidence level",
+              "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level."
+            ],
+            "flags": {
+              "allowableFailures": false,
+              "missingOptionalMissionTime": false,
+              "smallEvidenceMargin": false
+            },
+            "limitations": [
+              "No time-to-failure modeling",
+              "No reliability growth evaluation",
+              "Statistical demonstration does not confirm a physical failure mechanism"
+            ],
+            "meaning": "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level.",
+            "parameters": {
+              "allowableFailures": null,
+              "assumptions": [
+                "Independent pass/fail observations",
+                "Same mission definition for all units",
+                "No time-to-failure modeling"
+              ],
+              "decisionReasonCodes": [
+                "RELIABILITY_LOWER_BOUND_BELOW_TARGET",
+                "ACHIEVED_CONFIDENCE_BELOW_REQUIREMENT",
+                "EVIDENCE_GAP_REMAINS"
+              ],
+              "decisionStatus": "NOT_DEMONSTRATED",
+              "evidenceGapStatus": "GAP_REMAINS",
+              "evidenceText": "Reliability lower bound is 0.00%; achieved confidence at target is 0.00%.",
+              "meaningText": "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level.",
+              "method": "sample",
+              "missingOptionalMissionTime": false,
+              "resultText": "Target not demonstrated at the selected confidence level",
+              "validationStatus": "VALID",
+              "workflow": "evaluate"
+            },
+            "recommendationKeys": [
+              "Confirm mission definition",
+              "Confirm failure classification",
+              "Continue testing to close the evidence gap",
+              "Use Life Data if failure times and censoring information are available"
+            ],
+            "recommendedActions": [
+              "Confirm mission definition",
+              "Confirm failure classification",
+              "Continue testing to close the evidence gap",
+              "Use Life Data if failure times and censoring information are available"
+            ],
+            "result": "Target not demonstrated at the selected confidence level",
+            "structuredLimitations": [
+              "No time-to-failure modeling",
+              "No reliability growth evaluation",
+              "Statistical demonstration does not confirm a physical failure mechanism"
+            ]
+          },
+          "result": {
+            "achievedConfidenceAtTarget": 0,
+            "demonstrated": false,
+            "evidenceGap": {
+              "additionalUnitsRequired": 142,
+              "assumption": "This estimate assumes no additional failures occur in the added units.",
+              "requiredTotalUnits": 152
+            },
+            "method": "sample",
+            "missionTime": null,
+            "observedFailures": 10,
+            "observedPassRate": 0,
+            "observedSuccesses": 0,
+            "reliabilityLowerBound": 0,
+            "requiredConfidence": 0.9,
+            "targetReliability": 0.9,
+            "timeUnit": "hours",
+            "unitsTested": 10,
+            "workflow": "evaluate"
+          },
+          "validation": {
+            "errors": [],
+            "warnings": []
+          }
+        },
+        "decision": {
+          "actualEvidence": {
+            "evidenceGap": {
+              "additionalUnitsRequired": 142,
+              "assumption": "This estimate assumes no additional failures occur in the added units.",
+              "requiredTotalUnits": 152
+            },
+            "observedFailures": 10,
+            "unitsTested": 10
+          },
+          "actualValue": 0,
+          "evidenceGap": {
+            "additionalUnitsRequired": 142,
+            "assumption": "This estimate assumes no additional failures occur in the added units.",
+            "requiredTotalUnits": 152,
+            "status": "GAP_REMAINS"
+          },
+          "existingDecision": {
+            "demonstrated": false
+          },
+          "limitations": [],
+          "reasonCodes": [
+            "RELIABILITY_LOWER_BOUND_BELOW_TARGET",
+            "ACHIEVED_CONFIDENCE_BELOW_REQUIREMENT",
+            "EVIDENCE_GAP_REMAINS"
+          ],
+          "requirement": {
+            "requiredConfidence": 0.9,
+            "targetReliability": 0.9
+          },
+          "status": "NOT_DEMONSTRATED"
+        },
+        "insight": {
+          "explanationKeys": [
+            "Target not demonstrated at the selected confidence level",
+            "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level."
+          ],
+          "limitations": [
+            "No time-to-failure modeling",
+            "No reliability growth evaluation",
+            "Statistical demonstration does not confirm a physical failure mechanism"
+          ],
+          "parameters": {
+            "allowableFailures": null,
+            "assumptions": [
+              "Independent pass/fail observations",
+              "Same mission definition for all units",
+              "No time-to-failure modeling"
+            ],
+            "decisionReasonCodes": [
+              "RELIABILITY_LOWER_BOUND_BELOW_TARGET",
+              "ACHIEVED_CONFIDENCE_BELOW_REQUIREMENT",
+              "EVIDENCE_GAP_REMAINS"
+            ],
+            "decisionStatus": "NOT_DEMONSTRATED",
+            "evidenceGapStatus": "GAP_REMAINS",
+            "evidenceText": "Reliability lower bound is 0.00%; achieved confidence at target is 0.00%.",
+            "meaningText": "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level.",
+            "method": "sample",
+            "missingOptionalMissionTime": false,
+            "resultText": "Target not demonstrated at the selected confidence level",
+            "validationStatus": "VALID",
+            "workflow": "evaluate"
+          },
+          "recommendationKeys": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Continue testing to close the evidence gap",
+            "Use Life Data if failure times and censoring information are available"
+          ]
+        },
+        "metadata": {
+          "contractVersion": "1.0.0",
+          "engineVersion": "1.0.0",
+          "fixtureVersion": "1.0.0",
+          "module": "demonstration"
+        },
+        "validation": {
+          "errors": [],
+          "status": "VALID",
+          "warnings": []
+        }
+      },
+      "reportConsumer": {
+        "chartSource": {
+          "evidence": {
+            "evidenceGap": {
+              "additionalUnitsRequired": 142,
+              "assumption": "This estimate assumes no additional failures occur in the added units.",
+              "requiredTotalUnits": 152
+            },
+            "observedFailures": 10,
+            "observedSuccesses": 0,
+            "unitsTested": 10
+          },
+          "evidenceGap": {
+            "additionalUnitsRequired": 142,
+            "assumption": "This estimate assumes no additional failures occur in the added units.",
+            "requiredTotalUnits": 152,
+            "status": "GAP_REMAINS"
+          },
+          "method": "sample",
+          "metrics": {
+            "achievedConfidenceAtTarget": 0,
+            "observedPassRate": 0,
+            "reliabilityLowerBound": 0
+          },
+          "requirement": {
+            "requiredConfidence": 0.9,
+            "targetReliability": 0.9
+          },
+          "workflow": "evaluate"
+        },
+        "chartSvgSha256": "5af74a9c31ecc3651fb1749cd38369ef37c2cf665d5203ab46eb961ee471273e",
+        "inputs": {
+          "confidenceLevel": 0.9,
+          "observedFailures": 10,
+          "targetReliability": 0.9,
+          "timeUnit": "hours",
+          "unitsTested": 10
+        },
+        "insight": {
+          "assumptions": [
+            "Independent pass/fail observations",
+            "Same mission definition for all units",
+            "No time-to-failure modeling"
+          ],
+          "evidence": "Reliability lower bound is 0.00%; achieved confidence at target is 0.00%.",
+          "explanationKeys": [
+            "Target not demonstrated at the selected confidence level",
+            "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level."
+          ],
+          "flags": {
+            "allowableFailures": false,
+            "missingOptionalMissionTime": false,
+            "smallEvidenceMargin": false
+          },
+          "limitations": [
+            "No time-to-failure modeling",
+            "No reliability growth evaluation",
+            "Statistical demonstration does not confirm a physical failure mechanism"
+          ],
+          "meaning": "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level.",
+          "parameters": {
+            "allowableFailures": null,
+            "assumptions": [
+              "Independent pass/fail observations",
+              "Same mission definition for all units",
+              "No time-to-failure modeling"
+            ],
+            "decisionReasonCodes": [
+              "RELIABILITY_LOWER_BOUND_BELOW_TARGET",
+              "ACHIEVED_CONFIDENCE_BELOW_REQUIREMENT",
+              "EVIDENCE_GAP_REMAINS"
+            ],
+            "decisionStatus": "NOT_DEMONSTRATED",
+            "evidenceGapStatus": "GAP_REMAINS",
+            "evidenceText": "Reliability lower bound is 0.00%; achieved confidence at target is 0.00%.",
+            "meaningText": "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level.",
+            "method": "sample",
+            "missingOptionalMissionTime": false,
+            "resultText": "Target not demonstrated at the selected confidence level",
+            "validationStatus": "VALID",
+            "workflow": "evaluate"
+          },
+          "recommendationKeys": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Continue testing to close the evidence gap",
+            "Use Life Data if failure times and censoring information are available"
+          ],
+          "recommendedActions": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Continue testing to close the evidence gap",
+            "Use Life Data if failure times and censoring information are available"
+          ],
+          "result": "Target not demonstrated at the selected confidence level",
+          "structuredLimitations": [
+            "No time-to-failure modeling",
+            "No reliability growth evaluation",
+            "Statistical demonstration does not confirm a physical failure mechanism"
+          ]
+        },
+        "result": {
+          "achievedConfidenceAtTarget": 0,
+          "demonstrated": false,
+          "evidenceGap": {
+            "additionalUnitsRequired": 142,
+            "assumption": "This estimate assumes no additional failures occur in the added units.",
+            "requiredTotalUnits": 152
+          },
+          "method": "sample",
+          "missionTime": null,
+          "observedFailures": 10,
+          "observedPassRate": 0,
+          "observedSuccesses": 0,
+          "reliabilityLowerBound": 0,
+          "requiredConfidence": 0.9,
+          "targetReliability": 0.9,
+          "timeUnit": "hours",
+          "unitsTested": 10,
+          "workflow": "evaluate"
+        }
+      },
+      "valueAudit": {
+        "nonFiniteNumberPaths": [],
+        "undefinedPaths": []
+      }
+    },
+    {
+      "chartData": {
+        "presentationDigest": "b98c8b12047d33a23730613b31583bf8352c7e35c6a27d4476851e62c412962b",
+        "source": {
+          "evidence": {
+            "evidenceGap": {
+              "additionalTotalTestTimeRequired": 0,
+              "assumption": "No additional exposure is required.",
+              "requiredTotalTestTime": 2302.5850929149315
+            },
+            "observedFailures": 0,
+            "totalTestTime": 3000
+          },
+          "evidenceGap": {
+            "additionalTotalTestTimeRequired": 0,
+            "assumption": "No additional exposure is required.",
+            "requiredTotalTestTime": 2302.5850929149315,
+            "status": "SATISFIED"
+          },
+          "method": "time",
+          "metrics": {
+            "achievedConfidenceAtTarget": 0.950212931632136,
+            "chiSquareEquivalentQuantile": 4.605170185829863,
+            "mtbfLowerBound": 1302.883445754521,
+            "mtbfPointEstimate": null,
+            "reliabilityLowerBoundAtMissionTime": null,
+            "requiredExposureFactor": 2.3025850929149314
+          },
+          "requirement": {
+            "missionTime": null,
+            "requiredConfidence": 0.9,
+            "targetDefinition": "mtbf",
+            "targetMTBF": 1000,
+            "targetReliability": null
+          },
+          "workflow": "evaluate"
+        }
+      },
+      "covers": [
+        "time_demonstration"
+      ],
+      "id": "demo_time_demonstration",
+      "input": {
+        "inputs": {
+          "confidenceLevel": 0.9,
+          "observedFailures": 0,
+          "targetDefinition": "mtbf",
+          "targetMTBF": 1000,
+          "timeUnit": "hours",
+          "totalTestTime": 3000
+        },
+        "method": "time",
+        "targetDefinition": "mtbf",
+        "workflow": "evaluate"
+      },
+      "output": {
+        "calculation": {
+          "assumptions": {
+            "evidenceGapAssumption": "No additional exposure is required.",
+            "pointEstimateNotEstimable": true
+          },
+          "evidence": {
+            "evidenceGap": {
+              "additionalTotalTestTimeRequired": 0,
+              "assumption": "No additional exposure is required.",
+              "requiredTotalTestTime": 2302.5850929149315
+            },
+            "observedFailures": 0,
+            "totalTestTime": 3000
+          },
+          "metrics": {
+            "achievedConfidenceAtTarget": 0.950212931632136,
+            "chiSquareEquivalentQuantile": 4.605170185829863,
+            "mtbfLowerBound": 1302.883445754521,
+            "mtbfPointEstimate": null,
+            "reliabilityLowerBoundAtMissionTime": null,
+            "requiredExposureFactor": 2.3025850929149314
+          },
+          "model": "Exponential / Poisson",
+          "requirement": {
+            "missionTime": null,
+            "requiredConfidence": 0.9,
+            "targetDefinition": "mtbf",
+            "targetMTBF": 1000,
+            "targetReliability": null
+          },
+          "status": "COMPLETED"
+        },
+        "compatibility": {
+          "insight": {
+            "assumptions": [
+              "Exponential constant failure-rate assumption",
+              "Independent failure events",
+              "Accumulated exposure time is treated as reliable"
+            ],
+            "evidence": "MTBF lower bound is 1,302.88; achieved confidence at target is 95.02%.",
+            "explanationKeys": [
+              "Target demonstrated at the selected confidence level",
+              "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level."
+            ],
+            "flags": {
+              "allowableFailures": false,
+              "missingOptionalMissionTime": false,
+              "smallEvidenceMargin": false
+            },
+            "limitations": [
+              "No failure-rate trend evaluation",
+              "No repairable-system growth modeling",
+              "Statistical demonstration does not confirm a physical failure mechanism"
+            ],
+            "meaning": "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level.",
+            "parameters": {
+              "allowableFailures": null,
+              "assumptions": [
+                "Exponential constant failure-rate assumption",
+                "Independent failure events",
+                "Accumulated exposure time is treated as reliable"
+              ],
+              "decisionReasonCodes": [
+                "MTBF_LOWER_BOUND_MEETS_TARGET",
+                "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT",
+                "ZERO_OBSERVED_FAILURES"
+              ],
+              "decisionStatus": "DEMONSTRATED",
+              "evidenceGapStatus": "SATISFIED",
+              "evidenceText": "MTBF lower bound is 1,302.88; achieved confidence at target is 95.02%.",
+              "meaningText": "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level.",
+              "method": "time",
+              "missingOptionalMissionTime": false,
+              "resultText": "Target demonstrated at the selected confidence level",
+              "validationStatus": "VALID",
+              "workflow": "evaluate"
+            },
+            "recommendationKeys": [
+              "Confirm mission definition",
+              "Confirm failure classification",
+              "Review whether the exponential assumption is appropriate",
+              "Use Life Data if failure times and censoring information are available",
+              "Use the lower confidence bound instead of an infinite point estimate"
+            ],
+            "recommendedActions": [
+              "Confirm mission definition",
+              "Confirm failure classification",
+              "Review whether the exponential assumption is appropriate",
+              "Use Life Data if failure times and censoring information are available",
+              "Use the lower confidence bound instead of an infinite point estimate"
+            ],
+            "result": "Target demonstrated at the selected confidence level",
+            "structuredLimitations": [
+              "No failure-rate trend evaluation",
+              "No repairable-system growth modeling",
+              "Statistical demonstration does not confirm a physical failure mechanism",
+              "MTBF_POINT_ESTIMATE_NOT_ESTIMABLE_ZERO_FAILURE"
+            ]
+          },
+          "result": {
+            "achievedConfidenceAtTarget": 0.950212931632136,
+            "chiSquareEquivalentQuantile": 4.605170185829863,
+            "demonstrated": true,
+            "evidenceGap": {
+              "additionalTotalTestTimeRequired": 0,
+              "assumption": "No additional exposure is required.",
+              "requiredTotalTestTime": 2302.5850929149315
+            },
+            "method": "time",
+            "missionTime": null,
+            "mtbfLowerBound": 1302.883445754521,
+            "mtbfPointEstimate": null,
+            "observedFailures": 0,
+            "pointEstimateNotEstimable": true,
+            "reliabilityLowerBoundAtMissionTime": null,
+            "requiredConfidence": 0.9,
+            "requiredExposureFactor": 2.3025850929149314,
+            "targetDefinition": "mtbf",
+            "targetMTBF": 1000,
+            "targetReliability": null,
+            "timeUnit": "hours",
+            "totalTestTime": 3000,
+            "workflow": "evaluate"
+          },
+          "validation": {
+            "errors": [],
+            "warnings": []
+          }
+        },
+        "decision": {
+          "actualEvidence": {
+            "evidenceGap": {
+              "additionalTotalTestTimeRequired": 0,
+              "assumption": "No additional exposure is required.",
+              "requiredTotalTestTime": 2302.5850929149315
+            },
+            "observedFailures": 0,
+            "totalTestTime": 3000
+          },
+          "actualValue": 1302.883445754521,
+          "evidenceGap": {
+            "additionalTotalTestTimeRequired": 0,
+            "assumption": "No additional exposure is required.",
+            "requiredTotalTestTime": 2302.5850929149315,
+            "status": "SATISFIED"
+          },
+          "existingDecision": {
+            "demonstrated": true
+          },
+          "limitations": [
+            "MTBF_POINT_ESTIMATE_NOT_ESTIMABLE_ZERO_FAILURE"
+          ],
+          "reasonCodes": [
+            "MTBF_LOWER_BOUND_MEETS_TARGET",
+            "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT",
+            "ZERO_OBSERVED_FAILURES"
+          ],
+          "requirement": {
+            "missionTime": null,
+            "requiredConfidence": 0.9,
+            "targetDefinition": "mtbf",
+            "targetMTBF": 1000,
+            "targetReliability": null
+          },
+          "status": "DEMONSTRATED"
+        },
+        "insight": {
+          "explanationKeys": [
+            "Target demonstrated at the selected confidence level",
+            "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level."
+          ],
+          "limitations": [
+            "No failure-rate trend evaluation",
+            "No repairable-system growth modeling",
+            "Statistical demonstration does not confirm a physical failure mechanism",
+            "MTBF_POINT_ESTIMATE_NOT_ESTIMABLE_ZERO_FAILURE"
+          ],
+          "parameters": {
+            "allowableFailures": null,
+            "assumptions": [
+              "Exponential constant failure-rate assumption",
+              "Independent failure events",
+              "Accumulated exposure time is treated as reliable"
+            ],
+            "decisionReasonCodes": [
+              "MTBF_LOWER_BOUND_MEETS_TARGET",
+              "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT",
+              "ZERO_OBSERVED_FAILURES"
+            ],
+            "decisionStatus": "DEMONSTRATED",
+            "evidenceGapStatus": "SATISFIED",
+            "evidenceText": "MTBF lower bound is 1,302.88; achieved confidence at target is 95.02%.",
+            "meaningText": "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level.",
+            "method": "time",
+            "missingOptionalMissionTime": false,
+            "resultText": "Target demonstrated at the selected confidence level",
+            "validationStatus": "VALID",
+            "workflow": "evaluate"
+          },
+          "recommendationKeys": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Review whether the exponential assumption is appropriate",
+            "Use Life Data if failure times and censoring information are available",
+            "Use the lower confidence bound instead of an infinite point estimate"
+          ]
+        },
+        "metadata": {
+          "contractVersion": "1.0.0",
+          "engineVersion": "1.0.0",
+          "fixtureVersion": "1.0.0",
+          "module": "demonstration"
+        },
+        "validation": {
+          "errors": [],
+          "status": "VALID",
+          "warnings": []
+        }
+      },
+      "reportConsumer": {
+        "chartSource": {
+          "evidence": {
+            "evidenceGap": {
+              "additionalTotalTestTimeRequired": 0,
+              "assumption": "No additional exposure is required.",
+              "requiredTotalTestTime": 2302.5850929149315
+            },
+            "observedFailures": 0,
+            "totalTestTime": 3000
+          },
+          "evidenceGap": {
+            "additionalTotalTestTimeRequired": 0,
+            "assumption": "No additional exposure is required.",
+            "requiredTotalTestTime": 2302.5850929149315,
+            "status": "SATISFIED"
+          },
+          "method": "time",
+          "metrics": {
+            "achievedConfidenceAtTarget": 0.950212931632136,
+            "chiSquareEquivalentQuantile": 4.605170185829863,
+            "mtbfLowerBound": 1302.883445754521,
+            "mtbfPointEstimate": null,
+            "reliabilityLowerBoundAtMissionTime": null,
+            "requiredExposureFactor": 2.3025850929149314
+          },
+          "requirement": {
+            "missionTime": null,
+            "requiredConfidence": 0.9,
+            "targetDefinition": "mtbf",
+            "targetMTBF": 1000,
+            "targetReliability": null
+          },
+          "workflow": "evaluate"
+        },
+        "chartSvgSha256": "b98c8b12047d33a23730613b31583bf8352c7e35c6a27d4476851e62c412962b",
+        "inputs": {
+          "confidenceLevel": 0.9,
+          "observedFailures": 0,
+          "targetDefinition": "mtbf",
+          "targetMTBF": 1000,
+          "timeUnit": "hours",
+          "totalTestTime": 3000
+        },
+        "insight": {
+          "assumptions": [
+            "Exponential constant failure-rate assumption",
+            "Independent failure events",
+            "Accumulated exposure time is treated as reliable"
+          ],
+          "evidence": "MTBF lower bound is 1,302.88; achieved confidence at target is 95.02%.",
+          "explanationKeys": [
+            "Target demonstrated at the selected confidence level",
+            "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level."
+          ],
+          "flags": {
+            "allowableFailures": false,
+            "missingOptionalMissionTime": false,
+            "smallEvidenceMargin": false
+          },
+          "limitations": [
+            "No failure-rate trend evaluation",
+            "No repairable-system growth modeling",
+            "Statistical demonstration does not confirm a physical failure mechanism"
+          ],
+          "meaning": "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level.",
+          "parameters": {
+            "allowableFailures": null,
+            "assumptions": [
+              "Exponential constant failure-rate assumption",
+              "Independent failure events",
+              "Accumulated exposure time is treated as reliable"
+            ],
+            "decisionReasonCodes": [
+              "MTBF_LOWER_BOUND_MEETS_TARGET",
+              "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT",
+              "ZERO_OBSERVED_FAILURES"
+            ],
+            "decisionStatus": "DEMONSTRATED",
+            "evidenceGapStatus": "SATISFIED",
+            "evidenceText": "MTBF lower bound is 1,302.88; achieved confidence at target is 95.02%.",
+            "meaningText": "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level.",
+            "method": "time",
+            "missingOptionalMissionTime": false,
+            "resultText": "Target demonstrated at the selected confidence level",
+            "validationStatus": "VALID",
+            "workflow": "evaluate"
+          },
+          "recommendationKeys": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Review whether the exponential assumption is appropriate",
+            "Use Life Data if failure times and censoring information are available",
+            "Use the lower confidence bound instead of an infinite point estimate"
+          ],
+          "recommendedActions": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Review whether the exponential assumption is appropriate",
+            "Use Life Data if failure times and censoring information are available",
+            "Use the lower confidence bound instead of an infinite point estimate"
+          ],
+          "result": "Target demonstrated at the selected confidence level",
+          "structuredLimitations": [
+            "No failure-rate trend evaluation",
+            "No repairable-system growth modeling",
+            "Statistical demonstration does not confirm a physical failure mechanism",
+            "MTBF_POINT_ESTIMATE_NOT_ESTIMABLE_ZERO_FAILURE"
+          ]
+        },
+        "result": {
+          "achievedConfidenceAtTarget": 0.950212931632136,
+          "chiSquareEquivalentQuantile": 4.605170185829863,
+          "demonstrated": true,
+          "evidenceGap": {
+            "additionalTotalTestTimeRequired": 0,
+            "assumption": "No additional exposure is required.",
+            "requiredTotalTestTime": 2302.5850929149315
+          },
+          "method": "time",
+          "missionTime": null,
+          "mtbfLowerBound": 1302.883445754521,
+          "mtbfPointEstimate": null,
+          "observedFailures": 0,
+          "pointEstimateNotEstimable": true,
+          "reliabilityLowerBoundAtMissionTime": null,
+          "requiredConfidence": 0.9,
+          "requiredExposureFactor": 2.3025850929149314,
+          "targetDefinition": "mtbf",
+          "targetMTBF": 1000,
+          "targetReliability": null,
+          "timeUnit": "hours",
+          "totalTestTime": 3000,
+          "workflow": "evaluate"
+        }
+      },
+      "valueAudit": {
+        "nonFiniteNumberPaths": [],
+        "undefinedPaths": []
+      }
+    },
+    {
+      "chartData": {
+        "presentationDigest": "530e0b449c882e48c3a203c076a0afadc8909a951410dec3294b81d3151791b9",
+        "source": {
+          "evidence": {
+            "evidenceGap": {
+              "additionalUnitsRequired": 0,
+              "assumption": "No additional units are required.",
+              "requiredTotalUnits": 22
+            },
+            "observedFailures": 0,
+            "observedSuccesses": 22,
+            "unitsTested": 22
+          },
+          "evidenceGap": {
+            "additionalUnitsRequired": 0,
+            "assumption": "No additional units are required.",
+            "requiredTotalUnits": 22,
+            "status": "SATISFIED"
+          },
+          "method": "sample",
+          "metrics": {
+            "achievedConfidenceAtTarget": 0.8999999999999999,
+            "observedPassRate": 1,
+            "reliabilityLowerBound": 0.9006280202083872
+          },
+          "requirement": {
+            "requiredConfidence": 0.9,
+            "targetReliability": 0.9006280202112785
+          },
+          "workflow": "evaluate"
+        }
+      },
+      "covers": [
+        "equal_boundary",
+        "sample",
+        "time"
+      ],
+      "id": "demo_equal_boundary__sample_eval_target_equals_lower",
+      "input": {
+        "inputs": {
+          "confidenceLevel": 0.9,
+          "observedFailures": 0,
+          "targetReliability": 0.9006280202112785,
+          "timeUnit": "hours",
+          "unitsTested": 22
+        },
+        "method": "sample",
+        "targetDefinition": {
+          "$baselineType": "undefined"
+        },
+        "workflow": "evaluate"
+      },
+      "output": {
+        "calculation": {
+          "assumptions": {
+            "evidenceGapAssumption": "No additional units are required."
+          },
+          "evidence": {
+            "evidenceGap": {
+              "additionalUnitsRequired": 0,
+              "assumption": "No additional units are required.",
+              "requiredTotalUnits": 22
+            },
+            "observedFailures": 0,
+            "observedSuccesses": 22,
+            "unitsTested": 22
+          },
+          "metrics": {
+            "achievedConfidenceAtTarget": 0.8999999999999999,
+            "observedPassRate": 1,
+            "reliabilityLowerBound": 0.9006280202083872
+          },
+          "model": "Exact Binomial",
+          "requirement": {
+            "requiredConfidence": 0.9,
+            "targetReliability": 0.9006280202112785
+          },
+          "status": "COMPLETED"
+        },
+        "compatibility": {
+          "insight": {
+            "assumptions": [
+              "Independent pass/fail observations",
+              "Same mission definition for all units",
+              "No time-to-failure modeling"
+            ],
+            "evidence": "Reliability lower bound is 90.06%; achieved confidence at target is 90.00%.",
+            "explanationKeys": [
+              "Target demonstrated at the selected confidence level",
+              "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level."
+            ],
+            "flags": {
+              "allowableFailures": false,
+              "missingOptionalMissionTime": false,
+              "smallEvidenceMargin": false
+            },
+            "limitations": [
+              "No time-to-failure modeling",
+              "No reliability growth evaluation",
+              "Statistical demonstration does not confirm a physical failure mechanism"
+            ],
+            "meaning": "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level.",
+            "parameters": {
+              "allowableFailures": null,
+              "assumptions": [
+                "Independent pass/fail observations",
+                "Same mission definition for all units",
+                "No time-to-failure modeling"
+              ],
+              "decisionReasonCodes": [
+                "RELIABILITY_LOWER_BOUND_MEETS_TARGET",
+                "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT",
+                "ZERO_OBSERVED_FAILURES"
+              ],
+              "decisionStatus": "DEMONSTRATED",
+              "evidenceGapStatus": "SATISFIED",
+              "evidenceText": "Reliability lower bound is 90.06%; achieved confidence at target is 90.00%.",
+              "meaningText": "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level.",
+              "method": "sample",
+              "missingOptionalMissionTime": false,
+              "resultText": "Target demonstrated at the selected confidence level",
+              "validationStatus": "VALID",
+              "workflow": "evaluate"
+            },
+            "recommendationKeys": [
+              "Confirm mission definition",
+              "Confirm failure classification",
+              "Use Life Data if failure times and censoring information are available"
+            ],
+            "recommendedActions": [
+              "Confirm mission definition",
+              "Confirm failure classification",
+              "Use Life Data if failure times and censoring information are available"
+            ],
+            "result": "Target demonstrated at the selected confidence level",
+            "structuredLimitations": [
+              "No time-to-failure modeling",
+              "No reliability growth evaluation",
+              "Statistical demonstration does not confirm a physical failure mechanism"
+            ]
+          },
+          "result": {
+            "achievedConfidenceAtTarget": 0.8999999999999999,
+            "demonstrated": true,
+            "evidenceGap": {
+              "additionalUnitsRequired": 0,
+              "assumption": "No additional units are required.",
+              "requiredTotalUnits": 22
+            },
+            "method": "sample",
+            "missionTime": null,
+            "observedFailures": 0,
+            "observedPassRate": 1,
+            "observedSuccesses": 22,
+            "reliabilityLowerBound": 0.9006280202083872,
+            "requiredConfidence": 0.9,
+            "targetReliability": 0.9006280202112785,
+            "timeUnit": "hours",
+            "unitsTested": 22,
+            "workflow": "evaluate"
+          },
+          "validation": {
+            "errors": [],
+            "warnings": []
+          }
+        },
+        "decision": {
+          "actualEvidence": {
+            "evidenceGap": {
+              "additionalUnitsRequired": 0,
+              "assumption": "No additional units are required.",
+              "requiredTotalUnits": 22
+            },
+            "observedFailures": 0,
+            "unitsTested": 22
+          },
+          "actualValue": 0.9006280202083872,
+          "evidenceGap": {
+            "additionalUnitsRequired": 0,
+            "assumption": "No additional units are required.",
+            "requiredTotalUnits": 22,
+            "status": "SATISFIED"
+          },
+          "existingDecision": {
+            "demonstrated": true
+          },
+          "limitations": [],
+          "reasonCodes": [
+            "RELIABILITY_LOWER_BOUND_MEETS_TARGET",
+            "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT",
+            "ZERO_OBSERVED_FAILURES"
+          ],
+          "requirement": {
+            "requiredConfidence": 0.9,
+            "targetReliability": 0.9006280202112785
+          },
+          "status": "DEMONSTRATED"
+        },
+        "insight": {
+          "explanationKeys": [
+            "Target demonstrated at the selected confidence level",
+            "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level."
+          ],
+          "limitations": [
+            "No time-to-failure modeling",
+            "No reliability growth evaluation",
+            "Statistical demonstration does not confirm a physical failure mechanism"
+          ],
+          "parameters": {
+            "allowableFailures": null,
+            "assumptions": [
+              "Independent pass/fail observations",
+              "Same mission definition for all units",
+              "No time-to-failure modeling"
+            ],
+            "decisionReasonCodes": [
+              "RELIABILITY_LOWER_BOUND_MEETS_TARGET",
+              "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT",
+              "ZERO_OBSERVED_FAILURES"
+            ],
+            "decisionStatus": "DEMONSTRATED",
+            "evidenceGapStatus": "SATISFIED",
+            "evidenceText": "Reliability lower bound is 90.06%; achieved confidence at target is 90.00%.",
+            "meaningText": "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level.",
+            "method": "sample",
+            "missingOptionalMissionTime": false,
+            "resultText": "Target demonstrated at the selected confidence level",
+            "validationStatus": "VALID",
+            "workflow": "evaluate"
+          },
+          "recommendationKeys": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Use Life Data if failure times and censoring information are available"
+          ]
+        },
+        "metadata": {
+          "contractVersion": "1.0.0",
+          "engineVersion": "1.0.0",
+          "fixtureVersion": "1.0.0",
+          "module": "demonstration"
+        },
+        "validation": {
+          "errors": [],
+          "status": "VALID",
+          "warnings": []
+        }
+      },
+      "reportConsumer": {
+        "chartSource": {
+          "evidence": {
+            "evidenceGap": {
+              "additionalUnitsRequired": 0,
+              "assumption": "No additional units are required.",
+              "requiredTotalUnits": 22
+            },
+            "observedFailures": 0,
+            "observedSuccesses": 22,
+            "unitsTested": 22
+          },
+          "evidenceGap": {
+            "additionalUnitsRequired": 0,
+            "assumption": "No additional units are required.",
+            "requiredTotalUnits": 22,
+            "status": "SATISFIED"
+          },
+          "method": "sample",
+          "metrics": {
+            "achievedConfidenceAtTarget": 0.8999999999999999,
+            "observedPassRate": 1,
+            "reliabilityLowerBound": 0.9006280202083872
+          },
+          "requirement": {
+            "requiredConfidence": 0.9,
+            "targetReliability": 0.9006280202112785
+          },
+          "workflow": "evaluate"
+        },
+        "chartSvgSha256": "530e0b449c882e48c3a203c076a0afadc8909a951410dec3294b81d3151791b9",
+        "inputs": {
+          "confidenceLevel": 0.9,
+          "observedFailures": 0,
+          "targetReliability": 0.9006280202112785,
+          "timeUnit": "hours",
+          "unitsTested": 22
+        },
+        "insight": {
+          "assumptions": [
+            "Independent pass/fail observations",
+            "Same mission definition for all units",
+            "No time-to-failure modeling"
+          ],
+          "evidence": "Reliability lower bound is 90.06%; achieved confidence at target is 90.00%.",
+          "explanationKeys": [
+            "Target demonstrated at the selected confidence level",
+            "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level."
+          ],
+          "flags": {
+            "allowableFailures": false,
+            "missingOptionalMissionTime": false,
+            "smallEvidenceMargin": false
+          },
+          "limitations": [
+            "No time-to-failure modeling",
+            "No reliability growth evaluation",
+            "Statistical demonstration does not confirm a physical failure mechanism"
+          ],
+          "meaning": "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level.",
+          "parameters": {
+            "allowableFailures": null,
+            "assumptions": [
+              "Independent pass/fail observations",
+              "Same mission definition for all units",
+              "No time-to-failure modeling"
+            ],
+            "decisionReasonCodes": [
+              "RELIABILITY_LOWER_BOUND_MEETS_TARGET",
+              "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT",
+              "ZERO_OBSERVED_FAILURES"
+            ],
+            "decisionStatus": "DEMONSTRATED",
+            "evidenceGapStatus": "SATISFIED",
+            "evidenceText": "Reliability lower bound is 90.06%; achieved confidence at target is 90.00%.",
+            "meaningText": "The result is based on the exact binomial model, the selected target reliability, and the selected confidence level.",
+            "method": "sample",
+            "missingOptionalMissionTime": false,
+            "resultText": "Target demonstrated at the selected confidence level",
+            "validationStatus": "VALID",
+            "workflow": "evaluate"
+          },
+          "recommendationKeys": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Use Life Data if failure times and censoring information are available"
+          ],
+          "recommendedActions": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Use Life Data if failure times and censoring information are available"
+          ],
+          "result": "Target demonstrated at the selected confidence level",
+          "structuredLimitations": [
+            "No time-to-failure modeling",
+            "No reliability growth evaluation",
+            "Statistical demonstration does not confirm a physical failure mechanism"
+          ]
+        },
+        "result": {
+          "achievedConfidenceAtTarget": 0.8999999999999999,
+          "demonstrated": true,
+          "evidenceGap": {
+            "additionalUnitsRequired": 0,
+            "assumption": "No additional units are required.",
+            "requiredTotalUnits": 22
+          },
+          "method": "sample",
+          "missionTime": null,
+          "observedFailures": 0,
+          "observedPassRate": 1,
+          "observedSuccesses": 22,
+          "reliabilityLowerBound": 0.9006280202083872,
+          "requiredConfidence": 0.9,
+          "targetReliability": 0.9006280202112785,
+          "timeUnit": "hours",
+          "unitsTested": 22,
+          "workflow": "evaluate"
+        }
+      },
+      "valueAudit": {
+        "nonFiniteNumberPaths": [],
+        "undefinedPaths": []
+      }
+    },
+    {
+      "chartData": {
+        "presentationDigest": "e7c510f2a1a0ac3272016dd9395bdf8b86fd070a5df1a05e81e551fd89318499",
+        "source": {
+          "evidence": {
+            "evidenceGap": {
+              "additionalTotalTestTimeRequired": 0,
+              "assumption": "No additional exposure is required.",
+              "requiredTotalTestTime": 2302.5850929149315
+            },
+            "observedFailures": 0,
+            "totalTestTime": 2302.585092994046
+          },
+          "evidenceGap": {
+            "additionalTotalTestTimeRequired": 0,
+            "assumption": "No additional exposure is required.",
+            "requiredTotalTestTime": 2302.5850929149315,
+            "status": "SATISFIED"
+          },
+          "method": "time",
+          "metrics": {
+            "achievedConfidenceAtTarget": 0.9,
+            "chiSquareEquivalentQuantile": 4.605170185829863,
+            "mtbfLowerBound": 1000.0000000343591,
+            "mtbfPointEstimate": null,
+            "reliabilityLowerBoundAtMissionTime": null,
+            "requiredExposureFactor": 2.3025850929149314
+          },
+          "requirement": {
+            "missionTime": null,
+            "requiredConfidence": 0.9,
+            "targetDefinition": "mtbf",
+            "targetMTBF": 1000,
+            "targetReliability": null
+          },
+          "workflow": "evaluate"
+        }
+      },
+      "covers": [
+        "equal_boundary",
+        "sample",
+        "time"
+      ],
+      "id": "demo_equal_boundary__time_eval_target_equals_lower",
+      "input": {
+        "inputs": {
+          "confidenceLevel": 0.9,
+          "observedFailures": 0,
+          "targetDefinition": "mtbf",
+          "targetMTBF": 1000,
+          "timeUnit": "hours",
+          "totalTestTime": 2302.585092994046
+        },
+        "method": "time",
+        "targetDefinition": "mtbf",
+        "workflow": "evaluate"
+      },
+      "output": {
+        "calculation": {
+          "assumptions": {
+            "evidenceGapAssumption": "No additional exposure is required.",
+            "pointEstimateNotEstimable": true
+          },
+          "evidence": {
+            "evidenceGap": {
+              "additionalTotalTestTimeRequired": 0,
+              "assumption": "No additional exposure is required.",
+              "requiredTotalTestTime": 2302.5850929149315
+            },
+            "observedFailures": 0,
+            "totalTestTime": 2302.585092994046
+          },
+          "metrics": {
+            "achievedConfidenceAtTarget": 0.9,
+            "chiSquareEquivalentQuantile": 4.605170185829863,
+            "mtbfLowerBound": 1000.0000000343591,
+            "mtbfPointEstimate": null,
+            "reliabilityLowerBoundAtMissionTime": null,
+            "requiredExposureFactor": 2.3025850929149314
+          },
+          "model": "Exponential / Poisson",
+          "requirement": {
+            "missionTime": null,
+            "requiredConfidence": 0.9,
+            "targetDefinition": "mtbf",
+            "targetMTBF": 1000,
+            "targetReliability": null
+          },
+          "status": "COMPLETED"
+        },
+        "compatibility": {
+          "insight": {
+            "assumptions": [
+              "Exponential constant failure-rate assumption",
+              "Independent failure events",
+              "Accumulated exposure time is treated as reliable"
+            ],
+            "evidence": "MTBF lower bound is 1,000; achieved confidence at target is 90.00%.",
+            "explanationKeys": [
+              "Target demonstrated at the selected confidence level",
+              "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level."
+            ],
+            "flags": {
+              "allowableFailures": false,
+              "missingOptionalMissionTime": false,
+              "smallEvidenceMargin": false
+            },
+            "limitations": [
+              "No failure-rate trend evaluation",
+              "No repairable-system growth modeling",
+              "Statistical demonstration does not confirm a physical failure mechanism"
+            ],
+            "meaning": "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level.",
+            "parameters": {
+              "allowableFailures": null,
+              "assumptions": [
+                "Exponential constant failure-rate assumption",
+                "Independent failure events",
+                "Accumulated exposure time is treated as reliable"
+              ],
+              "decisionReasonCodes": [
+                "MTBF_LOWER_BOUND_MEETS_TARGET",
+                "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT",
+                "ZERO_OBSERVED_FAILURES"
+              ],
+              "decisionStatus": "DEMONSTRATED",
+              "evidenceGapStatus": "SATISFIED",
+              "evidenceText": "MTBF lower bound is 1,000; achieved confidence at target is 90.00%.",
+              "meaningText": "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level.",
+              "method": "time",
+              "missingOptionalMissionTime": false,
+              "resultText": "Target demonstrated at the selected confidence level",
+              "validationStatus": "VALID",
+              "workflow": "evaluate"
+            },
+            "recommendationKeys": [
+              "Confirm mission definition",
+              "Confirm failure classification",
+              "Review whether the exponential assumption is appropriate",
+              "Use Life Data if failure times and censoring information are available",
+              "Use the lower confidence bound instead of an infinite point estimate"
+            ],
+            "recommendedActions": [
+              "Confirm mission definition",
+              "Confirm failure classification",
+              "Review whether the exponential assumption is appropriate",
+              "Use Life Data if failure times and censoring information are available",
+              "Use the lower confidence bound instead of an infinite point estimate"
+            ],
+            "result": "Target demonstrated at the selected confidence level",
+            "structuredLimitations": [
+              "No failure-rate trend evaluation",
+              "No repairable-system growth modeling",
+              "Statistical demonstration does not confirm a physical failure mechanism",
+              "MTBF_POINT_ESTIMATE_NOT_ESTIMABLE_ZERO_FAILURE"
+            ]
+          },
+          "result": {
+            "achievedConfidenceAtTarget": 0.9,
+            "chiSquareEquivalentQuantile": 4.605170185829863,
+            "demonstrated": true,
+            "evidenceGap": {
+              "additionalTotalTestTimeRequired": 0,
+              "assumption": "No additional exposure is required.",
+              "requiredTotalTestTime": 2302.5850929149315
+            },
+            "method": "time",
+            "missionTime": null,
+            "mtbfLowerBound": 1000.0000000343591,
+            "mtbfPointEstimate": null,
+            "observedFailures": 0,
+            "pointEstimateNotEstimable": true,
+            "reliabilityLowerBoundAtMissionTime": null,
+            "requiredConfidence": 0.9,
+            "requiredExposureFactor": 2.3025850929149314,
+            "targetDefinition": "mtbf",
+            "targetMTBF": 1000,
+            "targetReliability": null,
+            "timeUnit": "hours",
+            "totalTestTime": 2302.585092994046,
+            "workflow": "evaluate"
+          },
+          "validation": {
+            "errors": [],
+            "warnings": []
+          }
+        },
+        "decision": {
+          "actualEvidence": {
+            "evidenceGap": {
+              "additionalTotalTestTimeRequired": 0,
+              "assumption": "No additional exposure is required.",
+              "requiredTotalTestTime": 2302.5850929149315
+            },
+            "observedFailures": 0,
+            "totalTestTime": 2302.585092994046
+          },
+          "actualValue": 1000.0000000343591,
+          "evidenceGap": {
+            "additionalTotalTestTimeRequired": 0,
+            "assumption": "No additional exposure is required.",
+            "requiredTotalTestTime": 2302.5850929149315,
+            "status": "SATISFIED"
+          },
+          "existingDecision": {
+            "demonstrated": true
+          },
+          "limitations": [
+            "MTBF_POINT_ESTIMATE_NOT_ESTIMABLE_ZERO_FAILURE"
+          ],
+          "reasonCodes": [
+            "MTBF_LOWER_BOUND_MEETS_TARGET",
+            "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT",
+            "ZERO_OBSERVED_FAILURES"
+          ],
+          "requirement": {
+            "missionTime": null,
+            "requiredConfidence": 0.9,
+            "targetDefinition": "mtbf",
+            "targetMTBF": 1000,
+            "targetReliability": null
+          },
+          "status": "DEMONSTRATED"
+        },
+        "insight": {
+          "explanationKeys": [
+            "Target demonstrated at the selected confidence level",
+            "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level."
+          ],
+          "limitations": [
+            "No failure-rate trend evaluation",
+            "No repairable-system growth modeling",
+            "Statistical demonstration does not confirm a physical failure mechanism",
+            "MTBF_POINT_ESTIMATE_NOT_ESTIMABLE_ZERO_FAILURE"
+          ],
+          "parameters": {
+            "allowableFailures": null,
+            "assumptions": [
+              "Exponential constant failure-rate assumption",
+              "Independent failure events",
+              "Accumulated exposure time is treated as reliable"
+            ],
+            "decisionReasonCodes": [
+              "MTBF_LOWER_BOUND_MEETS_TARGET",
+              "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT",
+              "ZERO_OBSERVED_FAILURES"
+            ],
+            "decisionStatus": "DEMONSTRATED",
+            "evidenceGapStatus": "SATISFIED",
+            "evidenceText": "MTBF lower bound is 1,000; achieved confidence at target is 90.00%.",
+            "meaningText": "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level.",
+            "method": "time",
+            "missingOptionalMissionTime": false,
+            "resultText": "Target demonstrated at the selected confidence level",
+            "validationStatus": "VALID",
+            "workflow": "evaluate"
+          },
+          "recommendationKeys": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Review whether the exponential assumption is appropriate",
+            "Use Life Data if failure times and censoring information are available",
+            "Use the lower confidence bound instead of an infinite point estimate"
+          ]
+        },
+        "metadata": {
+          "contractVersion": "1.0.0",
+          "engineVersion": "1.0.0",
+          "fixtureVersion": "1.0.0",
+          "module": "demonstration"
+        },
+        "validation": {
+          "errors": [],
+          "status": "VALID",
+          "warnings": []
+        }
+      },
+      "reportConsumer": {
+        "chartSource": {
+          "evidence": {
+            "evidenceGap": {
+              "additionalTotalTestTimeRequired": 0,
+              "assumption": "No additional exposure is required.",
+              "requiredTotalTestTime": 2302.5850929149315
+            },
+            "observedFailures": 0,
+            "totalTestTime": 2302.585092994046
+          },
+          "evidenceGap": {
+            "additionalTotalTestTimeRequired": 0,
+            "assumption": "No additional exposure is required.",
+            "requiredTotalTestTime": 2302.5850929149315,
+            "status": "SATISFIED"
+          },
+          "method": "time",
+          "metrics": {
+            "achievedConfidenceAtTarget": 0.9,
+            "chiSquareEquivalentQuantile": 4.605170185829863,
+            "mtbfLowerBound": 1000.0000000343591,
+            "mtbfPointEstimate": null,
+            "reliabilityLowerBoundAtMissionTime": null,
+            "requiredExposureFactor": 2.3025850929149314
+          },
+          "requirement": {
+            "missionTime": null,
+            "requiredConfidence": 0.9,
+            "targetDefinition": "mtbf",
+            "targetMTBF": 1000,
+            "targetReliability": null
+          },
+          "workflow": "evaluate"
+        },
+        "chartSvgSha256": "e7c510f2a1a0ac3272016dd9395bdf8b86fd070a5df1a05e81e551fd89318499",
+        "inputs": {
+          "confidenceLevel": 0.9,
+          "observedFailures": 0,
+          "targetDefinition": "mtbf",
+          "targetMTBF": 1000,
+          "timeUnit": "hours",
+          "totalTestTime": 2302.585092994046
+        },
+        "insight": {
+          "assumptions": [
+            "Exponential constant failure-rate assumption",
+            "Independent failure events",
+            "Accumulated exposure time is treated as reliable"
+          ],
+          "evidence": "MTBF lower bound is 1,000; achieved confidence at target is 90.00%.",
+          "explanationKeys": [
+            "Target demonstrated at the selected confidence level",
+            "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level."
+          ],
+          "flags": {
+            "allowableFailures": false,
+            "missingOptionalMissionTime": false,
+            "smallEvidenceMargin": false
+          },
+          "limitations": [
+            "No failure-rate trend evaluation",
+            "No repairable-system growth modeling",
+            "Statistical demonstration does not confirm a physical failure mechanism"
+          ],
+          "meaning": "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level.",
+          "parameters": {
+            "allowableFailures": null,
+            "assumptions": [
+              "Exponential constant failure-rate assumption",
+              "Independent failure events",
+              "Accumulated exposure time is treated as reliable"
+            ],
+            "decisionReasonCodes": [
+              "MTBF_LOWER_BOUND_MEETS_TARGET",
+              "ACHIEVED_CONFIDENCE_MEETS_REQUIREMENT",
+              "ZERO_OBSERVED_FAILURES"
+            ],
+            "decisionStatus": "DEMONSTRATED",
+            "evidenceGapStatus": "SATISFIED",
+            "evidenceText": "MTBF lower bound is 1,000; achieved confidence at target is 90.00%.",
+            "meaningText": "The result is based on the exponential constant failure-rate model, the selected target, and the selected confidence level.",
+            "method": "time",
+            "missingOptionalMissionTime": false,
+            "resultText": "Target demonstrated at the selected confidence level",
+            "validationStatus": "VALID",
+            "workflow": "evaluate"
+          },
+          "recommendationKeys": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Review whether the exponential assumption is appropriate",
+            "Use Life Data if failure times and censoring information are available",
+            "Use the lower confidence bound instead of an infinite point estimate"
+          ],
+          "recommendedActions": [
+            "Confirm mission definition",
+            "Confirm failure classification",
+            "Review whether the exponential assumption is appropriate",
+            "Use Life Data if failure times and censoring information are available",
+            "Use the lower confidence bound instead of an infinite point estimate"
+          ],
+          "result": "Target demonstrated at the selected confidence level",
+          "structuredLimitations": [
+            "No failure-rate trend evaluation",
+            "No repairable-system growth modeling",
+            "Statistical demonstration does not confirm a physical failure mechanism",
+            "MTBF_POINT_ESTIMATE_NOT_ESTIMABLE_ZERO_FAILURE"
+          ]
+        },
+        "result": {
+          "achievedConfidenceAtTarget": 0.9,
+          "chiSquareEquivalentQuantile": 4.605170185829863,
+          "demonstrated": true,
+          "evidenceGap": {
+            "additionalTotalTestTimeRequired": 0,
+            "assumption": "No additional exposure is required.",
+            "requiredTotalTestTime": 2302.5850929149315
+          },
+          "method": "time",
+          "missionTime": null,
+          "mtbfLowerBound": 1000.0000000343591,
+          "mtbfPointEstimate": null,
+          "observedFailures": 0,
+          "pointEstimateNotEstimable": true,
+          "reliabilityLowerBoundAtMissionTime": null,
+          "requiredConfidence": 0.9,
+          "requiredExposureFactor": 2.3025850929149314,
+          "targetDefinition": "mtbf",
+          "targetMTBF": 1000,
+          "targetReliability": null,
+          "timeUnit": "hours",
+          "totalTestTime": 2302.585092994046,
+          "workflow": "evaluate"
+        }
+      },
+      "valueAudit": {
+        "nonFiniteNumberPaths": [],
+        "undefinedPaths": []
+      }
+    },
+    {
+      "chartData": {
+        "presentationDigest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "source": null
+      },
+      "covers": [
+        "invalid",
+        "missing_target",
+        "downstream_nullability"
+      ],
+      "id": "demonstration_invalid_missing_target",
+      "input": {
+        "inputs": {
+          "allowableFailures": 0,
+          "confidenceLevel": 0.9,
+          "observedFailures": 0,
+          "targetReliability": "",
+          "timeUnit": "hours",
+          "unitsTested": 22
+        },
+        "method": "sample",
+        "targetDefinition": "reliability",
+        "workflow": "evaluate"
+      },
+      "output": {
+        "calculation": null,
+        "compatibility": {
+          "insight": null,
+          "result": null,
+          "validation": {
+            "errors": [
+              "demoReliabilityInvalid"
+            ],
+            "warnings": []
+          }
+        },
+        "decision": null,
+        "insight": null,
+        "metadata": {
+          "contractVersion": "1.0.0",
+          "engineVersion": "1.0.0",
+          "fixtureVersion": "1.0.0",
+          "module": "demonstration"
+        },
+        "validation": {
+          "errors": [
+            "demoReliabilityInvalid"
+          ],
+          "status": "INVALID",
+          "warnings": []
+        }
+      },
+      "reportConsumer": null,
+      "valueAudit": {
+        "nonFiniteNumberPaths": [],
+        "undefinedPaths": []
+      }
+    }
+  ],
+  "contract_version": "1.0.0",
+  "fixture_version": "1.0.0",
+  "module": "demonstration",
+  "reference_engine_version": "1.0.0"
+}

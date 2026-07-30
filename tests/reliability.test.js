@@ -131,7 +131,9 @@ test("report content uses Life Data structure without fake fit fields", () => {
   });
   assert(report.includes("Weibull 2P MLE"));
   assert(report.includes("Target Comparison"));
-  assert(report.includes("Data Structure"));
+  assert(report.includes("Data Information / Appendix"));
+  assert(!report.includes('<th scope="row">time</th>'));
+  assert(!report.includes('<th scope="row">status</th>'));
   assert(!report.includes("Model Fit = Good"));
   assert(!report.includes("MTBF Results"));
   assert(!report.includes("Confidence Interval"));

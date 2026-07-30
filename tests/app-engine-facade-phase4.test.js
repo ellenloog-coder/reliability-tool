@@ -14,9 +14,8 @@ const appSource = await readFile(
   "utf8"
 );
 
-test("app analysis entries call Reliability Engine facades", () => {
+test("app uses Backend authority for Life Data and Facades for unchanged modules", () => {
   for (const facade of [
-    "analyzeLifeData",
     "analyzeMTBF",
     "analyzeDemonstration"
   ]) {
@@ -38,6 +37,8 @@ test("app analysis entries call Reliability Engine facades", () => {
       directCalculation
     );
   }
+  assert.match(appSource, /\blifeDataAuthority\.analyze\(/);
+  assert.doesNotMatch(appSource, /\banalyzeLifeData\(/);
   for (const adapter of [
     "adaptLifeDataFacadeResult",
     "adaptMTBFFacadeResult",

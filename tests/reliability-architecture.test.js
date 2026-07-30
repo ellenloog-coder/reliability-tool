@@ -17,10 +17,9 @@ async function directorySources(relativePath) {
   })));
 }
 
-test("app.js uses Facades and does not invoke core analysis or Decision rules", async () => {
+test("app.js uses Life Data Backend authority and unchanged Facades without direct core rules", async () => {
   const app = await source("app.js");
   for (const facade of [
-    "analyzeLifeData",
     "analyzeMTBF",
     "analyzeDemonstration"
   ]) {
@@ -48,6 +47,8 @@ test("app.js uses Facades and does not invoke core analysis or Decision rules", 
   ]) {
     assert.equal(app.includes(forbiddenCall), false, forbiddenCall);
   }
+  assert.match(app, /\blifeDataAuthority\.analyze\(/);
+  assert.doesNotMatch(app, /\banalyzeLifeData\(/);
 });
 
 test("UI adapters contain mapping and formatting but no calculation dependencies", async () => {

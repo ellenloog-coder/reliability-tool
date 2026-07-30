@@ -6,10 +6,13 @@ import { detectMTBFColumns, validateMTBFSummaryInput, validateMTBFUnitRows } fro
 import { buildMTBFInsight } from "./mtbf-insight.js";
 import { mtbfReliabilityCurveSvg } from "./mtbf-plotting.js";
 import { buildMTBFReportHtml } from "./mtbf-report.js";
-import { weibullProbabilityPlotSvg } from "./probability-plot.js";
-import { reliabilityCurveSvg, targetGapSummary } from "./reliability-curve.js";
-import { lifePercentileRows } from "./life-percentiles.js";
-import { reliabilityTableRows } from "./reliability-table.js";
+import {
+  weibullProbabilityPlotFromDataSvg
+} from "./probability-plot.js";
+import {
+  reliabilityCurveFromDataSvg
+} from "./reliability-curve.js";
+import { RESULT_CHART_SIZE } from "./chart-layout.js";
 import { buildReportHtml, downloadHtml, printReport } from "./report.js";
 import { t } from "./i18n.js";
 import { invalidateAnalysisState, loadDataState, resetLifeDataState } from "./state.js";
@@ -21,7 +24,6 @@ import { demonstrationEvidenceChartSvg } from "./demonstration/plotting.js";
 import { buildDemoReportHtml } from "./demonstration/report.js";
 import {
   analyzeDemonstration,
-  analyzeLifeData,
   analyzeMTBF,
   previewDemonstrationTarget
 } from "./engine/index.js";
@@ -40,6 +42,15 @@ import {
   demonstrationGapRows,
   demonstrationKpiRows
 } from "./adapters/demonstration-ui-adapter.js";
+import { createHelpDrawer } from "./help-drawer.js";
+import {
+  lifeDataBackendEnabled,
+  resolveLifeDataAuthorityConfig
+} from "./backend-authority-config.js";
+import {
+  createLifeDataAuthorityController,
+  LifeDataAuthorityError
+} from "./life-data-authority.js";
 
 const templateHeaders = ["Sample ID", "Time", "Status", "Failure Mode", "Test Condition"];
 const exampleText = `Sample ID,Time,Status,Failure Mode,Test Condition
@@ -90,11 +101,29 @@ const state = {
   tables: null,
   curveMode: "reliability",
   customPercentile: "",
-  customTime: ""
+  customTime: "",
+  authoritySnapshot: null,
+  authorityStatus: "idle",
+  authorityError: null
 };
 
 const mtbfState = createMTBFState();
 const demoState = createDemoState();
+const lifeDataAuthorityConfig =
+  resolveLifeDataAuthorityConfig();
+const lifeDataAuthority = createLifeDataAuthorityController({
+  config: lifeDataAuthorityConfig
+});
+let helpDrawer = null;
+let lifeDataUiRevision = 0;
+const resultTabs = ["overview", "weibull", "weibull-plot", "curve", "b-life", "reliability-table", "statistics", "data"];
+let activeResultTab = "overview";
+let isSidebarCollapsed = false;
+const moduleDashboardState = {
+  mtbf: { collapsed: false, activeTab: "overview" },
+  demo: { collapsed: false, activeTab: "overview" },
+  alt: { collapsed: true, activeTab: "overview" }
+};
 
 const $ = id => document.getElementById(id);
 const ui = key => t(state.lang, key);
@@ -175,6 +204,16 @@ function init() {
   renderEmptyResults();
   renderMtbfPanel();
   renderDemoPanel();
+  renderAltPanel();
+  setResultTab(activeResultTab);
+  setSidebarCollapsed(isSidebarCollapsed);
+  helpDrawer = createHelpDrawer({
+    lang: state.lang,
+    onOpenChange: ({ open, panel }) => {
+      $("userManualButton").classList.toggle("active", open && panel === "manual");
+      $("faqButton").classList.toggle("active", open && panel === "faq");
+    }
+  });
 }
 
 function bindEvents() {
@@ -185,19 +224,28 @@ function bindEvents() {
   $("downloadXlsxButton").addEventListener("click", () => downloadXlsxTemplate());
   $("runButton").addEventListener("click", runAnalysis);
   $("resetButton").addEventListener("click", reset);
+  $("sidebarToggle").addEventListener("click", () => setSidebarCollapsed(!isSidebarCollapsed));
   $("missionTime").addEventListener("input", updateMissionOnly);
   $("targetReliability").addEventListener("input", updateMissionOnly);
-  $("timeUnit").addEventListener("change", updateValidation);
+  $("timeUnit").addEventListener("change", async () => {
+    updateValidation();
+    if (state.authoritySnapshot || lifeDataAuthority.current()) {
+      await requestLifeDataAuthoritySnapshot();
+    }
+  });
   $("customPercentile").addEventListener("input", updateCustomPercentile);
   $("customTime").addEventListener("input", updateCustomTime);
-  $("curveModeReliability").addEventListener("click", () => setCurveMode("reliability"));
-  $("curveModeFailure").addEventListener("click", () => setCurveMode("failure"));
   $("exportHtmlButton").addEventListener("click", () => state.reportHtml && downloadHtml(state.reportHtml));
   $("exportPdfButton").addEventListener("click", () => state.reportHtml && printReport(state.reportHtml));
   $("printButton").addEventListener("click", () => state.reportHtml && printReport(state.reportHtml));
-  $("englishButton").addEventListener("click", () => setLanguage("en"));
-  $("chineseButton").addEventListener("click", () => setLanguage("zh"));
+  $("languageSelect").addEventListener("change", event => setLanguage(event.target.value));
+  $("userManualButton").addEventListener("click", () => helpDrawer?.open("manual", $("userManualButton")));
+  $("faqButton").addEventListener("click", () => helpDrawer?.open("faq", $("faqButton")));
   document.querySelectorAll("[data-mode]").forEach(button => button.addEventListener("click", () => setMode(button.dataset.mode)));
+  document.querySelectorAll("[data-result-tab-target]").forEach(button => {
+    button.addEventListener("click", () => setResultTab(button.dataset.resultTabTarget));
+    button.addEventListener("keydown", handleResultTabKeydown);
+  });
 }
 
 async function handleFile(event) {
@@ -227,6 +275,8 @@ function loadExample() {
 }
 
 function loadParsedData(parsed, sourceName, sourceKey = "") {
+  lifeDataAuthority.cancel("input-changed");
+  clearLifeDataAuthorityResult();
   loadDataState(state, {
     headers: parsed.headers,
     rows: parsed.rows,
@@ -251,8 +301,10 @@ function renderMapping() {
   ];
   $("mappingGrid").innerHTML = fields.map(([key, label]) => `<div class="field"><label for="map-${key}">${label}</label><select id="map-${key}">${selectOptions(state.headers, state.mapping[key])}</select></div>`).join("");
   fields.forEach(([key]) => $(`map-${key}`).addEventListener("change", event => {
+    lifeDataAuthority.cancel("input-changed");
     state.mapping[key] = event.target.value;
     invalidateAnalysisState(state);
+    clearLifeDataAuthorityResult();
     updateValidation();
     renderPreview();
     renderEmptyResults();
@@ -301,30 +353,19 @@ function renderValidation() {
     + v.warnings.slice(0, 5).map(warning => `<div class="info-item warn"><b>${escapeHtml(ui("notice"))}</b><span>${escapeHtml(localizeRuntimeText(warning))}</span></div>`).join("");
 }
 
-function runAnalysis() {
+async function runAnalysis() {
   updateValidation();
   if (!state.validation || state.validation.errors.length) return;
-  state.fit = null;
-  state.metrics = null;
-  state.insight = null;
-  state.plots = null;
-  const engineResult = analyzeLifeData(lifeDataEngineInput());
-  if (!applyLifeDataEngineResult(engineResult)) {
-    renderValidation();
-    updateRunState();
-    return;
-  }
-  renderResults();
-  renderMtbfPanel();
-  updateSteps(3);
+  await requestLifeDataAuthoritySnapshot({
+    collapseOnSuccess: true
+  });
 }
 
-function updateMissionOnly() {
-  if (!state.fit || !state.validation) return;
-  const engineResult = analyzeLifeData(lifeDataEngineInput());
-  if (!applyLifeDataEngineResult(engineResult)) return;
-  renderResults();
-  renderMtbfPanel();
+async function updateMissionOnly() {
+  if (!state.validation
+    || (!state.authoritySnapshot
+      && !lifeDataAuthority.current())) return;
+  await requestLifeDataAuthoritySnapshot();
 }
 
 function lifeDataEngineInput() {
@@ -335,12 +376,59 @@ function lifeDataEngineInput() {
       timeUnit: $("timeUnit").value,
       missionTime: $("missionTime").value,
       targetReliability: $("targetReliability").value
+    },
+    presentation: {
+      productName: $("productName").value,
+      lang: state.lang,
+      customPercentile: state.customPercentile,
+      customTime: state.customTime
     }
   };
 }
 
-function applyLifeDataEngineResult(engineResult) {
-  const adapted = adaptLifeDataFacadeResult(engineResult, {
+async function requestLifeDataAuthoritySnapshot({
+  collapseOnSuccess = false
+} = {}) {
+  if (!lifeDataBackendEnabled(lifeDataAuthorityConfig)) {
+    handleLifeDataAuthorityError(new LifeDataAuthorityError(
+      "BACKEND_AUTHORITY_DISABLED",
+      ui("backendAuthorityDisabled"),
+      { kind: "configuration" }
+    ));
+    return false;
+  }
+  const input = lifeDataEngineInput();
+  const uiRevision = ++lifeDataUiRevision;
+  clearLifeDataAuthorityResult();
+  renderEmptyResults(ui("analyzing"));
+  setLifeDataLoading(true);
+  try {
+    const result = await lifeDataAuthority.analyze(input);
+    if (result.validationFailure) {
+      applyInvalidLifeDataSnapshot(result.snapshot);
+      return false;
+    }
+    if (!applyLifeDataAuthoritySnapshot(result.snapshot)) {
+      return false;
+    }
+    renderResults();
+    renderMtbfPanel();
+    updateSteps(3);
+    if (collapseOnSuccess) setSidebarCollapsed(true);
+    return true;
+  } catch (error) {
+    if (error?.silent) return false;
+    handleLifeDataAuthorityError(error);
+    return false;
+  } finally {
+    if (uiRevision === lifeDataUiRevision) {
+      setLifeDataLoading(false);
+    }
+  }
+}
+
+function applyLifeDataAuthoritySnapshot(snapshot) {
+  const adapted = adaptLifeDataFacadeResult(snapshot, {
     validation: state.validation
   });
   state.validation = adapted.validation;
@@ -352,23 +440,61 @@ function applyLifeDataEngineResult(engineResult) {
   }
 
   Object.assign(state, adapted.state);
+  state.authoritySnapshot = snapshot;
+  state.authorityStatus = "ready";
+  state.authorityError = null;
   state.plots = {
-    probability: weibullProbabilityPlotSvg(
-      adapted.page.records,
-      state.fit,
+    probability: weibullProbabilityPlotFromDataSvg(
+      snapshot.charts.probability,
       chartLabels()
     ),
-    reliability: reliabilityCurveSvg(adapted.page.records, state.fit, adapted.page.missionTime, chartLabels(), {
-      mode: state.curveMode,
-      targetReliability: $("targetReliability").value
-    })
+    reliability: reliabilityCurveFromDataSvg(
+      snapshot.charts.reliability,
+      missionChartPoint(snapshot),
+      chartLabels(),
+      {
+      mode: "reliability",
+      width: RESULT_CHART_SIZE.split.width,
+      targetReliability:
+        snapshot.decision?.requirement?.targetReliability
+      }
+    ),
+    failure: reliabilityCurveFromDataSvg(
+      snapshot.charts.cumulativeFailure,
+      missionChartPoint(snapshot),
+      chartLabels(),
+      {
+      mode: "failure",
+      width: RESULT_CHART_SIZE.split.width,
+      targetReliability:
+        snapshot.decision?.requirement?.targetReliability
+      }
+    )
   };
-  state.tables = buildLifeTables(
-    adapted.page.records,
-    state.fit,
-    state.metrics
-  );
+  state.tables = snapshot.report_payload.tables;
+  publishLifeDataSnapshotProvenance(snapshot);
   return true;
+}
+
+function applyInvalidLifeDataSnapshot(snapshot) {
+  clearLifeDataAuthorityResult();
+  state.validation = snapshot.compatibility?.validation
+    || state.validation;
+  state.authoritySnapshot = snapshot;
+  state.authorityStatus = "validation_error";
+  renderValidation();
+  renderEmptyResults(ui("backendValidationFailed"));
+  updateRunState();
+}
+
+function missionChartPoint(snapshot) {
+  return {
+    missionTime: snapshot.calculation.metrics.missionTime,
+    missionReliability:
+      snapshot.calculation.metrics.missionReliability,
+    missionFailureProbability:
+      snapshot.calculation.metrics.missionFailureProbability
+  };
 }
 
 function renderResults() {
@@ -385,10 +511,14 @@ function renderResults() {
   ).map(kpi).join("");
   $("probabilityPlot").innerHTML = state.plots.probability;
   $("reliabilityCurve").innerHTML = state.plots.reliability;
+  $("failureCurve").innerHTML = state.plots.failure;
+  renderWeibullModelPanel();
   renderLifeVisualizationPanels();
   renderInsight();
   renderTargetComparison();
-  state.reportHtml = buildReportHtml({ metrics: state.metrics, insight: state.insight, validation: state.validation, mapping: state.mapping, settings: settings(), plots: state.plots, tables: state.tables, curveMode: state.curveMode, lang: state.lang });
+  renderStatisticalInfo();
+  state.reportHtml = buildLifeDataAuthorityReport();
+  setLifeDataReportActionsEnabled(Boolean(state.reportHtml));
 }
 
 function renderEmptyResults(note = "Load data to begin Weibull life data analysis.") {
@@ -400,16 +530,146 @@ function renderEmptyResults(note = "Load data to begin Weibull life data analysi
   ).map(kpi).join("");
   $("probabilityPlot").textContent = ui("realPlotPlaceholder");
   $("reliabilityCurve").textContent = ui("realCurvePlaceholder");
+  $("failureCurve").textContent = ui("realCurvePlaceholder");
+  renderWeibullModelPanel();
   renderEmptyLifeVisualizationPanels();
   $("insightGrid").innerHTML = `<div class="insight-card"><h4>${escapeHtml(ui("insight"))}</h4><strong>${escapeHtml(ui("waitingResult"))}</strong><p>${escapeHtml(ui("waitingInsight"))}</p></div>`;
   renderTargetComparison();
+  renderStatisticalInfo();
   state.reportHtml = null;
+  setLifeDataReportActionsEnabled(false);
+}
+
+function setLifeDataReportActionsEnabled(enabled) {
+  for (const id of [
+    "exportHtmlButton",
+    "exportPdfButton",
+    "printButton"
+  ]) {
+    const button = $(id);
+    if (!button) continue;
+    button.disabled = !enabled;
+    button.setAttribute(
+      "aria-disabled",
+      enabled ? "false" : "true"
+    );
+  }
+}
+
+function buildLifeDataAuthorityReport() {
+  const payload = state.authoritySnapshot?.report_payload;
+  if (!payload || payload.authority?.analysis_id
+    !== state.authoritySnapshot.metadata.analysis_id) {
+    return null;
+  }
+  return buildReportHtml({
+    ...payload,
+    plots: state.plots,
+    lang: state.lang
+  });
+}
+
+function setLifeDataLoading(loading) {
+  state.authorityStatus = loading ? "loading" : state.authorityStatus;
+  const button = $("runButton");
+  button.disabled = loading || !state.validation
+    || state.validation.errors.length > 0;
+  button.setAttribute("aria-busy", loading ? "true" : "false");
+  button.textContent = ui(loading ? "analyzing" : "run");
+}
+
+function handleLifeDataAuthorityError(error) {
+  lifeDataAuthority.cancel("error");
+  clearLifeDataAuthorityResult();
+  state.authorityStatus = authorityErrorStatus(error);
+  state.authorityError = {
+    code: error?.code || "BACKEND_UNAVAILABLE",
+    message: error?.message || ui("backendUnavailable")
+  };
+  renderEmptyResults(localizeAuthorityError(error));
+  renderMessage(
+    "dataCheck",
+    localizeAuthorityError(error),
+    "error"
+  );
+  updateRunState();
+}
+
+function clearLifeDataAuthorityResult() {
+  state.fit = null;
+  state.metrics = null;
+  state.mtbf = null;
+  state.insight = null;
+  state.plots = null;
+  state.tables = null;
+  state.reportHtml = null;
+  state.authoritySnapshot = null;
+  for (const id of [
+    "lifePanel",
+    "probabilityPlot",
+    "reliabilityCurve",
+    "failureCurve",
+    "exportHtmlButton",
+    "exportPdfButton",
+    "printButton"
+  ]) {
+    const node = $(id);
+    if (!node) continue;
+    delete node.dataset.analysisId;
+    delete node.dataset.inputFingerprint;
+  }
+}
+
+function publishLifeDataSnapshotProvenance(snapshot) {
+  const analysisId = snapshot.metadata.analysis_id;
+  const inputFingerprint = snapshot.metadata.input_fingerprint;
+  for (const id of [
+    "lifePanel",
+    "probabilityPlot",
+    "reliabilityCurve",
+    "failureCurve",
+    "exportHtmlButton",
+    "exportPdfButton",
+    "printButton"
+  ]) {
+    const node = $(id);
+    if (!node) continue;
+    node.dataset.analysisId = analysisId;
+    node.dataset.inputFingerprint = inputFingerprint;
+  }
+}
+
+function authorityErrorStatus(error) {
+  if (error?.code === "BACKEND_TIMEOUT") return "timeout";
+  if (error?.kind === "network") return "network_error";
+  if (error?.kind === "contract") return "contract_error";
+  return "system_error";
+}
+
+function localizeAuthorityError(error) {
+  const keyByCode = {
+    BACKEND_TIMEOUT: "backendTimeout",
+    BACKEND_UNAVAILABLE: "backendUnavailable",
+    CONTRACT_VERSION_MISMATCH: "backendContractMismatch",
+    BACKEND_VERSION_MISMATCH: "backendVersionMismatch",
+    FINGERPRINT_MISMATCH: "backendFingerprintMismatch",
+    MALFORMED_BACKEND_RESPONSE: "backendMalformedResponse",
+    BACKEND_AUTHORITY_DISABLED: "backendAuthorityDisabled",
+    MALFORMED_JSON: "backendRequestError",
+    UNRECOGNIZED_REQUEST_STRUCTURE: "backendRequestError",
+    UNKNOWN_FIELD: "backendRequestError",
+    UNSUPPORTED_CONTENT_TYPE: "backendUnsupportedContent",
+    METHOD_NOT_APPLICABLE: "backendMethodNotApplicable",
+    INTERNAL_ERROR: "backendInternalError"
+  };
+  const key = keyByCode[error?.code];
+  return key ? ui(key) : (error?.message || ui("backendUnavailable"));
 }
 
 function renderInsight() {
   const i = state.insight;
   $("insightGrid").innerHTML = `
-    <div class="insight-card"><h4>${escapeHtml(ui("result"))}</h4><strong>${escapeHtml(localizeInsightText(i.result))}</strong><p>${escapeHtml(ui("failureRateTrend"))}: ${escapeHtml(failureRateTrendLabel(state.fit?.beta))}</p><p>${escapeHtml(localizeInsightText(i.evidence))}</p></div>
+    <div class="insight-card"><h4>${escapeHtml(ui("result"))}</h4><strong>${escapeHtml(localizeInsightText(i.result))}</strong><p>${escapeHtml(ui("failureRateTrend"))}: ${escapeHtml(failureRateTrendLabel())}</p><p>${escapeHtml(localizeInsightText(i.evidence))}</p></div>
     <div class="insight-card"><h4>${escapeHtml(ui("meaning"))}</h4><strong>${escapeHtml(localizeInsightText(i.meaning))}</strong><p>${escapeHtml(localizeInsightText(i.limitations))}</p></div>
     <div class="insight-card"><h4>${escapeHtml(ui("possibleConsiderations"))}</h4>${i.possibleConsiderations.length ? `<ul>${i.possibleConsiderations.map(item => `<li>${escapeHtml(localizeInsightText(item))}</li>`).join("")}</ul>` : `<p>${escapeHtml(localizeInsightText("No confirmed physical failure mechanism is identified by beta alone."))}</p>`}</div>
     <div class="insight-card"><h4>${escapeHtml(ui("recommendedActions"))}</h4><ul>${i.recommendedActions.map(item => `<li>${escapeHtml(localizeInsightText(item))}</li>`).join("")}</ul></div>`;
@@ -417,8 +677,10 @@ function renderInsight() {
 
 function renderTargetComparison() {
   const comparison = state.metrics?.targetComparison || { status: "Target not provided", message: "Reliability risk not assessed — no target reliability was provided." };
+  const targetReliability = state.authoritySnapshot
+    ?.decision?.requirement?.targetReliability;
   const rows = [
-    [ui("targetReliability"), $("targetReliability").value ? pct(Number($("targetReliability").value)) : ui("targetNotProvided")],
+    [ui("targetReliability"), Number.isFinite(targetReliability) ? pct(targetReliability) : ui("targetNotProvided")],
     [ui("missionReliability"), state.metrics ? pct(state.metrics.missionReliability) : "-"],
     [ui("result"), localizeTargetStatus(comparison.status)]
   ];
@@ -426,22 +688,180 @@ function renderTargetComparison() {
     + `<div class="info-item ${comparison.status === "Below Target" ? "warn" : ""}"><b>${escapeHtml(ui("targetComparison"))}</b><span>${escapeHtml(localizeTargetMessage(comparison.message))}</span></div>`;
 }
 
-function buildLifeTables(records, fit, metrics) {
-  const percentiles = lifePercentileRows(fit.beta, fit.eta, state.customPercentile);
-  const selectedTimes = reliabilityTableRows(fit.beta, fit.eta, records, metrics.missionTime, state.customTime);
-  return {
-    percentiles,
-    selectedTimes,
-    targetGap: targetGapSummary(metrics.missionReliability, $("targetReliability").value)
-  };
+function renderStatisticalInfo() {
+  const panel = $("statisticalInfoPanel");
+  if (!panel) return;
+  if (!state.metrics || !state.validation) {
+    panel.innerHTML = `<div class="info-item"><b>${escapeHtml(ui("resultStatisticalInfo"))}</b><span>${escapeHtml(ui("waitingResult"))}</span></div>`;
+    return;
+  }
+  const unit = unitLabel($("timeUnit").value);
+  const rows = [
+    [ui("analysisMethod"), "Weibull 2P MLE"],
+    [ui("totalSamples"), state.validation.totalCount],
+    [ui("failureCount"), state.validation.failureCount],
+    [ui("censoredCount"), state.validation.censoredCount],
+    [ui("betaShape"), fmt(state.metrics.beta)],
+    [ui("etaScale"), `${fmt(state.metrics.eta)} ${unit}`],
+    [ui("limitations"), ui("pointEstimateComparisonOnly")]
+  ];
+  panel.innerHTML = rows.map(([label, value]) => `<div class="info-item"><b>${escapeHtml(label)}</b><span>${escapeHtml(value)}</span></div>`).join("");
+}
+
+function renderWeibullModelPanel() {
+  const panel = $("weibullModelPanel");
+  if (!panel) return;
+  if (!state.metrics || !state.validation) {
+    panel.innerHTML = `<div class="info-item"><b>${escapeHtml(ui("resultWeibullModel"))}</b><span>${escapeHtml(ui("waitingResult"))}</span></div>`;
+    return;
+  }
+  const unit = unitLabel($("timeUnit").value);
+  const rows = [
+    [ui("analysisMethod"), "Weibull 2P MLE"],
+    [ui("model"), "Weibull 2P"],
+    [ui("betaShape"), fmt(state.metrics.beta)],
+    [ui("etaScale"), `${fmt(state.metrics.eta)} ${unit}`],
+    [ui("failureCount"), state.validation.failureCount],
+    [ui("censoredCount"), state.validation.censoredCount]
+  ];
+  panel.innerHTML = rows.map(([label, value]) => `<div class="info-item"><b>${escapeHtml(label)}</b><span>${escapeHtml(value)}</span></div>`).join("");
+}
+
+function setResultTab(tab) {
+  activeResultTab = resultTabs.includes(tab) ? tab : "overview";
+  document.querySelectorAll("[data-result-tab-target]").forEach(button => {
+    const active = button.dataset.resultTabTarget === activeResultTab;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-selected", active ? "true" : "false");
+    button.tabIndex = active ? 0 : -1;
+  });
+  document.querySelectorAll("[data-result-tab-panel]").forEach(panel => {
+    const active = panel.dataset.resultTabPanel === activeResultTab;
+    panel.hidden = !active;
+    panel.classList.toggle("result-panel-active", active);
+    panel.setAttribute("aria-hidden", active ? "false" : "true");
+  });
+}
+
+function handleResultTabKeydown(event) {
+  if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+  event.preventDefault();
+  const currentIndex = resultTabs.indexOf(activeResultTab);
+  const nextIndex = event.key === "Home"
+    ? 0
+    : event.key === "End"
+      ? resultTabs.length - 1
+      : (currentIndex + (event.key === "ArrowRight" ? 1 : -1) + resultTabs.length) % resultTabs.length;
+  setResultTab(resultTabs[nextIndex]);
+  document.querySelector(`[data-result-tab-target="${resultTabs[nextIndex]}"]`)?.focus();
+}
+
+function setSidebarCollapsed(collapsed) {
+  isSidebarCollapsed = Boolean(collapsed);
+  $("lifeLayout").classList.toggle("sidebar-collapsed", isSidebarCollapsed);
+  $("analysisSidebar").classList.toggle("collapsed", isSidebarCollapsed);
+  const toggle = $("sidebarToggle");
+  const details = $("sidebarDetails");
+  const label = ui(isSidebarCollapsed ? "expandSettings" : "collapseSettings");
+  toggle.setAttribute("aria-expanded", isSidebarCollapsed ? "false" : "true");
+  toggle.setAttribute("aria-label", label);
+  toggle.title = label;
+  toggle.querySelector("span").textContent = isSidebarCollapsed ? "›" : "‹";
+  details.setAttribute("aria-hidden", isSidebarCollapsed ? "true" : "false");
+  details.inert = isSidebarCollapsed;
+}
+
+function renderModuleResultTabs(module, tabs) {
+  const activeTab = moduleDashboardState[module].activeTab;
+  return `<nav class="panel result-tabs" aria-label="${escapeHtml(ui("resultNavigation"))}">
+    <div class="result-tabs-scroll" role="tablist">
+      ${tabs.map(([tab, labelKey]) => `<button class="result-tab ${activeTab === tab ? "active" : ""}" type="button" role="tab" aria-selected="${activeTab === tab ? "true" : "false"}" tabindex="${activeTab === tab ? "0" : "-1"}" data-module-tab="${module}" data-module-tab-target="${tab}">${escapeHtml(ui(labelKey))}</button>`).join("")}
+    </div>
+  </nav>`;
+}
+
+function modulePanelAttributes(module, tab) {
+  const active = moduleDashboardState[module].activeTab === tab;
+  return `data-module-tab-panel="${module}" data-module-tab-name="${tab}" ${active ? "" : 'hidden aria-hidden="true"'}`;
+}
+
+function bindModuleDashboard(module) {
+  document.querySelectorAll(`[data-module-tab="${module}"]`).forEach(button => {
+    button.addEventListener("click", () => setModuleDashboardTab(module, button.dataset.moduleTabTarget));
+    button.addEventListener("keydown", event => handleModuleTabKeydown(event, module));
+  });
+  $(`${module}SidebarToggle`)?.addEventListener("click", () => {
+    setModuleSidebarCollapsed(module, !moduleDashboardState[module].collapsed);
+  });
+  syncModuleDashboard(module);
+}
+
+function setModuleDashboardTab(module, tab) {
+  const buttons = Array.from(document.querySelectorAll(`[data-module-tab="${module}"]`));
+  if (!buttons.some(button => button.dataset.moduleTabTarget === tab)) return;
+  moduleDashboardState[module].activeTab = tab;
+  buttons.forEach(button => {
+    const active = button.dataset.moduleTabTarget === tab;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-selected", active ? "true" : "false");
+    button.tabIndex = active ? 0 : -1;
+  });
+  document.querySelectorAll(`[data-module-tab-panel="${module}"]`).forEach(panel => {
+    const active = panel.dataset.moduleTabName === tab;
+    panel.hidden = !active;
+    panel.classList.toggle("result-panel-active", active);
+    panel.setAttribute("aria-hidden", active ? "false" : "true");
+  });
+}
+
+function handleModuleTabKeydown(event, module) {
+  if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+  event.preventDefault();
+  const buttons = Array.from(document.querySelectorAll(`[data-module-tab="${module}"]`));
+  const tabs = buttons.map(button => button.dataset.moduleTabTarget);
+  const currentIndex = tabs.indexOf(moduleDashboardState[module].activeTab);
+  const nextIndex = event.key === "Home"
+    ? 0
+    : event.key === "End"
+      ? tabs.length - 1
+      : (currentIndex + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+  setModuleDashboardTab(module, tabs[nextIndex]);
+  buttons[nextIndex]?.focus();
+}
+
+function setModuleSidebarCollapsed(module, collapsed) {
+  moduleDashboardState[module].collapsed = Boolean(collapsed);
+  syncModuleDashboard(module);
+}
+
+function syncModuleDashboard(module) {
+  const collapsed = moduleDashboardState[module].collapsed;
+  const layout = document.querySelector(`[data-dashboard-layout="${module}"]`);
+  const sidebar = document.querySelector(`[data-dashboard-sidebar="${module}"]`);
+  const details = document.querySelector(`[data-dashboard-details="${module}"]`);
+  const toggle = $(`${module}SidebarToggle`);
+  if (!layout || !sidebar || !details || !toggle) return;
+  layout.classList.toggle("sidebar-collapsed", collapsed);
+  sidebar.classList.toggle("collapsed", collapsed);
+  const label = ui(collapsed ? "expandSettings" : "collapseSettings");
+  toggle.setAttribute("aria-expanded", collapsed ? "false" : "true");
+  toggle.setAttribute("aria-label", label);
+  toggle.title = label;
+  toggle.querySelector("span").textContent = collapsed ? "›" : "‹";
+  details.setAttribute("aria-hidden", collapsed ? "true" : "false");
+  details.inert = collapsed;
+  setModuleDashboardTab(module, moduleDashboardState[module].activeTab);
+}
+
+function unavailableDashboardPanel(titleKey, messageKey) {
+  return `<section class="panel block"><h3>${escapeHtml(ui(titleKey))}</h3><div class="empty-dashboard-state"><span class="status-badge muted">${escapeHtml(ui("notAvailable"))}</span><p>${escapeHtml(ui(messageKey))}</p></div></section>`;
 }
 
 function renderLifeVisualizationPanels() {
   renderProbabilityStats();
   renderLifePercentiles();
   renderReliabilityTimes();
-  renderTargetGap();
-  updateCurveModeButtons();
+  renderCurveSummaries();
 }
 
 function renderEmptyLifeVisualizationPanels() {
@@ -451,8 +871,9 @@ function renderEmptyLifeVisualizationPanels() {
   $("customPercentileMessage").innerHTML = `<b>${escapeHtml(ui("customPercentile"))}</b><span>${escapeHtml(ui("customPercentileHint"))}</span>`;
   $("reliabilityTimesTable").innerHTML = `<table><tbody><tr><td>${escapeHtml(ui("waitingResult"))}</td></tr></tbody></table>`;
   $("customTimeMessage").innerHTML = `<b>${escapeHtml(ui("customTime"))}</b><span>${escapeHtml(ui("customTimeHint"))}</span>`;
-  $("targetGapPanel").innerHTML = `<div class="info-item"><b>${escapeHtml(ui("targetGap"))}</b><span>${escapeHtml(ui("targetNotProvidedMessage"))}</span></div>`;
-  updateCurveModeButtons();
+  const emptySummary = `<div class="info-item"><b>${escapeHtml(ui("targetGap"))}</b><span>${escapeHtml(ui("targetNotProvidedMessage"))}</span></div>`;
+  $("reliabilityTargetGapPanel").innerHTML = emptySummary;
+  $("failureTargetGapPanel").innerHTML = emptySummary;
 }
 
 function renderProbabilityStats() {
@@ -486,63 +907,60 @@ function renderReliabilityTimes() {
   $("customTimeMessage").innerHTML = `<b>${escapeHtml(ui("customTime"))}</b><span>${escapeHtml(error ? localizeCustomInputError(error) : ui("customTimeHint"))}</span>`;
 }
 
-function renderTargetGap() {
+function renderCurveSummaries() {
   const gap = state.tables?.targetGap;
   if (!gap) {
-    $("targetGapPanel").innerHTML = `<div class="info-item"><b>${escapeHtml(ui("targetGap"))}</b><span>${escapeHtml(ui("targetNotProvidedMessage"))}</span></div>`;
+    const emptySummary = `<div class="info-item"><b>${escapeHtml(ui("targetGap"))}</b><span>${escapeHtml(ui("targetNotProvidedMessage"))}</span></div>`;
+    $("reliabilityTargetGapPanel").innerHTML = emptySummary;
+    $("failureTargetGapPanel").innerHTML = emptySummary;
     return;
   }
-  const sign = gap.gapPercentagePoints >= 0 ? "+" : "";
-  $("targetGapPanel").innerHTML = [
+  const reliabilityGap = gap.gapPercentagePoints;
+  const failureGap = gap.failureGapPercentagePoints;
+  $("reliabilityTargetGapPanel").innerHTML = [
     [ui("predictedReliability"), pct(gap.predictedReliability)],
     [ui("targetReliability"), pct(gap.targetReliability)],
-    [ui("gap"), `${sign}${gap.gapPercentagePoints.toFixed(2)} ${ui("percentagePoints")}`],
+    [ui("gap"), `${reliabilityGap >= 0 ? "+" : ""}${reliabilityGap.toFixed(2)} ${ui("percentagePoints")}`],
+    [ui("limitations"), ui("pointEstimateComparisonOnly")]
+  ].map(([b, s]) => `<div class="info-item"><b>${escapeHtml(b)}</b><span>${escapeHtml(s)}</span></div>`).join("");
+  $("failureTargetGapPanel").innerHTML = [
+    [ui("predictedFailureProbability"), pct(gap.predictedFailureProbability)],
+    [ui("targetFailureProbability"), pct(gap.targetFailureProbability)],
+    [ui("gap"), `${failureGap >= 0 ? "+" : ""}${failureGap.toFixed(2)} ${ui("percentagePoints")}`],
     [ui("limitations"), ui("pointEstimateComparisonOnly")]
   ].map(([b, s]) => `<div class="info-item"><b>${escapeHtml(b)}</b><span>${escapeHtml(s)}</span></div>`).join("");
 }
 
-function updateCustomPercentile() {
+async function updateCustomPercentile() {
   state.customPercentile = $("customPercentile").value;
-  if (!state.fit || !state.validation || !state.metrics) {
+  if (!state.authoritySnapshot || !state.validation) {
     renderEmptyLifeVisualizationPanels();
     return;
   }
-  state.tables = buildLifeTables(state.validation.records, state.fit, state.metrics);
-  renderLifeVisualizationPanels();
-  state.reportHtml = buildReportHtml({ metrics: state.metrics, insight: state.insight, validation: state.validation, mapping: state.mapping, settings: settings(), plots: state.plots, tables: state.tables, curveMode: state.curveMode, lang: state.lang });
+  await requestLifeDataAuthoritySnapshot();
 }
 
-function updateCustomTime() {
+async function updateCustomTime() {
   state.customTime = $("customTime").value;
-  if (!state.fit || !state.validation || !state.metrics) {
+  if (!state.authoritySnapshot || !state.validation) {
     renderEmptyLifeVisualizationPanels();
     return;
   }
-  state.tables = buildLifeTables(state.validation.records, state.fit, state.metrics);
-  renderLifeVisualizationPanels();
-  state.reportHtml = buildReportHtml({ metrics: state.metrics, insight: state.insight, validation: state.validation, mapping: state.mapping, settings: settings(), plots: state.plots, tables: state.tables, curveMode: state.curveMode, lang: state.lang });
+  await requestLifeDataAuthoritySnapshot();
 }
 
-function setCurveMode(mode) {
-  state.curveMode = mode === "failure" ? "failure" : "reliability";
-  updateCurveModeButtons();
-  if (!state.fit || !state.validation || !state.metrics) return;
-  state.plots.reliability = reliabilityCurveSvg(state.validation.records, state.fit, state.metrics.missionTime, chartLabels(), { mode: state.curveMode, targetReliability: $("targetReliability").value });
-  $("reliabilityCurve").innerHTML = state.plots.reliability;
-  state.reportHtml = buildReportHtml({ metrics: state.metrics, insight: state.insight, validation: state.validation, mapping: state.mapping, settings: settings(), plots: state.plots, tables: state.tables, curveMode: state.curveMode, lang: state.lang });
-}
-
-function updateCurveModeButtons() {
-  $("curveModeReliability")?.classList.toggle("active", state.curveMode === "reliability");
-  $("curveModeFailure")?.classList.toggle("active", state.curveMode === "failure");
-}
-
-function failureRateTrendLabel(beta) {
-  const value = Number(beta);
-  if (!Number.isFinite(value)) return "-";
-  if (value < 0.9) return ui("decreasingFailureRateTrend");
-  if (value <= 1.1) return ui("constantFailureRateTrend");
-  return ui("increasingFailureRateTrend");
+function failureRateTrendLabel() {
+  const flags = state.insight?.flags || {};
+  if (flags.decreasingFailureRate) {
+    return ui("decreasingFailureRateTrend");
+  }
+  if (flags.approximatelyConstantFailureRate) {
+    return ui("constantFailureRateTrend");
+  }
+  if (flags.increasingFailureRate) {
+    return ui("increasingFailureRateTrend");
+  }
+  return "-";
 }
 
 function renderPreview() {
@@ -555,15 +973,28 @@ function renderPreview() {
 }
 
 function renderMtbfPanel() {
+  const tabs = [
+    ["overview", "resultOverview"],
+    ["mtbf-results", "mtbfResultsTab"],
+    ["mttr-results", "mttrResultsTab"],
+    ["availability", "availabilityTab"],
+    ["distribution", "distributionFitTab"],
+    ["statistics", "resultStatisticalInfo"],
+    ["data", "resultDataSummary"]
+  ];
   $("mtbfPanel").innerHTML = `
-    <div class="layout">
-      <aside class="panel sidebar">
-        <h2 class="section-title">${escapeHtml(ui("setup"))}</h2>
-        <div class="step-list">
+    <div class="layout" data-dashboard-layout="mtbf">
+      <aside class="panel sidebar" data-dashboard-sidebar="mtbf">
+        <div class="sidebar-header">
+          <h2 class="section-title">${escapeHtml(ui("mtbfTitle"))}</h2>
+          <button class="sidebar-toggle" id="mtbfSidebarToggle" type="button" aria-expanded="true" aria-controls="mtbfSidebarDetails"><span aria-hidden="true">‹</span></button>
+        </div>
+        <div class="step-list dashboard-steps">
           <div class="step active"><div class="step-num">1</div><div><strong>${escapeHtml(ui("enterData"))}</strong><span>${escapeHtml(mtbfState.inputMode === "summary" ? ui("summaryInput") : ui("unitLevelData"))}</span></div></div>
           <div class="step ${mtbfState.validation && !mtbfState.validation.errors?.length ? "done" : ""}"><div class="step-num">2</div><div><strong>${escapeHtml(ui("confirmExposure"))}</strong><span>${escapeHtml(ui("mapping"))}</span></div></div>
           <div class="step ${mtbfState.result ? "done" : ""}"><div class="step-num">3</div><div><strong>${escapeHtml(ui("stepRun"))}</strong><span>${escapeHtml(ui("mtbfRunHint"))}</span></div></div>
         </div>
+        <div class="sidebar-details" id="mtbfSidebarDetails" data-dashboard-details="mtbf">
         <div class="segmented" role="group" aria-label="${escapeHtml(ui("inputMode"))}">
           <button class="segment ${mtbfState.inputMode === "summary" ? "active" : ""}" id="mtbfModeSummary" type="button">${escapeHtml(ui("summaryInput"))}</button>
           <button class="segment ${mtbfState.inputMode === "unit" ? "active" : ""}" id="mtbfModeUnit" type="button">${escapeHtml(ui("unitLevelData"))}</button>
@@ -578,25 +1009,42 @@ function renderMtbfPanel() {
         <h3 class="section-title" style="margin-top:14px">${escapeHtml(ui("dataCheck"))}</h3>
         <div class="info-list" id="mtbfDataCheck">${renderMTBFDataCheck()}</div>
         <p class="privacy">${escapeHtml(ui("localOnly"))}</p>
+        </div>
         <div class="sidebar-footer"><button class="btn" id="mtbfResetButton" type="button">${escapeHtml(ui("reset"))}</button><button class="btn primary" id="mtbfRunButton" type="button">${escapeHtml(ui("run"))}</button></div>
       </aside>
       <main class="main">
-        <section class="panel summary">
-          <span class="status-badge">${escapeHtml(ui("available"))}</span>
-          <h2>${escapeHtml(ui("mtbfSummary"))}</h2>
-          <p>${escapeHtml(ui("mtbfIntroFull"))}</p>
-          <p>${escapeHtml(ui("mtbfRepairableBoundary"))}</p>
-          <div class="kpis">${renderMTBFKpis()}</div>
-        </section>
-        <section class="panel block"><h3>${escapeHtml(ui("exposureSummary"))}</h3><div class="info-list">${renderMTBFExposureSummary()}</div></section>
-        <section class="panel block"><h3>${escapeHtml(ui("reliabilityCurve"))}</h3><div class="chart">${mtbfState.curveSvg || escapeHtml(mtbfState.result && !mtbfState.result.estimable ? ui("mtbfZeroCurveNote") : ui("realCurvePlaceholder"))}</div></section>
-        <section class="panel block"><h3>${escapeHtml(ui("targetComparison"))}</h3><div class="info-list">${renderMTBFTargetComparison()}</div></section>
-        <section class="panel insight"><h3 style="margin:0 0 12px;font-size:15px">${escapeHtml(ui("insight"))}</h3><div class="insight-grid">${renderMTBFInsight()}</div></section>
-        <section class="panel block"><h3>${escapeHtml(ui("preview"))}</h3><div class="table-wrap">${renderMTBFPreview()}</div></section>
-        <section class="panel block"><h3>${escapeHtml(ui("report"))}</h3><div class="report-actions"><button class="btn" id="mtbfExportHtmlButton" type="button" ${mtbfState.reportHtml ? "" : "disabled"}>${escapeHtml(ui("exportHtml"))}</button><button class="btn" id="mtbfExportPdfButton" type="button" ${mtbfState.reportHtml ? "" : "disabled"}>${escapeHtml(ui("exportPdf"))}</button><button class="btn" id="mtbfPrintButton" type="button" ${mtbfState.reportHtml ? "" : "disabled"}>${escapeHtml(ui("print"))}</button></div></section>
+        ${renderModuleResultTabs("mtbf", tabs)}
+        <div class="dashboard-panel-stack" ${modulePanelAttributes("mtbf", "overview")}>
+          <section class="panel summary">
+            <span class="status-badge">${escapeHtml(ui("available"))}</span>
+            <h2>${escapeHtml(ui("mtbfSummary"))}</h2>
+            <p>${escapeHtml(ui("mtbfIntroFull"))}</p>
+            <p>${escapeHtml(ui("mtbfRepairableBoundary"))}</p>
+            <div class="kpis">${renderMTBFKpis()}</div>
+          </section>
+          <section class="panel insight"><h3 style="margin:0 0 12px;font-size:15px">${escapeHtml(ui("insight"))}</h3><div class="insight-grid">${renderMTBFInsight()}</div></section>
+        </div>
+        <div class="dashboard-panel-stack" ${modulePanelAttributes("mtbf", "mtbf-results")}>
+          <section class="panel block"><h3>${escapeHtml(ui("exposureSummary"))}</h3><div class="info-list result-statistics">${renderMTBFExposureSummary()}</div></section>
+          <section class="panel block"><h3>${escapeHtml(ui("targetComparison"))}</h3><div class="info-list">${renderMTBFTargetComparison()}</div></section>
+        </div>
+        <div class="dashboard-panel-stack" ${modulePanelAttributes("mtbf", "mttr-results")}>${unavailableDashboardPanel("mttrResultsTab", "mttrUnavailable")}</div>
+        <div class="dashboard-panel-stack" ${modulePanelAttributes("mtbf", "availability")}>${unavailableDashboardPanel("availabilityTab", "availabilityUnavailable")}</div>
+        <div class="dashboard-panel-stack" ${modulePanelAttributes("mtbf", "distribution")}>
+          <section class="panel block result-chart-panel"><h3>${escapeHtml(ui("reliabilityCurve"))}</h3><div class="chart result-chart result-chart-full" id="mtbfReliabilityChart">${mtbfState.curveSvg || escapeHtml(mtbfState.result && !mtbfState.result.estimable ? ui("mtbfZeroCurveNote") : ui("realCurvePlaceholder"))}</div><p class="plot-note">${escapeHtml(ui("exponentialCurve"))}</p></section>
+        </div>
+        <div class="dashboard-panel-stack" ${modulePanelAttributes("mtbf", "statistics")}>
+          <section class="panel block"><h3>${escapeHtml(ui("resultStatisticalInfo"))}</h3><div class="info-list result-statistics">${renderMTBFDataCheck()}</div></section>
+          <section class="panel block"><h3>${escapeHtml(ui("assumptionsNotices"))}</h3><div class="info-list"><div class="info-item"><b>${escapeHtml(ui("model"))}</b><span>${escapeHtml(ui("constantFailureRate"))}</span></div><div class="info-item"><b>${escapeHtml(ui("limitations"))}</b><span>${escapeHtml(ui("mtbfTargetLimit"))}</span></div></div></section>
+        </div>
+        <div class="dashboard-panel-stack" ${modulePanelAttributes("mtbf", "data")}>
+          <section class="panel block"><h3>${escapeHtml(ui("preview"))}</h3><div class="table-wrap">${renderMTBFPreview()}</div></section>
+          <section class="panel block"><h3>${escapeHtml(ui("report"))}</h3><div class="report-actions"><button class="btn" id="mtbfExportHtmlButton" type="button" ${mtbfState.reportHtml ? "" : "disabled"}>${escapeHtml(ui("exportHtml"))}</button><button class="btn" id="mtbfExportPdfButton" type="button" ${mtbfState.reportHtml ? "" : "disabled"}>${escapeHtml(ui("exportPdf"))}</button><button class="btn" id="mtbfPrintButton" type="button" ${mtbfState.reportHtml ? "" : "disabled"}>${escapeHtml(ui("print"))}</button></div></section>
+        </div>
       </main>
     </div>`;
   bindMTBFPanelEvents();
+  bindModuleDashboard("mtbf");
   updateMTBFRunState();
 }
 
@@ -751,6 +1199,7 @@ function bindMTBFPanelEvents() {
 
 function setMTBFInputMode(inputMode) {
   if (mtbfState.inputMode === inputMode) return;
+  moduleDashboardState.mtbf.collapsed = false;
   mtbfState.inputMode = inputMode;
   mtbfState.validation = null;
   mtbfState.inputSummary = null;
@@ -868,6 +1317,8 @@ function runMTBFAnalysis() {
   if (!applyMTBFEngineResult(engineResult)) return;
   mtbfState.curveSvg = mtbfState.result.estimable ? mtbfReliabilityCurveSvg(mtbfState.result, mtbfChartLabels()) : "";
   buildMTBFReport();
+  moduleDashboardState.mtbf.collapsed = true;
+  moduleDashboardState.mtbf.activeTab = "overview";
   renderMtbfPanel();
 }
 
@@ -929,21 +1380,35 @@ function renderMTBFCheckAndRun() {
 
 function resetMTBF() {
   resetMTBFState(mtbfState);
+  moduleDashboardState.mtbf.collapsed = false;
+  moduleDashboardState.mtbf.activeTab = "overview";
   renderMtbfPanel();
 }
 
 function renderDemoPanel() {
   demoState.validation = validateDemoInputs(demoState, ui);
-  const input = demoState.inputs;
+  const tabs = [
+    ["overview", "resultOverview"],
+    ["plan", "verificationPlanTab"],
+    ["results", "verificationResultsTab"],
+    ["confidence", "confidenceIntervalTab"],
+    ["conclusion", "verificationConclusionTab"],
+    ["statistics", "resultStatisticalInfo"],
+    ["data", "resultDataSummary"]
+  ];
   $("demoPanel").innerHTML = `
-    <div class="layout">
-      <aside class="panel sidebar">
-        <h2 class="section-title">${escapeHtml(ui("setup"))}</h2>
-        <div class="step-list">
+    <div class="layout" data-dashboard-layout="demo">
+      <aside class="panel sidebar" data-dashboard-sidebar="demo">
+        <div class="sidebar-header">
+          <h2 class="section-title">${escapeHtml(ui("demoTitle"))}</h2>
+          <button class="sidebar-toggle" id="demoSidebarToggle" type="button" aria-expanded="true" aria-controls="demoSidebarDetails"><span aria-hidden="true">‹</span></button>
+        </div>
+        <div class="step-list dashboard-steps">
           <div class="step active"><div class="step-num">1</div><div><strong>${escapeHtml(ui("defineTarget"))}</strong><span>${escapeHtml(demoMethodLabel())}</span></div></div>
           <div class="step ${demoState.validation.errors.length ? "" : "done"}"><div class="step-num">2</div><div><strong>${escapeHtml(ui("defineEvidence"))}</strong><span>${escapeHtml(demoWorkflowLabel())}</span></div></div>
           <div class="step ${demoState.result ? "done" : ""}"><div class="step-num">3</div><div><strong>${escapeHtml(ui("calculatePlanEvaluate"))}</strong><span>${escapeHtml(ui("demoRunHint"))}</span></div></div>
         </div>
+        <div class="sidebar-details" id="demoSidebarDetails" data-dashboard-details="demo">
         <h3 class="section-title">${escapeHtml(ui("demoMethod"))}</h3>
         <div class="segmented" role="group" aria-label="${escapeHtml(ui("demoMethod"))}">
           <button class="segment ${demoState.method === "sample" ? "active" : ""}" id="demoMethodSample" type="button">${escapeHtml(ui("sampleBasedDemo"))}</button>
@@ -958,23 +1423,43 @@ function renderDemoPanel() {
         <h3 class="section-title" style="margin-top:14px">${escapeHtml(ui("dataCheck"))}</h3>
         <div class="info-list" id="demoDataCheck">${renderDemoDataCheck()}</div>
         <p class="privacy">${escapeHtml(ui("localOnly"))}</p>
+        </div>
         <div class="sidebar-footer"><button class="btn" id="demoResetButton" type="button">${escapeHtml(ui("reset"))}</button><button class="btn primary" id="demoRunButton" type="button">${escapeHtml(ui("demoRunButton"))}</button></div>
       </aside>
       <main class="main">
-        <section class="panel summary">
-          <span class="status-badge muted">${escapeHtml(ui("inDevelopment"))}</span>
-          <h2>${escapeHtml(ui("demoSummary"))}</h2>
-          <p>${escapeHtml(ui("demoIntroFull"))}</p>
-          <div class="kpis">${renderDemoKpis()}</div>
-        </section>
-        <section class="panel block"><h3>${escapeHtml(ui("demoEvidenceChart"))}</h3><div class="chart">${demoState.chartSvg || escapeHtml(ui("realCurvePlaceholder"))}</div></section>
-        <section class="panel block"><h3>${escapeHtml(ui("demoEvidenceGap"))}</h3><div class="info-list">${renderDemoGap()}</div></section>
-        <section class="panel insight"><h3 style="margin:0 0 12px;font-size:15px">${escapeHtml(ui("insight"))}</h3><div class="insight-grid">${renderDemoInsight()}</div></section>
-        <section class="panel block"><h3>${escapeHtml(ui("assumptionsNotices"))}</h3><div class="info-list">${renderDemoBoundaries()}</div></section>
-        <section class="panel block"><h3>${escapeHtml(ui("report"))}</h3><div class="report-actions"><button class="btn" id="demoExportHtmlButton" type="button" ${demoState.reportHtml ? "" : "disabled"}>${escapeHtml(ui("exportHtml"))}</button><button class="btn" id="demoExportPdfButton" type="button" ${demoState.reportHtml ? "" : "disabled"}>${escapeHtml(ui("exportPdf"))}</button><button class="btn" id="demoPrintButton" type="button" ${demoState.reportHtml ? "" : "disabled"}>${escapeHtml(ui("print"))}</button></div></section>
+        ${renderModuleResultTabs("demo", tabs)}
+        <div class="dashboard-panel-stack" ${modulePanelAttributes("demo", "overview")}>
+          <section class="panel summary">
+            <span class="status-badge muted">${escapeHtml(ui("inDevelopment"))}</span>
+            <h2>${escapeHtml(ui("demoSummary"))}</h2>
+            <p>${escapeHtml(ui("demoIntroFull"))}</p>
+            <div class="kpis">${renderDemoKpis()}</div>
+          </section>
+        </div>
+        <div class="dashboard-panel-stack" ${modulePanelAttributes("demo", "plan")}>
+          <section class="panel block"><h3>${escapeHtml(ui("verificationPlanTab"))}</h3><div class="info-list result-statistics">${renderDemoDataCheck()}</div></section>
+        </div>
+        <div class="dashboard-panel-stack" ${modulePanelAttributes("demo", "results")}>
+          <section class="panel block"><h3>${escapeHtml(ui("verificationResultsTab"))}</h3><div class="kpis">${renderDemoKpis()}</div></section>
+          <section class="panel block"><h3>${escapeHtml(ui("demoEvidenceGap"))}</h3><div class="info-list">${renderDemoGap()}</div></section>
+        </div>
+        <div class="dashboard-panel-stack" ${modulePanelAttributes("demo", "confidence")}>
+          <section class="panel block result-chart-panel"><h3>${escapeHtml(ui("demoEvidenceChart"))}</h3><div class="chart result-chart result-chart-full" id="demonstrationEvidenceChart">${demoState.chartSvg || escapeHtml(ui("realCurvePlaceholder"))}</div></section>
+        </div>
+        <div class="dashboard-panel-stack" ${modulePanelAttributes("demo", "conclusion")}>
+          <section class="panel insight"><h3 style="margin:0 0 12px;font-size:15px">${escapeHtml(ui("verificationConclusionTab"))}</h3><div class="insight-grid">${renderDemoInsight()}</div></section>
+        </div>
+        <div class="dashboard-panel-stack" ${modulePanelAttributes("demo", "statistics")}>
+          <section class="panel block"><h3>${escapeHtml(ui("assumptionsNotices"))}</h3><div class="info-list">${renderDemoBoundaries()}</div></section>
+        </div>
+        <div class="dashboard-panel-stack" ${modulePanelAttributes("demo", "data")}>
+          <section class="panel block"><h3>${escapeHtml(ui("dataCheck"))}</h3><div class="info-list result-statistics">${renderDemoDataCheck()}</div></section>
+          <section class="panel block"><h3>${escapeHtml(ui("report"))}</h3><div class="report-actions"><button class="btn" id="demoExportHtmlButton" type="button" ${demoState.reportHtml ? "" : "disabled"}>${escapeHtml(ui("exportHtml"))}</button><button class="btn" id="demoExportPdfButton" type="button" ${demoState.reportHtml ? "" : "disabled"}>${escapeHtml(ui("exportPdf"))}</button><button class="btn" id="demoPrintButton" type="button" ${demoState.reportHtml ? "" : "disabled"}>${escapeHtml(ui("print"))}</button></div></section>
+        </div>
       </main>
     </div>`;
   bindDemoPanelEvents();
+  bindModuleDashboard("demo");
   updateDemoRunState();
 }
 
@@ -1108,6 +1593,7 @@ function bindDemoPanelEvents() {
 
 function setDemoMethod(method) {
   if (demoState.method === method) return;
+  moduleDashboardState.demo.collapsed = false;
   demoState.method = method;
   if (method === "sample") demoState.targetDefinition = "mtbf";
   invalidateDemoResult(demoState);
@@ -1116,6 +1602,7 @@ function setDemoMethod(method) {
 
 function setDemoWorkflow(workflow) {
   if (demoState.workflow === workflow) return;
+  moduleDashboardState.demo.collapsed = false;
   demoState.workflow = workflow;
   invalidateDemoResult(demoState);
   renderDemoPanel();
@@ -1123,6 +1610,7 @@ function setDemoWorkflow(workflow) {
 
 function setDemoTargetDefinition(targetDefinition) {
   if (demoState.targetDefinition === targetDefinition) return;
+  moduleDashboardState.demo.collapsed = false;
   demoState.targetDefinition = targetDefinition;
   invalidateDemoResult(demoState);
   renderDemoPanel();
@@ -1166,6 +1654,8 @@ function runDemoAnalysis() {
   Object.assign(demoState, adapted.state);
   demoState.chartSvg = demonstrationEvidenceChartSvg(demoState.result, demoChartLabels());
   buildDemoReport();
+  moduleDashboardState.demo.collapsed = true;
+  moduleDashboardState.demo.activeTab = "overview";
   renderDemoPanel();
 }
 
@@ -1182,7 +1672,80 @@ function buildDemoReport() {
 
 function resetDemo() {
   resetDemoState(demoState);
+  moduleDashboardState.demo.collapsed = false;
+  moduleDashboardState.demo.activeTab = "overview";
   renderDemoPanel();
+}
+
+function renderAltPanel() {
+  const tabs = [
+    ["overview", "resultOverview"],
+    ["model-fit", "altModelFitTab"],
+    ["acceleration-model", "altAccelerationModelTab"],
+    ["use-prediction", "altUsePredictionTab"],
+    ["diagnostics", "altDiagnosticsTab"],
+    ["statistics", "resultStatisticalInfo"],
+    ["data", "resultDataSummary"]
+  ];
+  $("altPanel").innerHTML = `
+    <div class="layout" data-dashboard-layout="alt">
+      <aside class="panel sidebar" data-dashboard-sidebar="alt">
+        <div class="sidebar-header">
+          <h2 class="section-title">${escapeHtml(ui("navAltFull"))}</h2>
+          <button class="sidebar-toggle" id="altSidebarToggle" type="button" aria-expanded="true" aria-controls="altSidebarDetails"><span aria-hidden="true">‹</span></button>
+        </div>
+        <div class="step-list dashboard-steps">
+          <div class="step active"><div class="step-num">1</div><div><strong>${escapeHtml(ui("enterData"))}</strong><span>${escapeHtml(ui("notAvailable"))}</span></div></div>
+          <div class="step"><div class="step-num">2</div><div><strong>${escapeHtml(ui("altDefineModel"))}</strong><span>${escapeHtml(ui("comingSoon"))}</span></div></div>
+          <div class="step"><div class="step-num">3</div><div><strong>${escapeHtml(ui("stepRun"))}</strong><span>${escapeHtml(ui("comingSoon"))}</span></div></div>
+        </div>
+        <div class="sidebar-details" id="altSidebarDetails" data-dashboard-details="alt">
+          <div class="info-list">
+            <div class="info-item"><b>${escapeHtml(ui("comingSoon"))}</b><span>${escapeHtml(ui("altBoundary"))}</span></div>
+          </div>
+          <h3 class="section-title" style="margin-top:14px">${escapeHtml(ui("altAccelerationModelTab"))}</h3>
+          <div class="future-list"><span>Arrhenius</span><span>Peck</span><span>Coffin-Manson</span></div>
+          <p class="privacy">${escapeHtml(ui("localOnly"))}</p>
+        </div>
+        <div class="sidebar-footer"><button class="btn" id="altResetButton" type="button">${escapeHtml(ui("reset"))}</button><button class="btn primary" id="altRunButton" type="button" disabled aria-disabled="true">${escapeHtml(ui("run"))}</button></div>
+      </aside>
+      <main class="main">
+        ${renderModuleResultTabs("alt", tabs)}
+        <div class="dashboard-panel-stack" ${modulePanelAttributes("alt", "overview")}>
+          <section class="panel summary">
+            <span class="status-badge muted">${escapeHtml(ui("comingSoon"))}</span>
+            <h2>${escapeHtml(ui("navAltFull"))}</h2>
+            <p>${escapeHtml(ui("altDescription"))}</p>
+            <div class="kpis">${renderAltKpis()}</div>
+          </section>
+        </div>
+        <div class="dashboard-panel-stack" ${modulePanelAttributes("alt", "model-fit")}>${unavailableDashboardPanel("altModelFitTab", "altUnavailable")}</div>
+        <div class="dashboard-panel-stack" ${modulePanelAttributes("alt", "acceleration-model")}>
+          <section class="panel block"><h3>${escapeHtml(ui("altAccelerationModelTab"))}</h3><div class="future-list"><span>Arrhenius</span><span>Peck</span><span>Coffin-Manson</span></div><p class="eta-note">${escapeHtml(ui("altBoundary"))}</p></section>
+        </div>
+        <div class="dashboard-panel-stack" ${modulePanelAttributes("alt", "use-prediction")}>${unavailableDashboardPanel("altUsePredictionTab", "altUnavailable")}</div>
+        <div class="dashboard-panel-stack" ${modulePanelAttributes("alt", "diagnostics")}>
+          <section class="panel block result-chart-panel"><h3>${escapeHtml(ui("altDiagnosticsTab"))}</h3><div class="chart result-chart result-chart-full" id="altDiagnosticsChart">${escapeHtml(ui("altUnavailable"))}</div></section>
+        </div>
+        <div class="dashboard-panel-stack" ${modulePanelAttributes("alt", "statistics")}>${unavailableDashboardPanel("resultStatisticalInfo", "altUnavailable")}</div>
+        <div class="dashboard-panel-stack" ${modulePanelAttributes("alt", "data")}>${unavailableDashboardPanel("resultDataSummary", "altUnavailable")}</div>
+      </main>
+    </div>`;
+  $("altResetButton")?.addEventListener("click", () => {
+    moduleDashboardState.alt.collapsed = true;
+    moduleDashboardState.alt.activeTab = "overview";
+    renderAltPanel();
+  });
+  bindModuleDashboard("alt");
+}
+
+function renderAltKpis() {
+  return [
+    [ui("altAccelerationModel"), ui("notAvailable")],
+    [ui("betaParameters"), "-"],
+    [ui("characteristicLife"), "-"],
+    [ui("accelerationFactor"), "-"]
+  ].map(kpi).join("");
 }
 
 function updateDemoRunState() {
@@ -1290,7 +1853,7 @@ function updateRunState() {
 }
 
 function updateSteps(active) {
-  document.querySelectorAll(".step").forEach(step => {
+  document.querySelectorAll("#steps .step").forEach(step => {
     const n = Number(step.dataset.step);
     step.classList.toggle("active", n === active);
     step.classList.toggle("done", n < active);
@@ -1300,7 +1863,7 @@ function updateSteps(active) {
 function setMode(mode) {
   state.mode = mode;
   document.querySelectorAll("[data-mode]").forEach(button => button.classList.toggle("active", button.dataset.mode === mode));
-  ["life", "mtbf", "demo", "alt", "faq"].forEach(name => $(`${name}Panel`).classList.toggle("active", name === mode));
+  ["life", "mtbf", "demo", "alt"].forEach(name => $(`${name}Panel`).classList.toggle("active", name === mode));
   renderHero();
 }
 
@@ -1314,21 +1877,85 @@ function setLanguage(lang) {
 function applyLanguage() {
   document.documentElement.lang = state.lang === "zh" ? "zh-CN" : "en";
   document.querySelectorAll("[data-i18n]").forEach(node => { node.textContent = t(state.lang, node.dataset.i18n); });
+  $("languageSelect").value = state.lang;
+  $("languageSelect").setAttribute("aria-label", ui("language"));
   $("targetReliability").placeholder = ui("targetPlaceholder");
   $("productName").placeholder = ui("optionalPlaceholder");
   renderHero();
   renderMapping();
   renderValidation();
   renderPreview();
-  if (state.metrics) renderResults();
+  if (state.metrics) {
+    refreshLifePlotPresentation();
+    renderResults();
+  }
   else renderEmptyResults();
+  refreshModulePlotPresentation();
   renderMtbfPanel();
   renderDemoPanel();
+  renderAltPanel();
+  setSidebarCollapsed(isSidebarCollapsed);
+  helpDrawer?.setLanguage(state.lang);
+}
+
+function refreshModulePlotPresentation() {
+  if (mtbfState.result?.estimable) {
+    mtbfState.curveSvg = mtbfReliabilityCurveSvg(mtbfState.result, mtbfChartLabels());
+  }
+  if (demoState.result) {
+    demoState.chartSvg = demonstrationEvidenceChartSvg(demoState.result, demoChartLabels());
+  }
+}
+
+function refreshLifePlotPresentation() {
+  const snapshot = state.authoritySnapshot;
+  if (!snapshot?.charts || !state.metrics) return;
+  state.plots = {
+    ...state.plots,
+    probability: weibullProbabilityPlotFromDataSvg(
+      snapshot.charts.probability,
+      chartLabels()
+    ),
+    reliability: reliabilityCurveFromDataSvg(
+      snapshot.charts.reliability,
+      missionChartPoint(snapshot),
+      chartLabels(),
+      {
+        mode: "reliability",
+        width: RESULT_CHART_SIZE.split.width,
+        targetReliability: snapshot.decision
+          ?.requirement?.targetReliability
+      }
+    ),
+    failure: reliabilityCurveFromDataSvg(
+      snapshot.charts.cumulativeFailure,
+      missionChartPoint(snapshot),
+      chartLabels(),
+      {
+        mode: "failure",
+        width: RESULT_CHART_SIZE.split.width,
+        targetReliability: snapshot.decision
+          ?.requirement?.targetReliability
+      }
+    )
+  };
 }
 
 function renderHero() {
-  const titleKey = state.mode === "mtbf" ? "mtbfTitle" : state.mode === "demo" ? "demoTitle" : "title";
-  const subtitleKey = state.mode === "mtbf" ? "mtbfSubtitle" : state.mode === "demo" ? "demoSubtitle" : "subtitle";
+  const titleKey = state.mode === "mtbf"
+    ? "mtbfTitle"
+    : state.mode === "demo"
+      ? "demoTitle"
+      : state.mode === "alt"
+        ? "navAltFull"
+        : "title";
+  const subtitleKey = state.mode === "mtbf"
+    ? "mtbfSubtitle"
+    : state.mode === "demo"
+      ? "demoSubtitle"
+      : state.mode === "alt"
+        ? "altDescription"
+        : "subtitle";
   const titleNode = document.querySelector(".hero h1");
   const subtitleNode = document.querySelector(".hero p");
   if (titleNode) titleNode.textContent = ui(titleKey);
@@ -1336,7 +1963,9 @@ function renderHero() {
 }
 
 function reset() {
+  lifeDataAuthority.cancel("reset");
   resetLifeDataState(state);
+  clearLifeDataAuthorityResult();
   $("pasteInput").value = "";
   $("fileInput").value = "";
   $("missionTime").value = "";
@@ -1353,10 +1982,7 @@ function reset() {
   renderDemoPanel();
   updateSteps(1);
   updateRunState();
-}
-
-function settings() {
-  return { timeUnit: $("timeUnit").value, missionTime: Number($("missionTime").value), targetReliability: $("targetReliability").value, productName: $("productName").value, customPercentile: state.customPercentile, customTime: state.customTime, lang: state.lang };
+  setSidebarCollapsed(false);
 }
 
 function kpi([label, value]) {
@@ -1505,7 +2131,8 @@ function chartLabels() {
     testCondition: ui("testCondition"),
     notProvided: ui("notProvided"),
     missionTime: ui("missionTime"),
-    targetReliability: ui("targetReliability")
+    targetReliability: ui("targetReliability"),
+    targetFailureProbability: ui("targetFailureProbability")
   };
 }
 
@@ -1514,7 +2141,8 @@ function mtbfChartLabels() {
     time: ui("chartTime"),
     reliability: ui("chartReliability"),
     reliabilityCurve: ui("reliabilityCurve"),
-    exponentialCurve: ui("exponentialCurve")
+    exponentialCurve: ui("exponentialCurve"),
+    missionTime: ui("missionTime")
   };
 }
 

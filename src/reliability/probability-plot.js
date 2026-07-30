@@ -1,5 +1,6 @@
 import { failureProbabilityAt } from "./metrics.js";
 import { calculateKaplanMeierPositions, transformToWeibullCoordinates, weibullProbabilityTicks, weibullProbabilityY } from "./plotting-positions.js";
+import { RESULT_CHART_SIZE, RESULT_CHART_TYPE } from "./chart-layout.js";
 
 export function buildWeibullFittedLine(beta, eta, timeRange, count = 80) {
   const [minTime, maxTime] = timeRange;
@@ -13,13 +14,39 @@ export function buildWeibullFittedLine(beta, eta, timeRange, count = 80) {
 }
 
 export function weibullProbabilityPlotSvg(records, fit, labels = {}) {
-  const width = 760;
-  const height = 350;
-  const m = { l: 64, r: 24, t: 28, b: 60 };
   const positions = calculateKaplanMeierPositions(records);
-  const times = records.map(record => record.time).filter(time => Number.isFinite(time) && time > 0);
-  const minT = Math.max(Math.min(...times) * 0.9, Number.MIN_VALUE);
+  const times = records.map(record => record.time)
+    .filter(time => Number.isFinite(time) && time > 0);
+  const minT = Math.max(
+    Math.min(...times) * 0.9,
+    Number.MIN_VALUE
+  );
   const maxT = Math.max(...times) * 1.1;
+  return weibullProbabilityPlotFromDataSvg({
+    observed: positions,
+    fitted: buildWeibullFittedLine(
+      fit.beta,
+      fit.eta,
+      [minT, maxT]
+    )
+  }, labels);
+}
+
+export function weibullProbabilityPlotFromDataSvg(
+  chartData,
+  labels = {}
+) {
+  const { width, height } = RESULT_CHART_SIZE.full;
+  const m = { l: 76, r: 18, t: 30, b: 36 };
+  const positions = chartData.observed;
+  const fitted = chartData.fitted;
+  const chartTimes = [
+    ...positions.failurePositions.map(point => point.time),
+    ...positions.censoredMarkers.map(point => point.time),
+    ...fitted.map(point => point.time)
+  ].filter(time => Number.isFinite(time) && time > 0);
+  const minT = Math.min(...chartTimes);
+  const maxT = Math.max(...chartTimes);
   const xMin = Math.log(minT);
   const xMax = Math.log(maxT);
   const yTickValues = weibullProbabilityTicks();
@@ -28,16 +55,34 @@ export function weibullProbabilityPlotSvg(records, fit, labels = {}) {
   const sx = time => m.l + ((Math.log(time) - xMin) / (xMax - xMin || 1)) * (width - m.l - m.r);
   const sy = probability => height - m.b - ((weibullProbabilityY(probability) - yMin) / (yMax - yMin)) * (height - m.t - m.b);
   const syTransformed = y => height - m.b - ((y - yMin) / (yMax - yMin)) * (height - m.t - m.b);
-  const fitted = buildWeibullFittedLine(fit.beta, fit.eta, [minT, maxT]);
+  const yTickLabelPositions = spreadYTickLabels(yTickValues, sy, m.t - 2, 11);
+  const yTickLabelY = probability => yTickLabelPositions.get(probability);
   const fittedPath = fitted.map((point, index) => `${index ? "L" : "M"} ${sx(point.time).toFixed(1)} ${syTransformed(point.transformedY).toFixed(1)}`).join(" ");
-  const yGrid = yTickValues.map(p => `<line x1="${m.l}" x2="${width - m.r}" y1="${sy(p).toFixed(1)}" y2="${sy(p).toFixed(1)}" class="grid"/><text x="${m.l - 10}" y="${(sy(p) + 4).toFixed(1)}" text-anchor="end">${formatPercentTick(p)}</text>`).join("");
-  const xTicks = logTicks(minT, maxT).map(time => `<line x1="${sx(time).toFixed(1)}" x2="${sx(time).toFixed(1)}" y1="${height - m.b}" y2="${height - m.b + 5}" class="axis"/><text x="${sx(time).toFixed(1)}" y="${height - 36}" text-anchor="middle">${formatTick(time)}</text>`).join("");
+  const yGrid = yTickValues.map(p => `<line x1="${m.l}" x2="${width - m.r}" y1="${sy(p).toFixed(1)}" y2="${sy(p).toFixed(1)}" class="grid"/><text x="${m.l - 8}" y="${yTickLabelY(p).toFixed(1)}" text-anchor="end" class="tick-label">${formatPercentTick(p)}</text>`).join("");
+  const xTicks = logTicks(minT, maxT).map(time => `<line x1="${sx(time).toFixed(1)}" x2="${sx(time).toFixed(1)}" y1="${height - m.b}" y2="${height - m.b + 4}" class="axis"/><text x="${sx(time).toFixed(1)}" y="${height - m.b + 17}" text-anchor="middle" class="tick-label">${formatTick(time)}</text>`).join("");
   const failureMarkers = positions.failurePositions.map(point => `<circle cx="${sx(point.time).toFixed(1)}" cy="${sy(point.cumulativeFailureProbability).toFixed(1)}" r="4.5" class="fail"><title>${failureTooltip(point, labels)}</title></circle>`).join("");
   const rugY = height - m.b - 9;
   const censoredMarkers = positions.censoredMarkers.map(point => `<path d="M ${sx(point.time).toFixed(1)} ${rugY - 6} L ${(sx(point.time) - 5).toFixed(1)} ${rugY + 4} L ${(sx(point.time) + 5).toFixed(1)} ${rugY + 4} Z" class="cens-fill"><title>${censoredTooltip(point, labels)}</title></path>`).join("");
-  const legendX = m.l;
+  const legendY = 12;
+  const legendLabels = [
+    labels.weibullLine || "Weibull 2P fitted line",
+    labels.failureObservation || "Failure Observation",
+    labels.rightCensored || "Right-censored"
+  ];
+  const legendWidths = [
+    22 + estimateLegendTextWidth(legendLabels[0]),
+    13 + estimateLegendTextWidth(legendLabels[1]),
+    13 + estimateLegendTextWidth(legendLabels[2])
+  ];
+  const legendGap = 18;
+  const legendStart = (width - legendWidths.reduce((sum, value) => sum + value, 0) - legendGap * 2) / 2;
+  const legendX = [
+    legendStart,
+    legendStart + legendWidths[0] + legendGap,
+    legendStart + legendWidths[0] + legendGap + legendWidths[1] + legendGap
+  ];
   return `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeHtml(labels.probPlot || "Weibull Probability Plot")}">
-    <style>.axis{stroke:#98a2b3}.grid{stroke:#e4e7ec}.fit{fill:none;stroke:#2563eb;stroke-width:2.4}.fail{fill:#b42318}.cens-fill{fill:#3538cd;stroke:#3538cd}.rug{stroke:#3538cd;stroke-width:1.5}.mission{stroke:#0f766e;stroke-dasharray:5 5}.point{fill:#0f766e}text{font:12px -apple-system,BlinkMacSystemFont,Segoe UI,Arial,sans-serif;fill:#475467}.legend-text{font-weight:700}</style>
+    <style>.axis{stroke:#98a2b3}.grid{stroke:#e4e7ec}.fit{fill:none;stroke:#2563eb;stroke-width:2.4}.fail{fill:#b42318}.cens-fill{fill:#3538cd;stroke:#3538cd}.rug{stroke:#3538cd;stroke-width:1.5}.mission{stroke:#0f766e;stroke-dasharray:5 5}.point{fill:#0f766e}text{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Arial,sans-serif;fill:#475467}.tick-label{font-size:${RESULT_CHART_TYPE.axisFontSize}px;font-weight:400}.axis-title{font-size:${RESULT_CHART_TYPE.axisFontSize}px;font-weight:500}.legend-text{font-size:${RESULT_CHART_TYPE.legendFontSize}px;font-weight:600}.legend-line{stroke:#2563eb;stroke-width:1.8}</style>
     <rect x="0" y="0" width="${width}" height="${height}" fill="#fff"/>
     ${yGrid}${xTicks}
     <line x1="${m.l}" x2="${width - m.r}" y1="${height - m.b}" y2="${height - m.b}" class="axis"/>
@@ -46,9 +91,13 @@ export function weibullProbabilityPlotSvg(records, fit, labels = {}) {
     ${failureMarkers}
     <line x1="${m.l}" x2="${width - m.r}" y1="${rugY + 5}" y2="${rugY + 5}" class="rug"/>
     ${censoredMarkers}
-    <g transform="translate(${legendX} 24)"><line x1="0" x2="22" y1="0" y2="0" class="fit"/><text x="28" y="4" class="legend-text">${escapeHtml(labels.weibullLine || "Weibull 2P fitted line")}</text><circle cx="220" cy="0" r="4.5" class="fail"/><text x="232" y="4" class="legend-text">${escapeHtml(labels.failureObservation || "Failure Observation")}</text><path d="M 410 -6 L 405 4 L 415 4 Z" class="cens-fill"/><text x="424" y="4" class="legend-text">${escapeHtml(labels.rightCensored || "Right-censored")}</text></g>
-    <text x="${width / 2}" y="${height - 12}" text-anchor="middle">${escapeHtml(labels.time || "Time")}</text>
-    <text transform="translate(18 ${height / 2}) rotate(-90)" text-anchor="middle">${escapeHtml(labels.cumulativeFailureProbability || "Cumulative failure probability")}</text>
+    <g aria-label="${escapeHtml(labels.probPlot || "Weibull Probability Plot")}">
+      <g transform="translate(${legendX[0].toFixed(1)} ${legendY})"><line x1="0" x2="17" y1="0" y2="0" class="legend-line"/><text x="22" y="3" class="legend-text">${escapeHtml(legendLabels[0])}</text></g>
+      <g transform="translate(${legendX[1].toFixed(1)} ${legendY})"><circle cx="4" cy="0" r="3.3" class="fail"/><text x="13" y="3" class="legend-text">${escapeHtml(legendLabels[1])}</text></g>
+      <g transform="translate(${legendX[2].toFixed(1)} ${legendY})"><path d="M 4 -4 L 0 3 L 8 3 Z" class="cens-fill"/><text x="13" y="3" class="legend-text">${escapeHtml(legendLabels[2])}</text></g>
+    </g>
+    <text x="${width / 2}" y="${height - 6}" text-anchor="middle" class="axis-title">${escapeHtml(labels.time || "Time")}</text>
+    <text transform="translate(15 ${height / 2}) rotate(-90)" text-anchor="middle" class="axis-title">${escapeHtml(labels.cumulativeFailureProbability || "Cumulative failure probability")}</text>
   </svg>`;
 }
 
@@ -88,6 +137,22 @@ function formatNumber(value) {
 
 function formatPercentTick(value) {
   return `${Number(value * 100).toLocaleString(undefined, { maximumSignificantDigits: 3 })}%`;
+}
+
+function spreadYTickLabels(values, scale, topBaseline, minimumGap) {
+  const positions = new Map();
+  let previous = topBaseline - minimumGap;
+  [...values].sort((a, b) => b - a).forEach(probability => {
+    const preferred = scale(probability) + 3 - (probability === 0.99 ? 5 : 0);
+    const position = Math.max(preferred, previous + minimumGap);
+    positions.set(probability, position);
+    previous = position;
+  });
+  return positions;
+}
+
+function estimateLegendTextWidth(value) {
+  return Array.from(String(value ?? "")).reduce((width, character) => width + (/[\u2E80-\u9FFF]/.test(character) ? 8.5 : 4.7), 0);
 }
 
 function escapeHtml(value) {

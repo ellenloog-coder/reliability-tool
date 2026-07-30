@@ -5,6 +5,11 @@
   "private": true,
   "scripts": {
     "test": "node --test tests/*.test.js",
+    "server": "node server/index.js",
+    "test:backend": "node --test server/test/*.test.js",
+    "test:life-data-parity": "node --test server/test/life-data-parity.test.js",
+    "verify:browser-engine-baseline": "node verification/browser-engine-baseline.mjs --verify",
+    "update-golden:browser-engine-baseline": "node verification/browser-engine-baseline.mjs --update",
     "verify:demonstration": "python3 verification/demonstration_reference.py --verify && node verification/compare-demonstration-numerics.js --verify",
     "update-golden:demonstration": "python3 verification/demonstration_reference.py --update-golden && node verification/compare-demonstration-numerics.js --write-report"
   }

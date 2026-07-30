@@ -66,7 +66,7 @@ export function reliabilityCurveSvg(records, fit, missionTime, labels = {}) {
 
 function chartFrame(width, height, xLabel, yLabel, grid, body) {
   return `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeHtml(`${xLabel} chart`)}">
-    <style>.axis{stroke:#98a2b3}.grid{stroke:#e4e7ec}.fit{fill:none;stroke:#2563eb;stroke-width:2.4}.fail{fill:#b42318}.cens{stroke:#3538cd;stroke-width:2;fill:none}.mission{stroke:#0f766e;stroke-dasharray:5 5}.point{fill:#0f766e}text{font:12px -apple-system,BlinkMacSystemFont,Segoe UI,Arial,sans-serif;fill:#475467}.legend-text{font-weight:700}</style>
+    <style>.axis{stroke:#98a2b3}.grid{stroke:#e4e7ec}.fit{fill:none;stroke:#2563eb;stroke-width:2.4}.fail{fill:#b42318}.cens{stroke:#3538cd;stroke-width:2;fill:none}.mission{stroke:#0f766e;stroke-dasharray:5 5}.point{fill:#0f766e}text{font:11px -apple-system,BlinkMacSystemFont,Segoe UI,Arial,sans-serif;fill:#475467}.legend-text{font-weight:700}</style>
     <rect x="0" y="0" width="${width}" height="${height}" fill="#fff"/>
     ${grid}
     <line x1="58" x2="${width - 22}" y1="${height - 54}" y2="${height - 54}" class="axis"/>

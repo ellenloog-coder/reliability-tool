@@ -1,0 +1,213 @@
+{
+  "baseline_id": "browser-engine-reference-v1-20260730-dirty-53ce11e",
+  "baseline_schema_version": "1.0.0",
+  "captured_at": "2026-07-30T03:36:03Z",
+  "freeze_completed_at": "2026-07-30T03:46:12Z",
+  "git": {
+    "branch": "main",
+    "commit": "53ce11ea9a1f4632a0fed7fc3b07f7c5104c4c8a",
+    "upstream": "origin/main",
+    "ahead": 0,
+    "behind": 0,
+    "working_tree_state": "DIRTY",
+    "note": "The reference was captured from the preserved local working tree; no reset, clean, checkout, commit, or push was performed.",
+    "modified_files_at_capture": [
+      "index.html",
+      "src/reliability/app.js",
+      "src/reliability/demonstration/plotting.js",
+      "src/reliability/i18n.js",
+      "src/reliability/mtbf-plotting.js",
+      "src/reliability/plotting.js",
+      "src/reliability/probability-plot.js",
+      "src/reliability/reliability-curve.js",
+      "src/reliability/report.js",
+      "styles.css",
+      "tests/life-data-visualization.test.js",
+      "tests/reliability-report.test.js",
+      "tests/reliability.test.js"
+    ],
+    "untracked_paths_at_capture": [
+      "output/",
+      "src/reliability/chart-layout.js",
+      "src/reliability/help-content.js",
+      "src/reliability/help-drawer.js",
+      "tests/help-content-and-drawer.test.js"
+    ]
+  },
+  "runtime": {
+    "package_version": "15.10.0",
+    "application_start": "python3 -m http.server <port> --bind 127.0.0.1",
+    "test_command": "npm test",
+    "tests_at_capture": {
+      "total": 238,
+      "passed": 238,
+      "failed": 0,
+      "skipped": 0
+    },
+    "tests_after_baseline_verification": {
+      "total": 241,
+      "passed": 241,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "reference": {
+    "engine_version": "1.0.0",
+    "contract_version": "1.0.0",
+    "fixture_version": "1.0.0",
+    "modules": [
+      "life-data",
+      "mtbf",
+      "demonstration"
+    ],
+    "excluded_modules": [
+      "alt"
+    ],
+    "entry_points": {
+      "life-data": "src/reliability/engine/life-data-engine.js#analyzeLifeData",
+      "mtbf": "src/reliability/engine/mtbf-engine.js#analyzeMTBF",
+      "demonstration": "src/reliability/engine/demonstration-engine.js#analyzeDemonstration"
+    }
+  },
+  "comparison_policy": {
+    "strings_booleans_null_integers": "exact",
+    "object_keys_and_array_order": "exact",
+    "reason_code_order": "exact",
+    "numeric_absolute_tolerance": 1e-12,
+    "numeric_relative_tolerance": 1e-10,
+    "non_finite_numbers": "forbidden",
+    "undefined_values": "captured explicitly as {$baselineType:\"undefined\"}; forbidden in authority layers",
+    "missing_fields": "significant; a missing key is not equivalent to null"
+  },
+  "authority_boundary": {
+    "authoritative": [
+      "input",
+      "validation",
+      "calculation",
+      "decision",
+      "insight",
+      "assumptions",
+      "warnings",
+      "chart numeric source data",
+      "report consumer payload"
+    ],
+    "compatibility": "Frozen for migration parity but deprecated for new consumers.",
+    "presentation": "English/Chinese labels, formatted strings, HTML, CSS, and SVG markup are presentation references, not backend authority.",
+    "localization_rule": "The backend-equivalence target is language-neutral data, statuses, reason codes, and numeric values. EN/CN text is rendered from the same authoritative result."
+  },
+  "input_contracts": {
+    "life-data": {
+      "entry_point": "analyzeLifeData(input)",
+      "required_top_level": [
+        "rows",
+        "mapping"
+      ],
+      "settings": {
+        "timeUnit": "optional string; current UI supplies hours/cycles/days",
+        "missionTime": "optional positive finite number; defaults from valid records",
+        "targetReliability": "optional probability in (0,1); empty means no decision"
+      },
+      "mapping": {
+        "time": "required mapped column",
+        "status": "required mapped column",
+        "sampleId": "optional",
+        "failureMode": "optional",
+        "testCondition": "optional"
+      },
+      "supported_statuses": [
+        "failure aliases",
+        "right-censored aliases"
+      ]
+    },
+    "mtbf": {
+      "entry_point": "analyzeMTBF(input)",
+      "summary": {
+        "inputMode": "summary or omitted",
+        "totalExposure": "required positive finite number",
+        "failureCount": "required non-negative integer",
+        "missionTime": "required positive finite number",
+        "targetMTBF": "optional positive finite number",
+        "timeUnit": "optional string"
+      },
+      "unit": {
+        "inputMode": "unit",
+        "rows": "required array",
+        "mapping": "exposureTime/status required; remaining mappings optional",
+        "missionTime": "required positive finite number",
+        "targetMTBF": "optional positive finite number"
+      }
+    },
+    "demonstration": {
+      "entry_point": "analyzeDemonstration(input)",
+      "method": [
+        "sample",
+        "time"
+      ],
+      "workflow": [
+        "plan",
+        "evaluate"
+      ],
+      "targetDefinition": [
+        "reliability",
+        "mtbf"
+      ],
+      "common_inputs": [
+        "confidenceLevel",
+        "allowableFailures",
+        "timeUnit"
+      ],
+      "sample_plan": [
+        "targetReliability"
+      ],
+      "sample_evaluate": [
+        "targetReliability",
+        "unitsTested",
+        "observedFailures"
+      ],
+      "time_plan": [
+        "targetMTBF or targetReliability+missionTime",
+        "optional numberOfUnits"
+      ],
+      "time_evaluate": [
+        "targetMTBF or targetReliability+missionTime",
+        "totalTestTime",
+        "observedFailures"
+      ]
+    }
+  },
+  "output_rules": {
+    "required_top_level": [
+      "validation",
+      "calculation",
+      "decision",
+      "insight",
+      "compatibility",
+      "metadata"
+    ],
+    "invalid_validation": {
+      "calculation": null,
+      "decision": null,
+      "insight": null
+    },
+    "calculation_error": {
+      "calculation_status": "ERROR",
+      "error_required": [
+        "code",
+        "message"
+      ],
+      "decision": null,
+      "insight": null
+    },
+    "finite_rule": "Every numeric value emitted by authority layers must be finite.",
+    "null_rule": "Null is significant and only accepted where emitted by the frozen fixtures/Contract v1.",
+    "missing_rule": "Missing, null, zero, empty string, and false are distinct.",
+    "decision_rule": "Decision status and ordered reasonCodes are exact migration acceptance fields.",
+    "insight_rule": "explanationKeys, recommendationKeys, limitations, and parameters are frozen structurally.",
+    "warning_rule": "Warning and assumption strings are frozen because legacy UI/report consumers currently expose them."
+  },
+  "file_sha256": {
+    "life-data": "a741f98ca0474134b4cb76d664abc3e2fad495336a183955c0828c63593b13b9",
+    "mtbf": "4eddf1e4e4621630abf9334f56ce4fc5a4c5990f353ea3304e014f4da78937cc",
+    "demonstration": "b7f5a4055816db228693e2e7050f2e7b3662d3cd8927085e0dc0a40a1d04131d"
+  }
+}

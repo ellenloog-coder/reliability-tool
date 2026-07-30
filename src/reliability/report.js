@@ -1,34 +1,110 @@
 import { t } from "./i18n.js";
 
 export function buildReportHtml(state) {
-  const { metrics, insight, validation, mapping, settings, plots, tables, curveMode } = state;
+  const { metrics, insight, validation = {}, settings = {}, plots = {}, tables = {}, curveMode } = state;
   const lang = state.lang || settings.lang || "en";
   const ui = key => t(lang, key);
   const target = metrics?.targetComparison || {};
-  const unit = unitLabel(settings.timeUnit, lang);
-  const rows = [
-    [ui("analysisMethod"), "Weibull 2P MLE"],
-    [ui("missionTime"), `${fmt(settings.missionTime)} ${unit}`],
-    [ui("targetReliability"), settings.targetReliability ? `${(Number(settings.targetReliability) * 100).toFixed(2)}%` : ui("targetNotProvided")],
-    [ui("localProcessing"), lang === "zh" ? "用户可靠性数据仅在浏览器本地处理，不上传、不保存。" : "User reliability data is processed locally in the browser and is not uploaded or stored."]
+  const unit = reportUnitLabel(settings.timeUnit, lang);
+  const missionTime = Number(metrics?.missionTime ?? settings.missionTime);
+  const targetReliability = Number(settings.targetReliability);
+  const hasTarget = Number.isFinite(targetReliability) && targetReliability > 0 && targetReliability < 1;
+
+  const summaryRows = [
+    [local(lang, "Analysis Method", "分析方法"), metrics ? "Weibull 2P MLE" : null],
+    [local(lang, "Sample Size", "样本量"), finiteInteger(validation.totalCount, lang)],
+    [local(lang, "Failure Count", "失效数"), finiteInteger(validation.failureCount, lang)],
+    ...(Number(validation.censoredCount) > 0
+      ? [[local(lang, "Right-censored Observations", "右删失观测数"), finiteInteger(validation.censoredCount, lang)]]
+      : []),
+    [local(lang, "Time Unit", "时间单位"), unit]
   ];
-  return `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Reliability Analysis Report</title>${reportStyle()}</head><body><main class="report">
+  const summaryContent = `${metricTable(summaryRows, lang)}
+    ${metrics ? `<p class="lead">${escapeHtml(summarySentence(metrics, target, lang))}</p>` : ""}
+    ${insight ? engineeringInterpretation(insight, lang, ui) : ""}`;
+
+  const weibullRows = metrics ? [
+    [local(lang, "Shape Parameter β", "形状参数 β"), formatNumber(metrics.beta, 3, lang)],
+    [local(lang, "Scale Parameter η", "尺度参数 η"), withUnit(formatNumber(metrics.eta, 1, lang), unit)],
+    ["B1", withUnit(formatNumber(metrics.b1, 2, lang), unit)],
+    ["B5", withUnit(formatNumber(metrics.b5, 2, lang), unit)],
+    ["B10", withUnit(formatNumber(metrics.b10, 2, lang), unit)],
+    ["B50", withUnit(formatNumber(metrics.b50, 1, lang), unit)]
+  ] : [];
+  const weibullContent = metrics
+    ? `<p class="section-note">${escapeHtml(local(lang, "Weibull 2-parameter maximum-likelihood point estimates.", "Weibull 双参数最大似然点估计。"))}</p>
+      <h3>${escapeHtml(ui("lifePercentiles"))}</h3>
+      ${metricTable(weibullRows, lang)}`
+    : "";
+
+  const predictionRows = metrics ? [
+    [local(lang, "Target Time", "目标时间"), withUnit(formatFlexible(missionTime, 2, lang), unit)],
+    [local(lang, "Reliability R(t)", "可靠度 R(t)"), pct(metrics.missionReliability)],
+    [local(lang, "Failure Probability F(t)", "失效概率 F(t)"), pct(metrics.missionFailureProbability)],
+    [ui("targetReliability"), hasTarget ? pct(targetReliability) : ui("targetNotProvided")],
+    ...(hasTarget ? [
+      [local(lang, "Decision", "判定"), localizeTargetStatus(target.status, lang)]
+    ] : [])
+  ] : [];
+  const selectedTimes = tables?.selectedTimes?.rows || [];
+  const targetGap = hasTarget ? tables?.targetGap : null;
+  const predictionContent = metrics
+    ? `${metricTable(predictionRows, lang)}
+      ${selectedTimes.length ? `<h3>${escapeHtml(ui("reliabilityAtSelectedTimes"))}</h3>${reliabilityTimesTable(selectedTimes, unit, ui, lang)}` : ""}
+      ${targetGap ? `<h3>${escapeHtml(ui("targetGap"))}</h3>${targetGapTable(targetGap, ui)}` : ""}
+      ${hasTarget ? `<h3>${escapeHtml(ui("targetComparison"))}</h3><p>${escapeHtml(localizeTargetMessage(target.message, lang))}</p>` : ""}`
+    : "";
+
+  const chartFigures = [
+    chartFigure(
+      plots?.probability,
+      ui("probPlot"),
+      ui("probabilityPlotLimit")
+    ),
+    chartFigure(
+      plots?.reliability,
+      ui("relCurve"),
+      metrics
+        ? local(
+          lang,
+          `Reliability at ${withUnit(formatFlexible(missionTime, 2, lang), unit)}: ${pct(metrics.missionReliability)}. Highlighted point: the specified target time.`,
+          `${withUnit(formatFlexible(missionTime, 2, lang), unit)} 时的可靠度：${pct(metrics.missionReliability)}。高亮点表示指定目标时间。`
+        )
+        : ""
+    )
+  ].filter(Boolean).join("");
+  const chartsContent = chartFigures
+    ? `<p class="section-note">${escapeHtml(local(
+      lang,
+      `Default report curve view: ${curveMode === "failure" ? "Cumulative Failure F(t)" : "Reliability R(t)"}.`,
+      `默认报告曲线视图：${curveMode === "failure" ? "累计失效概率 F(t)" : "可靠度 R(t)"}。`
+    ))}</p>${chartFigures}`
+    : "";
+
+  const statisticalContent = metrics ? `${metricTable([
+    [local(lang, "Estimation Method", "估计方法"), local(lang, "Maximum Likelihood Estimation (MLE)", "最大似然估计（MLE）")],
+    [local(lang, "Censoring Treatment", "删失处理"), Number(validation.censoredCount) > 0
+      ? local(lang, "Right-censored observations included in the likelihood", "右删失观测已纳入似然函数")
+      : local(lang, "No right-censored observations", "无右删失观测")],
+    [local(lang, "Estimate Type", "估计类型"), local(lang, "Point estimates", "点估计")],
+    [local(lang, "Confidence Information", "置信信息"), local(lang, "Not available in the current version", "当前版本暂未提供")]
+  ], lang)}
+    <p class="section-note">${escapeHtml(local(
+      lang,
+      "Goodness-of-fit and Anderson-Darling statistics are not calculated in the current version and are therefore not reported.",
+      "当前版本未计算拟合优度和 Anderson-Darling 统计量，因此报告中不展示相关结果。"
+    ))}</p>` : "";
+
+  const appendixContent = appendix(insight, validation.warnings || [], lang, ui);
+
+  return `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${escapeHtml(ui("reportTitle"))}</title>${reportStyle()}</head><body><main class="report">
     <h1>${escapeHtml(ui("reportTitle"))}</h1>
-    <h2>1. ${escapeHtml(ui("executiveSummary"))}</h2>${table(rows)}${metrics ? `<p>${escapeHtml(summarySentence(metrics, target, lang))}</p>` : ""}
-    <h2>2. ${escapeHtml(ui("studyInformation"))}</h2>${table([[ui("timeUnit"), unitLabel(settings.timeUnit, lang)], [ui("totalSamples"), validation.totalCount], [ui("failureCount"), validation.failureCount], [ui("censored"), validation.censoredCount]])}
-    <h2>3. ${escapeHtml(ui("dataSummary"))}</h2><p>${escapeHtml(validation.censoredCount ? local(lang, "Right-censored observations are present and included in the likelihood.", "存在右删失数据，并已纳入似然函数。") : local(lang, "No right-censored observations were detected.", "未检测到右删失数据。"))}</p>
-    <h2>4. ${escapeHtml(ui("analysisMethod"))}</h2><p>${escapeHtml(local(lang, "Weibull 2P parameters are estimated by maximum likelihood. Right-censored observations contribute to the likelihood. This MVP reports point estimates and does not report fit-quality or compliance conclusions.", "Weibull 2P 参数使用最大似然估计；右删失数据会进入似然函数。当前 MVP 仅报告点估计，不报告拟合质量或符合性结论。"))}</p>
-    ${metrics ? `<h2>5. ${escapeHtml(ui("weibullResults"))}</h2>${table([[ui("betaShape"), fmt(metrics.beta)], [ui("etaScale"), `${fmt(metrics.eta)} ${unit}`], ["B1", `${fmt(metrics.b1)} ${unit}`], ["B5", `${fmt(metrics.b5)} ${unit}`], ["B10", `${fmt(metrics.b10)} ${unit}`], ["B50", `${fmt(metrics.b50)} ${unit}`], [ui("missionReliability"), pct(metrics.missionReliability)], [ui("missionFailureProbability"), pct(metrics.missionFailureProbability)]])}` : ""}
-    <h2>6. ${escapeHtml(ui("reliabilityPlots"))}</h2><p>${escapeHtml(ui("probabilityPlotLimit"))}</p><p>${escapeHtml(local(lang, `Default report curve view: ${curveMode === "failure" ? "Cumulative Failure F(t)" : "Reliability R(t)"}.`, `默认报告曲线视图：${curveMode === "failure" ? "累计失效概率 F(t)" : "可靠度 R(t)"}。`))}</p><div class="plots">${plots?.probability || ""}${plots?.reliability || ""}</div>
-    <h2>7. ${escapeHtml(ui("lifePercentiles"))}</h2><p>${escapeHtml(ui("lifePercentilesHint"))}</p>${lifePercentilesTable(tables?.percentiles?.rows || [], unit, ui)}
-    <h2>8. ${escapeHtml(ui("reliabilityAtSelectedTimes"))}</h2>${reliabilityTimesTable(tables?.selectedTimes?.rows || [], unit, ui)}
-    <h2>9. ${escapeHtml(ui("targetGap"))}</h2>${targetGapTable(tables?.targetGap, ui)}
-    <h2>10. ${escapeHtml(ui("engineeringInterpretation"))}</h2>${insight ? `<p><b>${escapeHtml(localizeInsight(insight.result, lang))}</b></p><p>${escapeHtml(ui("failureRateTrend"))}: ${escapeHtml(failureRateTrendLabel(metrics?.beta, lang))}</p><p>${escapeHtml(localizeInsight(insight.meaning, lang))}</p><p>${escapeHtml(localizeInsight(insight.evidence, lang))}</p><p>${escapeHtml(ui("possibleConsiderations"))}: ${escapeHtml((insight.possibleConsiderations || []).map(item => localizeInsight(item, lang)).join(", ") || localizeInsight("No confirmed physical failure mechanism is identified by β alone.", lang))}</p>` : "<p>No Weibull interpretation is available.</p>"}
-    <h2>11. ${escapeHtml(ui("targetComparison"))}</h2>${table([[ui("targetReliability"), settings.targetReliability ? pct(Number(settings.targetReliability)) : ui("targetNotProvided")], [ui("missionReliability"), metrics ? pct(metrics.missionReliability) : "-"], [ui("result"), localizeTargetStatus(target.status, lang)], [ui("targetComparison"), localizeTargetMessage(target.message, lang)], [ui("limitations"), ui("pointEstimateComparisonOnly")]])}
-    <h2>12. ${escapeHtml(ui("limitations"))}</h2><ul><li>${escapeHtml(local(lang, "Possible mechanism does not mean root cause is confirmed.", "可能机理不代表根因已经确认。"))}</li><li>${escapeHtml(local(lang, "Point estimates are sensitive to small samples and heavy censoring.", "点估计会受到小样本和大量删失数据影响。"))}</li><li>${escapeHtml(local(lang, "No confidence intervals, probability bands, goodness-of-fit statistics, Anderson-Darling values, correlation coefficients, or standards-compliance conclusions are reported in this version.", "当前版本不报告置信区间、概率带、拟合优度统计、Anderson-Darling 值、相关系数或标准符合性结论。"))}</li><li>${escapeHtml(local(lang, "Legacy binary XLS parsing is limited; CSV, TSV, XLSX, and Excel HTML/XML are preferred.", "旧版二进制 XLS 解析能力有限；建议使用 CSV、TSV、XLSX 或 Excel HTML/XML。"))}</li></ul>
-    <h2>13. ${escapeHtml(ui("recommendedActions"))}</h2>${insight ? `<ul>${insight.recommendedActions.map(item => `<li>${escapeHtml(localizeInsight(item, lang))}</li>`).join("")}</ul>` : `<p>${escapeHtml(local(lang, "Review mission requirements and data quality.", "复核任务要求和数据质量。"))}</p>`}
-    <h2>14. ${escapeHtml(ui("dataStructure"))}</h2>${table(Object.entries(mapping).map(([k, v]) => [k, v || ui("notMapped")]))}
-    <h2>15. ${escapeHtml(ui("appendix"))}</h2><p>${escapeHtml(validation.warnings.join(" ") || local(lang, "No non-blocking warnings.", "无非阻断提示。"))}</p>
+    ${section(1, local(lang, "Analysis Summary", "分析摘要"), summaryContent)}
+    ${section(2, local(lang, "Weibull Parameters", "Weibull 参数"), weibullContent)}
+    ${section(3, local(lang, "Reliability Prediction", "可靠性预测"), predictionContent)}
+    ${section(4, local(lang, "Charts", "图表"), chartsContent, "chart-section")}
+    ${section(5, local(lang, "Statistical Information", "统计信息"), statisticalContent)}
+    ${section(6, local(lang, "Data Information / Appendix", "数据信息 / 附录"), appendixContent)}
   </main></body></html>`;
 }
 
@@ -48,51 +124,166 @@ export function printReport(reportHtml) {
   if (!popup) return false;
   popup.document.write(reportHtml);
   popup.document.close();
-  popup.focus();
-  popup.print();
+  const printWhenReady = () => {
+    const nextFrame = callback => popup.requestAnimationFrame
+      ? popup.requestAnimationFrame(callback)
+      : popup.setTimeout(callback, 0);
+    nextFrame(() => nextFrame(() => {
+      popup.focus();
+      popup.print();
+    }));
+  };
+  if (popup.document.readyState === "complete") printWhenReady();
+  else popup.addEventListener("load", printWhenReady, { once: true });
   return true;
 }
 
-function table(rows) {
-  return `<table>${rows.map(([k, v]) => `<tr><th>${escapeHtml(k)}</th><td>${escapeHtml(v)}</td></tr>`).join("")}</table>`;
+function section(number, title, content, className = "") {
+  if (!String(content || "").trim()) return "";
+  const classes = ["report-section", className].filter(Boolean).join(" ");
+  return `<section class="${classes}"><h2>${number}. ${escapeHtml(title)}</h2>${content}</section>`;
 }
 
-function lifePercentilesTable(rows, unit, ui) {
-  return `<table><thead><tr><th>${escapeHtml(ui("percentFailed"))}</th><th>${escapeHtml(ui("lifeMetric"))}</th><th>${escapeHtml(ui("estimatedTime"))}</th></tr></thead><tbody>${rows.map(row => `<tr><td>${fmt(row.percent)}%</td><td>${escapeHtml(row.metric)}</td><td>${fmt(row.estimatedTime)} ${escapeHtml(unit)}</td></tr>`).join("")}</tbody></table>`;
+function metricTable(rows, lang) {
+  const availableRows = rows.filter(([label, value]) =>
+    String(label || "").trim() && value !== null && value !== undefined && String(value).trim()
+  );
+  if (!availableRows.length) return "";
+  return `<table class="metric-table"><thead><tr><th scope="col">${escapeHtml(local(lang, "Metric", "指标"))}</th><th scope="col">${escapeHtml(local(lang, "Value", "数值"))}</th></tr></thead><tbody>${availableRows.map(([label, value]) => `<tr><th scope="row">${escapeHtml(label)}</th><td>${escapeHtml(value)}</td></tr>`).join("")}</tbody></table>`;
 }
 
-function reliabilityTimesTable(rows, unit, ui) {
-  return `<table><thead><tr><th>${escapeHtml(ui("chartTime"))}</th><th>${escapeHtml(ui("reliabilityRt"))}</th><th>${escapeHtml(ui("cumulativeFailureFt"))}</th></tr></thead><tbody>${rows.map(row => `<tr><td>${fmt(row.time)} ${escapeHtml(unit)}${row.isMissionTime ? ` · ${escapeHtml(ui("missionTime"))}` : ""}</td><td>${pct(row.reliability)}</td><td>${pct(row.failureProbability)}</td></tr>`).join("")}</tbody></table>`;
+function reliabilityTimesTable(rows, unit, ui, lang) {
+  if (!rows.length) return "";
+  return `<table class="data-table"><thead><tr><th>${escapeHtml(ui("chartTime"))}</th><th>${escapeHtml(ui("reliabilityRt"))}</th><th>${escapeHtml(ui("cumulativeFailureFt"))}</th></tr></thead><tbody>${rows.map(row => `<tr><td>${escapeHtml(withUnit(formatFlexible(row.time, 2, lang), unit))}${row.isMissionTime ? ` · ${escapeHtml(ui("missionTime"))}` : ""}</td><td>${pct(row.reliability)}</td><td>${pct(row.failureProbability)}</td></tr>`).join("")}</tbody></table>`;
 }
 
 function targetGapTable(gap, ui) {
-  if (!gap) return table([[ui("targetGap"), ui("targetNotProvided")]]);
+  if (!gap) return "";
   const sign = gap.gapPercentagePoints >= 0 ? "+" : "";
-  return table([[ui("predictedReliability"), pct(gap.predictedReliability)], [ui("targetReliability"), pct(gap.targetReliability)], [ui("gap"), `${sign}${gap.gapPercentagePoints.toFixed(2)} ${ui("percentagePoints")}`], [ui("limitations"), ui("pointEstimateComparisonOnly")]]);
+  return `<table class="metric-table"><tbody>${[
+    [ui("predictedReliability"), pct(gap.predictedReliability)],
+    [ui("targetReliability"), pct(gap.targetReliability)],
+    [ui("gap"), `${sign}${gap.gapPercentagePoints.toFixed(2)} ${ui("percentagePoints")}`],
+    [ui("limitations"), ui("pointEstimateComparisonOnly")]
+  ].map(([label, value]) => `<tr><th scope="row">${escapeHtml(label)}</th><td>${escapeHtml(value)}</td></tr>`).join("")}</tbody></table>`;
 }
 
-function failureRateTrendLabel(beta, lang) {
-  const value = Number(beta);
-  if (!Number.isFinite(value)) return "-";
-  if (value < 0.9) return t(lang, "decreasingFailureRateTrend");
-  if (value <= 1.1) return t(lang, "constantFailureRateTrend");
-  return t(lang, "increasingFailureRateTrend");
+function chartFigure(svg, title, caption) {
+  if (!String(svg || "").trim()) return "";
+  return `<figure class="chart-figure"><h3>${escapeHtml(title)}</h3>${svg}${caption ? `<figcaption>${escapeHtml(caption)}</figcaption>` : ""}</figure>`;
 }
 
 function reportStyle() {
-  return `<style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;margin:0;background:#f4f6f8;color:#172033}.report{max-width:1050px;margin:28px auto;background:#fff;border:1px solid #d9e0e8;border-radius:8px;padding:28px;line-height:1.5}h1{font-size:34px;margin:0 0 18px;border-bottom:2px solid #2563eb;padding-bottom:10px}h2{font-size:20px;margin:24px 0 12px}table{width:100%;border-collapse:collapse;margin:8px 0 14px}th,td{border:1px solid #d9e0e8;padding:9px 11px;text-align:left;vertical-align:top}th{background:#f8fafc;width:220px}.plots{display:grid;gap:14px}svg{max-width:100%;height:auto;border:1px solid #d9e0e8;border-radius:8px}@media print{@page{size:A4;margin:12mm}body{background:#fff}.report{border:0;margin:0;padding:0}h1{font-size:22pt}h2{font-size:14pt;break-after:avoid}tr,svg{break-inside:avoid}}</style>`;
+  return `<style>
+    *{box-sizing:border-box}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;margin:0;background:#eef2f6;color:#172033;line-height:1.5}
+    .report{max-width:980px;margin:28px auto;background:#fff;border:1px solid #d9e0e8;border-radius:10px;padding:34px 38px}
+    h1{font-size:32px;margin:0 0 22px;border-bottom:3px solid #2563eb;padding-bottom:12px;color:#172033}
+    h2{font-size:20px;margin:0 0 13px;color:#172033}
+    h3{font-size:15px;margin:18px 0 9px;color:#344054}
+    p{margin:8px 0 12px}
+    .lead{font-size:16px;color:#344054}
+    .section-note,figcaption{font-size:13px;color:#475467}
+    .report-section{border-top:1px solid #e4e7ec;padding-top:20px;margin-top:24px}
+    table{width:100%;border-collapse:collapse;margin:10px 0 16px;color:#172033}
+    th,td{border:1px solid #cfd8e3;padding:9px 11px;text-align:left;vertical-align:top;color:#172033}
+    thead th{background:#eaf0f7;font-weight:700}
+    .metric-table th[scope="row"]{background:#f6f8fb;font-weight:650;width:42%}
+    .data-table th{background:#eaf0f7}
+    .interpretation{border-left:4px solid #2563eb;background:#f6f8fb;padding:10px 14px;margin-top:14px}
+    .chart-figure{margin:14px 0 22px;border:1px solid #d9e0e8;border-radius:8px;padding:14px;background:#fff}
+    .chart-figure h3{margin:0 0 10px}
+    .chart-figure svg{display:block;width:100%;height:auto;border:0}
+    .chart-figure figcaption{border-top:1px solid #e4e7ec;margin-top:10px;padding-top:9px}
+    ul{margin:8px 0 14px;padding-left:22px}
+    @media print{
+      @page{size:A4;margin:14mm}
+      html,body{background:#fff}
+      body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+      .report{border:0;margin:0;padding:0;max-width:none}
+      h1{font-size:22pt}
+      h2{font-size:14pt;break-after:avoid-page}
+      h3{break-after:avoid-page}
+      .report-section:not(.chart-section){break-inside:avoid-page}
+      .chart-section{break-before:page;break-inside:auto}
+      table,.interpretation,.chart-figure{break-inside:avoid-page}
+      tr{break-inside:avoid}
+      th,td,h1,h2,h3,p,li{color:#172033!important}
+      thead th{background:#eaf0f7!important}
+      .metric-table th[scope="row"]{background:#f6f8fb!important}
+    }
+  </style>`;
 }
 
-function fmt(value) {
-  return Number.isFinite(Number(value)) ? Number(value).toLocaleString(undefined, { maximumSignificantDigits: 5 }) : "-";
+function engineeringInterpretation(insight, lang, ui) {
+  const considerations = (insight.possibleConsiderations || [])
+    .map(item => localizeInsight(item, lang))
+    .filter(Boolean);
+  return `<div class="interpretation"><h3>${escapeHtml(ui("engineeringInterpretation"))}</h3>
+    <p><strong>${escapeHtml(ui("failureRateTrend"))}:</strong> ${escapeHtml(localizeInsight(insight.result, lang))}</p>
+    <p>${escapeHtml(localizeInsight(insight.meaning, lang))}</p>
+    <p>${escapeHtml(localizeInsight(insight.evidence, lang))}</p>
+    ${considerations.length ? `<p><strong>${escapeHtml(ui("possibleConsiderations"))}:</strong> ${escapeHtml(considerations.join(", "))}</p>` : ""}
+  </div>`;
+}
+
+function appendix(insight, warnings, lang, ui) {
+  const limitations = [
+    local(lang, "Point estimates are sensitive to small samples and heavy censoring.", "点估计会受到小样本和大量删失数据影响。"),
+    local(lang, "Confidence bounds and formal goodness-of-fit statistics are not available in the current version.", "当前版本暂未提供置信界限和正式拟合优度统计量。"),
+    local(lang, "Statistical interpretation does not confirm a physical root cause.", "统计解释不能确认物理根因。")
+  ];
+  const recommendations = (insight?.recommendedActions || []).map(item => localizeInsight(item, lang)).filter(Boolean);
+  const warningContent = warnings.length
+    ? `<h3>${escapeHtml(local(lang, "Data Warnings", "数据提示"))}</h3><ul>${warnings.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`
+    : "";
+  return `<p class="section-note">${escapeHtml(local(
+    lang,
+    "Internal import mappings and extraction diagnostics are intentionally omitted from this user report.",
+    "本用户报告有意省略内部导入映射和提取诊断信息。"
+  ))}</p>
+    <h3>${escapeHtml(ui("limitations"))}</h3><ul>${limitations.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+    ${recommendations.length ? `<h3>${escapeHtml(ui("recommendedActions"))}</h3><ul>${recommendations.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>` : ""}
+    ${warningContent}`;
+}
+
+function formatNumber(value, decimals, lang) {
+  if (!Number.isFinite(Number(value))) return "-";
+  return Number(value).toLocaleString(lang === "zh" ? "zh-CN" : "en-US", {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals
+  });
+}
+
+function formatFlexible(value, maximumFractionDigits, lang) {
+  if (!Number.isFinite(Number(value))) return "-";
+  return Number(value).toLocaleString(lang === "zh" ? "zh-CN" : "en-US", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits
+  });
+}
+
+function finiteInteger(value, lang) {
+  return Number.isFinite(Number(value)) ? formatNumber(value, 0, lang) : null;
+}
+
+function withUnit(value, unit) {
+  return value === "-" ? value : `${value} ${unit}`.trim();
 }
 
 function pct(value) {
   return Number.isFinite(Number(value)) ? `${(Number(value) * 100).toFixed(2)}%` : "-";
 }
 
-function unitLabel(unit, lang) {
-  return t(lang, unit) || unit;
+function reportUnitLabel(unit, lang) {
+  const units = {
+    hours: "h",
+    cycles: lang === "zh" ? "次" : "cycles",
+    days: "d",
+    minutes: "min",
+    other: lang === "zh" ? "单位" : "units"
+  };
+  return units[unit] || t(lang, unit) || unit || "";
 }
 
 function summarySentence(metrics, target, lang) {
