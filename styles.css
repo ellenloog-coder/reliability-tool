@@ -242,3 +242,10 @@ body.help-open{overflow:hidden}
   font-size:var(--type-caption);font-weight:500;
   letter-spacing:.02em;text-align:center
 }
+
+/* Top navigation typography: 15% larger than the compact application scale. */
+.top-nav .logo,.top-nav .nav-link,.top-nav .nav-tool-option,.top-nav .nav-pill{
+  font-size:calc(var(--type-body) + 1.8px)
+}
+.top-nav .brand-name{font-size:calc(var(--type-card-title) + 2.2px)}
+.top-nav .language-picker{font-size:calc(var(--type-caption) + 1.5px)}

@@ -189,6 +189,8 @@ test("MTBF insight and report include model boundary and avoid unsupported claim
     mapping: { totalExposure: "总测试时间", failureCount: "失效数" },
     lang: "zh"
   });
+  assert(zhReport.includes('<html lang="zh-CN">'));
+  assert(zhReport.includes('"PingFang SC"'));
   assert(zhReport.includes("MTBF 点估计"));
   assert(zhReport.includes("无法估计"));
   assert(zhReport.includes("当前单元级数据"));

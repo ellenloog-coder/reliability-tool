@@ -13,10 +13,18 @@ test("manual uses matching bilingual chapter structure and documents all real mo
   assert.deepEqual(en.chapters.map(chapter => chapter.id), zh.chapters.map(chapter => chapter.id));
   assert.deepEqual(en.chapters.map(chapter => chapter.id), [
     "quick-start", "data-preparation", "life-data", "mtbf", "demonstration",
-    "alt", "results", "reports", "privacy", "limitations"
+    "alt", "results", "reports", "application-scenarios", "privacy", "limitations"
   ]);
+  const enScenarios = en.chapters.find(chapter => chapter.id === "application-scenarios");
+  const zhScenarios = zh.chapters.find(chapter => chapter.id === "application-scenarios");
+  assert.equal(enScenarios.sections.length, 4);
+  assert.equal(zhScenarios.sections.length, 4);
+  assert(enScenarios.sections.every(section => section.bullets.length >= 2));
+  assert(zhScenarios.sections.every(section => section.bullets.length >= 2));
   assert.match(en.chapters.find(chapter => chapter.id === "alt").sections[0].text, /not implemented/i);
   assert.match(zh.chapters.find(chapter => chapter.id === "alt").sections[0].text, /尚未实现/);
+  assert.match(enScenarios.sections[3].text, /not implemented/i);
+  assert.match(zhScenarios.sections[3].text, /尚未实现/);
 });
 
 test("FAQ has matching bilingual category/question ids and covers a substantial set", () => {

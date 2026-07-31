@@ -47,6 +47,8 @@ test("No target report does not claim meets/below target", () => {
 
 test("Chinese report localizes section titles", () => {
   const html = report("zh", "");
+  assert(html.includes('<html lang="zh-CN">'));
+  assert(html.includes('"PingFang SC"'));
   for (const title of ["分析摘要", "Weibull 参数", "可靠性预测", "图表", "统计信息", "数据信息 / 附录"]) {
     assert(html.includes(title), title);
   }

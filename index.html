@@ -4,9 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Reliability Analysis Tool</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KC0MC0Y15Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-KC0MC0Y15Y');
+  </script>
   <link rel="stylesheet" href="https://ellenloog-coder.github.io/guided-8d-investigation-tool/ai-assistant.css?v=20260730-6" />
   <link rel="stylesheet" href="https://ellenloog-coder.github.io/guided-8d-investigation-tool/feedback-widget.css?v=20260730-1" />
-  <link rel="stylesheet" href="styles.css?v=20260730-2" />
+  <link rel="stylesheet" href="styles.css?v=20260730-3" />
 </head>
 <body>
   <div class="top-nav-wrap">
@@ -110,7 +119,6 @@
             </div>
           </nav>
           <section class="panel summary" data-result-tab-panel="overview">
-            <span class="status-badge" data-i18n="available">Available</span>
             <h2 data-i18n="summary">Reliability Summary</h2><p id="summaryNote"></p>
             <div class="kpis" id="kpis"></div>
             <p class="eta-note" data-i18n="etaNote">η: Time at which the fitted cumulative failure probability reaches 63.2%.</p>

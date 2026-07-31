@@ -1032,7 +1032,6 @@ function renderMtbfPanel() {
         ${renderModuleResultTabs("mtbf", tabs)}
         <div class="dashboard-panel-stack" ${modulePanelAttributes("mtbf", "overview")}>
           <section class="panel summary">
-            <span class="status-badge">${escapeHtml(ui("available"))}</span>
             <h2>${escapeHtml(ui("mtbfSummary"))}</h2>
             <p>${escapeHtml(ui("mtbfIntroFull"))}</p>
             <p>${escapeHtml(ui("mtbfRepairableBoundary"))}</p>

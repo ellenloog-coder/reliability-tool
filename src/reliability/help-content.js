@@ -111,6 +111,41 @@ const manual = {
         }]
       },
       {
+        id: "application-scenarios",
+        title: "Application Scenarios",
+        sections: [
+          {
+            heading: "Life Data",
+            bullets: [
+              "Product life-test analysis: combine observed failures and right-censored units from a non-repairable product test to estimate Weibull β, η, B10, and reliability at a defined mission time.",
+              "Field or warranty life review: analyze consistent time-to-failure and still-operating records to screen for early-failure, approximately random, or wear-out patterns before a separate physical failure-mode investigation."
+            ]
+          },
+          {
+            heading: "MTBF",
+            bullets: [
+              "Accumulated operating-exposure summary: use total bench, fleet, or system operating time and observed failures to estimate constant failure rate, MTBF, and mission reliability under the exponential assumption.",
+              "Internal target screening: compare the observed MTBF point estimate with an engineering target and review the expected mission reliability; this is a point-estimate screen, not a confidence-based qualification."
+            ]
+          },
+          {
+            heading: "Reliability Demonstration",
+            bullets: [
+              "Sample-based verification planning or evaluation: determine the sample size and allowable failures, or evaluate completed pass/fail evidence, for a target reliability and confidence level.",
+              "Time-based verification planning or evaluation: determine required accumulated exposure, or evaluate completed exposure and observed failures, against a target MTBF or mission reliability under the exponential assumption."
+            ]
+          },
+          {
+            heading: "Accelerated Life Testing",
+            bullets: [
+              "Accelerated test-program design: engineering teams may need to compare life behavior across temperature, voltage, load, or other stress levels while confirming that the failure mechanism remains unchanged.",
+              "Use-condition extrapolation: validated multi-stress life data may be used outside this release to fit an appropriate acceleration model and predict use-condition life."
+            ],
+            text: "ALT is not implemented in the current release. These are selection references only; this tool cannot currently fit an acceleration model, calculate an acceleration factor, or make use-condition predictions."
+          }
+        ]
+      },
+      {
         id: "privacy",
         title: "Data and Privacy",
         sections: [{
@@ -215,6 +250,41 @@ const manual = {
           text: "支持的分析完成后，在数据摘要页签使用报告导出。导出 HTML 会下载独立报告；导出 PDF 会打开浏览器打印流程以保存 PDF；打印使用同一打印版报告。",
           bullets: ["导出前确认模块、源数据、单位、任务/目标设置、校验警告和当前结果。", "报告根据已完成的分析结果和当前界面语言生成。修改输入后必须重新运行，报告才会反映变化。", "导出报告是工程分析材料，不会自动成为获批验证记录或法规放行结论。"]
         }]
+      },
+      {
+        id: "application-scenarios",
+        title: "使用场景",
+        sections: [
+          {
+            heading: "寿命数据",
+            bullets: [
+              "产品寿命试验分析：将不可维修产品试验中的观察失效与右删失样品合并分析，用于估计 Weibull β、η、B10 以及指定任务时间的可靠度。",
+              "现场或质保寿命复盘：对条件一致的失效时间和仍在运行记录进行分析，初步识别早期失效、近似随机失效或磨损趋势，并进一步开展独立的物理失效模式调查。"
+            ]
+          },
+          {
+            heading: "MTBF",
+            bullets: [
+              "累计运行暴露汇总：使用台架、车队或系统的总运行时间和观察失效数，在指数分布假设下估计恒定失效率、MTBF 和任务可靠度。",
+              "内部目标筛查：将观察 MTBF 点估计与工程目标比较，并查看预期任务可靠度；该场景属于点估计筛查，不等同于具有置信度的资格验证。"
+            ]
+          },
+          {
+            heading: "可靠性验证",
+            bullets: [
+              "样本型验证规划或评估：针对目标可靠度和置信水平确定样本量与允许失效数，或评估已完成试验的通过/失效证据。",
+              "时间型验证规划或评估：在指数分布假设下，针对目标 MTBF 或任务可靠度确定所需累计暴露时间，或评估已完成的暴露时间和观察失效数。"
+            ]
+          },
+          {
+            heading: "加速寿命试验",
+            bullets: [
+              "加速试验方案设计：工程团队可能需要比较温度、电压、载荷或其他应力水平下的寿命表现，同时确认失效机理没有发生变化。",
+              "使用条件寿命外推：经过验证的多应力寿命数据可在本版本之外选择合适的加速模型，并预测使用条件下的寿命。"
+            ],
+            text: "当前版本尚未实现 ALT。以上仅用于工具选择参考；本工具目前不能拟合加速模型、计算加速因子或执行使用条件寿命预测。"
+          }
+        ]
       },
       {
         id: "privacy",

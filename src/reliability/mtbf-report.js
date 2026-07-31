@@ -8,7 +8,7 @@ export function buildMTBFReportHtml(state) {
   const target = state.targetComparison;
   const insight = state.insight;
   const unit = unitLabel(input.timeUnit, lang);
-  return `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${escapeHtml(ui("mtbfReportTitle"))}</title>${style()}</head><body><main class="report">
+  return `<!DOCTYPE html><html lang="${lang === "zh" ? "zh-CN" : "en"}"><head><meta charset="utf-8"><title>${escapeHtml(ui("mtbfReportTitle"))}</title>${style()}</head><body><main class="report">
     <h1>${escapeHtml(ui("mtbfReportTitle"))}</h1>
     <h2>1. ${escapeHtml(ui("executiveSummary"))}</h2>${table([[ui("analysisMethod"), ui("constantFailureRate")], [ui("localProcessing"), local(lang, "User reliability data is processed locally in the browser and is not uploaded or stored.", "用户可靠性数据仅在浏览器本地处理，不上传、不保存。")], [ui("targetMTBF"), input.targetMTBF ? fmt(input.targetMTBF) : ui("targetNotProvided")]])}
     <h2>2. ${escapeHtml(ui("studyInformation"))}</h2>${table([[ui("timeUnit"), unitLabel(input.timeUnit, lang)], [ui("inputMethod"), state.inputMode === "summary" ? ui("summaryInput") : ui("unitLevelData")]])}
@@ -30,7 +30,7 @@ function table(rows) {
 }
 
 function style() {
-  return `<style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;margin:0;background:#f4f6f8;color:#172033}.report{max-width:1050px;margin:28px auto;background:#fff;border:1px solid #d9e0e8;border-radius:8px;padding:28px;line-height:1.5}h1{font-size:34px;margin:0 0 18px;border-bottom:2px solid #2563eb;padding-bottom:10px}h2{font-size:20px;margin:24px 0 12px}table{width:100%;border-collapse:collapse;margin:8px 0 14px}th,td{border:1px solid #d9e0e8;padding:9px 11px;text-align:left;vertical-align:top}th{background:#f8fafc;width:240px}.plots{display:grid;gap:14px}svg{max-width:100%;height:auto;border:1px solid #d9e0e8;border-radius:8px}@media print{@page{size:A4;margin:12mm}body{background:#fff}.report{border:0;margin:0;padding:0}h1{font-size:22pt}h2{font-size:14pt;break-after:avoid}tr,svg{break-inside:avoid}}</style>`;
+  return `<style>body{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Noto Sans SC",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;margin:0;background:#f4f6f8;color:#172033}.report{max-width:1050px;margin:28px auto;background:#fff;border:1px solid #d9e0e8;border-radius:8px;padding:28px;line-height:1.5}h1{font-size:34px;margin:0 0 18px;border-bottom:2px solid #2563eb;padding-bottom:10px}h2{font-size:20px;margin:24px 0 12px}table{width:100%;border-collapse:collapse;margin:8px 0 14px}th,td{border:1px solid #d9e0e8;padding:9px 11px;text-align:left;vertical-align:top}th{background:#f8fafc;width:240px}.plots{display:grid;gap:14px}svg{max-width:100%;height:auto;border:1px solid #d9e0e8;border-radius:8px}@media print{@page{size:A4;margin:12mm}body{background:#fff}.report{border:0;margin:0;padding:0}h1{font-size:22pt}h2{font-size:14pt;break-after:avoid}tr,svg{break-inside:avoid}}</style>`;
 }
 
 function local(lang, en, zh) {

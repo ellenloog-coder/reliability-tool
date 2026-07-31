@@ -97,7 +97,7 @@ export function buildReportHtml(state) {
 
   const appendixContent = appendix(insight, validation.warnings || [], lang, ui);
 
-  return `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${escapeHtml(ui("reportTitle"))}</title>${reportStyle()}</head><body><main class="report">
+  return `<!DOCTYPE html><html lang="${lang === "zh" ? "zh-CN" : "en"}"><head><meta charset="utf-8"><title>${escapeHtml(ui("reportTitle"))}</title>${reportStyle()}</head><body><main class="report">
     <h1>${escapeHtml(ui("reportTitle"))}</h1>
     ${section(1, local(lang, "Analysis Summary", "分析摘要"), summaryContent)}
     ${section(2, local(lang, "Weibull Parameters", "Weibull 参数"), weibullContent)}
@@ -124,7 +124,12 @@ export function printReport(reportHtml) {
   if (!popup) return false;
   popup.document.write(reportHtml);
   popup.document.close();
-  const printWhenReady = () => {
+  const printWhenReady = async () => {
+    try {
+      await popup.document.fonts?.ready;
+    } catch {
+      // System-font fallback remains available if the FontFaceSet is unavailable.
+    }
     const nextFrame = callback => popup.requestAnimationFrame
       ? popup.requestAnimationFrame(callback)
       : popup.setTimeout(callback, 0);
@@ -176,7 +181,7 @@ function chartFigure(svg, title, caption) {
 function reportStyle() {
   return `<style>
     *{box-sizing:border-box}
-    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;margin:0;background:#eef2f6;color:#172033;line-height:1.5}
+    body{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Noto Sans SC",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;margin:0;background:#eef2f6;color:#172033;line-height:1.5}
     .report{max-width:980px;margin:28px auto;background:#fff;border:1px solid #d9e0e8;border-radius:10px;padding:34px 38px}
     h1{font-size:32px;margin:0 0 22px;border-bottom:3px solid #2563eb;padding-bottom:12px;color:#172033}
     h2{font-size:20px;margin:0 0 13px;color:#172033}
